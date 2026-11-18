@@ -185,8 +185,15 @@ docker push <your-registry>/semantic-sensemaking:0.1.0
 ```bash
 python -m pytest                 # unit, integration, and prototype-parity tests
 ruff check src tests
+python -m pytest --nbmake notebooks/01_dictionary_overlay.ipynb   # example notebook, as CI runs it
 pre-commit install               # ruff + notebook output stripping on commit
 ```
+
+The repository includes [Claude Code](https://claude.com/claude-code) project
+settings that call [OpenWolf](https://www.npmjs.com/package/openwolf) hooks.
+The hook scripts are machine-local; to use them after cloning, run
+`npm install && npx openwolf init`. Without them, Claude Code reports failed hooks
+but works normally.
 
 Tests needing a live model endpoint are marked `integration` and read
 `SSM_TEST_BASE_URL`. The parity tests in `tests/parity/` pin the dictionary
