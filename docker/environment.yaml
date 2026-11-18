@@ -1,0 +1,9 @@
+# Runtime environment for the container image. Python packages come from
+# pyproject.toml (pip install ".[tacc]") so the image and local installs resolve
+# the same dependencies. Development tools live in the repository-root environment.yaml.
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip

@@ -1,0 +1,17 @@
+Urban flood resilience workshop summary (synthetic example)
+
+This document is synthetic text written for the semantic-sensemaking examples.
+
+Participants from three cities discussed how urban growth changes flood risk.
+Paved surfaces speed up runoff, and aging stormwater infrastructure was designed
+for rainfall patterns that no longer hold. In low neighbourhoods, land subsidence
+of even a few centimetres turns nuisance flooding into repeated inundation.
+
+The metropolitan planning council described a new remote sensing program that
+uses satellite imagery and earth observation data to track impervious cover and
+ground motion together. Residents asked for clearer policy on who pays for
+drainage upgrades, and several stakeholders called for a regional governance
+body with authority over both flood control and groundwater withdrawal.
+
+The group agreed that uplift and rebound after pumping stops are poorly
+understood locally, and asked researchers to prioritise that question.

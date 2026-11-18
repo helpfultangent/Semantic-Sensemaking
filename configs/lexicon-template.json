@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "my_dictionary",
+  "description": "Replace these groups with your own concepts. Each group lists terms that signal it.",
+  "groups": [
+    {
+      "name": "Groundwater",
+      "description": "Water held in aquifers and its extraction",
+      "terms": ["groundwater", "aquifer", "drawdown"]
+    },
+    {
+      "name": "Subsidence",
+      "description": "Sinking of the ground surface",
+      "terms": ["land subsidence", "subsidence", "compaction"]
+    },
+    {
+      "name": "Policy",
+      "description": "Governance and management of water resources",
+      "terms": ["groundwater conservation district", "stakeholder"]
+    }
+  ]
+}

@@ -8,7 +8,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -29,5 +30,29 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Python and notebook development
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.ipynb_checkpoints/
+dist/
+build/
+.venv/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Workflow outputs — never commit run artifacts or staged corpora
+results/
+OverlayResults/
+ScienceBackboneResults/
+*.html
+.ssm-cache/
+
 # End of https://www.toptal.com/developers/gitignore/api/osx
 
+
+# Local tooling
+node_modules/
+.claude/settings.local.json

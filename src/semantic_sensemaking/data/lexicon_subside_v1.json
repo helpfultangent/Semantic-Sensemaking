@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "name": "subside_v1",
+  "description": "SUBSIDE keyword groups: the inline defaults from the SUBSIDE Backbone Overlay prototype.",
+  "groups": [
+    {"name": "Subsidence", "terms": ["subsidence", "land subsidence", "ground subsidence", "settlement", "compaction", "consolidation"]},
+    {"name": "Uplift_Rebound", "terms": ["uplift", "rebound", "heave", "swelling"]},
+    {"name": "Groundwater", "terms": ["groundwater", "aquifer", "aquifers", "pumping", "withdrawal", "depletion", "drawdown", "phreatic"]},
+    {"name": "OilGas", "terms": ["oil", "gas", "petroleum", "hydrocarbon", "reservoir", "extraction", "production", "co2 storage", "sequestration"]},
+    {"name": "Mining", "terms": ["mining", "mine", "coal mine", "underground mine", "longwall", "subsurface mining"]},
+    {"name": "Tectonic", "terms": ["tectonic", "fault", "faulting", "fault slip", "seismic"]},
+    {"name": "Sediment", "terms": ["sediment", "sedimentation", "deltaic", "delta", "alluvial", "natural compaction"]},
+    {"name": "InSAR", "terms": ["insar", "interferometric", "interferogram", "psinsar", "persistent scatterer", "sentinel-1", "alos", "envisat"]},
+    {"name": "GNSS_GPS", "terms": ["gnss", "gps", "global positioning", "continuous gps", "cgps", "geodetic"]},
+    {"name": "LiDAR", "terms": ["lidar", "light detection and ranging", "airborne lidar", "topobathymetric"]},
+    {"name": "Leveling", "terms": ["leveling", "levelling", "extensometer", "extensometers"]},
+    {"name": "Remote_Sensing", "terms": ["remote sensing", "satellite", "earth observation", "sar", "synthetic aperture radar"]},
+    {"name": "Coastal", "terms": ["coastal", "coast", "shoreline", "tidal", "estuary", "estuaries", "salt marsh", "sea level", "sea-level rise"]},
+    {"name": "Urban", "terms": ["urban", "city", "cities", "metropolitan", "infrastructure"]},
+    {"name": "Flood", "terms": ["flood", "flooding", "inundation", "storm surge"]},
+    {"name": "Modeling", "terms": ["model", "modeling", "simulation", "physics-based", "numerical model", "finite element", "finite-element", "modflow"]},
+    {"name": "MachineLearning", "terms": ["machine learning", "deep learning", "neural network", "random forest", "lstm", "convolutional"]},
+    {"name": "Policy_Decision", "terms": ["policy", "governance", "stakeholder", "decision support", "management", "regulation", "groundwater management area", "gma", "groundwater conservation district", "gcd"]}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "name": "subside_v1",
+  "description": "Compact SUBSIDE-tuned science backbone: the inline fallback from the SUBSIDE Backbone Overlay prototype. Domain names follow the UCSD map of science.",
+  "layer": "subside_inline",
+  "domains": [
+    {
+      "domain": "Earth Sciences",
+      "subdisciplines": ["Hydrology", "Hydrogeology", "Sedimentology", "Geomorphology", "Tectonics", "Coastal Science", "Remote Sensing"],
+      "terms": ["groundwater", "aquifer", "subsidence", "compaction", "sediment", "coastal", "insar", "gnss", "lidar", "remote sensing", "geodetic", "sea level", "fault", "tectonic"]
+    },
+    {
+      "domain": "Chemical, Mechanical, & Civil Engineering",
+      "subdisciplines": ["Geotechnical Engineering", "Petroleum Engineering", "Mining Engineering", "Civil Engineering"],
+      "terms": ["geotechnical", "oil", "gas", "petroleum", "mining", "coal", "civil", "foundation", "reservoir", "co2"]
+    },
+    {
+      "domain": "Electrical Engineering & Computer Science",
+      "subdisciplines": ["Machine Learning", "Signal Processing"],
+      "terms": ["machine learning", "deep learning", "neural network", "lstm", "convolutional", "algorithm", "signal processing"]
+    },
+    {
+      "domain": "Social Sciences",
+      "subdisciplines": ["Public Policy", "Decision Science", "Geography"],
+      "terms": ["policy", "governance", "stakeholder", "decision support", "regulation", "management", "gma", "gcd", "groundwater management"]
+    },
+    {
+      "domain": "Math & Physics",
+      "subdisciplines": ["Mathematics", "Statistics", "Geophysics"],
+      "terms": ["mathematics", "statistics", "numerical", "simulation", "modeling", "geophysics", "equation", "model"]
+    }
+  ]
+}

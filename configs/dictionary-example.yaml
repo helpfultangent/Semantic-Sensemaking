@@ -1,0 +1,41 @@
+# Dictionary workflow job file.
+#
+# Used by the CLI (--config), the notebook (RunConfig.load), and the Tapis app
+# (upload as "Job configuration"). Any value can also be set with an SSM_*
+# environment variable, e.g. SSM_CORPUS__MAX_FILES=50, or on the command line
+# with --set corpus.max_files=50. Unknown keys are rejected.
+#
+# Full schema: src/semantic_sensemaking/data/schemas/job-config.schema.json
+
+workflow: dictionary
+
+inputs:
+  # A folder (or single file) of .txt, .md, .json, .docx, or .pdf documents.
+  # In a Tapis job this is set for you from the staged "Corpus" input.
+  # corpus: /corral-repl/tacc/aci/<project>/<collection>
+  use_sample_corpus: true   # built-in synthetic documents; ignored when corpus is set
+  lexicon: null             # null = built-in SUBSIDE dictionary; or a .json/.csv path
+  taxonomy: null            # null = built-in SUBSIDE backbone; or science_backbone.json
+  taxonomy_layer: null      # for layered backbone files: merged, ucsd, ...
+
+corpus:
+  glob_patterns: ["*"]      # e.g. ["*Brown_Bag*"] to narrow a folder
+  recursive: false
+  max_files: 200
+  min_chars: 200
+
+# These defaults reproduce the original SUBSIDE Backbone Overlay notebook.
+# See configs/dictionary-corrected.yaml for the fixed scoring.
+scoring:
+  method: keyword           # keyword | semantic (semantic needs an embedding backend)
+  match_mode: auto          # auto | word_boundary | longest_match
+  mapping_method: legacy    # legacy | subdiscipline_aware | embedding
+  unmapped_groups: drop     # drop | keep
+  top_n_assignments: 3
+
+viz:
+  enabled: true
+  per_document_figures: false
+
+output:
+  dir: results              # each run writes results/<run_id>/

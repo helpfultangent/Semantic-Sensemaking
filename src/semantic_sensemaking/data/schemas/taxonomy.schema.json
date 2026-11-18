@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "TaxonomyDomainModel": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        },
+        "subdisciplines": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Subdisciplines",
+          "type": "array"
+        },
+        "terms": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Terms",
+          "type": "array"
+        }
+      },
+      "required": [
+        "domain"
+      ],
+      "title": "TaxonomyDomainModel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "JSON Schema source of truth for structured taxonomy files.",
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "name": {
+      "default": "taxonomy",
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Description"
+    },
+    "layer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Layer"
+    },
+    "produced_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Produced At"
+    },
+    "domains": {
+      "items": {
+        "$ref": "#/$defs/TaxonomyDomainModel"
+      },
+      "minItems": 1,
+      "title": "Domains",
+      "type": "array"
+    }
+  },
+  "required": [
+    "domains"
+  ],
+  "title": "Semantic Sensemaking taxonomy",
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-09-15T17:44:30.476Z",
+      "error_message": "Significant refactor of select.py",
+      "file": "src/semantic_sensemaking/corpus/select.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 16→19 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-15T17:44:30.476Z"
+    }
+  ]
+}

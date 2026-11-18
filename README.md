@@ -1,4 +1,43 @@
-This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
+# Semantic Sensemaking
+
+This repository is the starting point for a Python library and executable examples for semantic sensemaking workflows. The original TACC cookbook deployment instructions are retained below while the library and notebooks are developed.
+
+## Local development
+
+Create an environment and install the project in editable mode:
+
+```bash
+conda env create -f environment.yaml
+conda activate semantic-sensemaking
+python -m pip install -e ".[dev]"
+```
+
+Run the tests:
+
+```bash
+python -m pytest
+```
+
+Launch the notebooks:
+
+```bash
+jupyter lab
+```
+
+The first example is [`notebooks/01_row_averages.ipynb`](notebooks/01_row_averages.ipynb). Library code lives in [`semantic_sensemaking`](semantic_sensemaking), and can be imported directly:
+
+```python
+from semantic_sensemaking import average_of_each_row
+
+averages = average_of_each_row(
+   "tests/data/dataset.csv",
+   numeric_columns=["total_bill", "tip", "size"],
+)
+```
+
+## TACC cookbook template
+
+This repository is also based on a template in a [series of templates](#next-templates) that guide you through creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
 
 ## Requirements
 

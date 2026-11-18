@@ -1,0 +1,455 @@
+{
+  "$defs": {
+    "BackendConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "default": "none",
+          "enum": [
+            "none",
+            "openai_compatible",
+            "huggingface_local",
+            "anthropic",
+            "hashing"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "base_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Url"
+        },
+        "api_key_env": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Api Key Env"
+        },
+        "batch_size": {
+          "default": 32,
+          "minimum": 1,
+          "title": "Batch Size",
+          "type": "integer"
+        },
+        "timeout_s": {
+          "default": 120.0,
+          "exclusiveMinimum": 0,
+          "title": "Timeout S",
+          "type": "number"
+        },
+        "max_retries": {
+          "default": 3,
+          "minimum": 0,
+          "title": "Max Retries",
+          "type": "integer"
+        },
+        "cache_dir": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cache Dir"
+        },
+        "device": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device"
+        },
+        "dimensions": {
+          "default": 256,
+          "minimum": 8,
+          "title": "Dimensions",
+          "type": "integer"
+        }
+      },
+      "title": "BackendConfig",
+      "type": "object"
+    },
+    "CorpusConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "glob_patterns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Glob Patterns",
+          "type": "array"
+        },
+        "recursive": {
+          "default": false,
+          "title": "Recursive",
+          "type": "boolean"
+        },
+        "max_files": {
+          "default": 200,
+          "minimum": 1,
+          "title": "Max Files",
+          "type": "integer"
+        },
+        "min_chars": {
+          "default": 200,
+          "minimum": 0,
+          "title": "Min Chars",
+          "type": "integer"
+        },
+        "encoding": {
+          "default": "utf-8",
+          "title": "Encoding",
+          "type": "string"
+        },
+        "ignore_patterns": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ignore Patterns",
+          "type": "array"
+        }
+      },
+      "title": "CorpusConfig",
+      "type": "object"
+    },
+    "FormulationConfig": {
+      "additionalProperties": false,
+      "description": "Settings reserved for the planned problem-formulation workflow.",
+      "properties": {
+        "problem_statement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Problem Statement"
+        },
+        "max_groups": {
+          "default": 20,
+          "minimum": 1,
+          "title": "Max Groups",
+          "type": "integer"
+        },
+        "max_terms_per_group": {
+          "default": 12,
+          "minimum": 1,
+          "title": "Max Terms Per Group",
+          "type": "integer"
+        }
+      },
+      "title": "FormulationConfig",
+      "type": "object"
+    },
+    "InputsConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "corpus": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Corpus"
+        },
+        "use_sample_corpus": {
+          "default": false,
+          "title": "Use Sample Corpus",
+          "type": "boolean"
+        },
+        "lexicon": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lexicon"
+        },
+        "taxonomy": {
+          "anyOf": [
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taxonomy"
+        },
+        "taxonomy_layer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taxonomy Layer"
+        }
+      },
+      "title": "InputsConfig",
+      "type": "object"
+    },
+    "MatchMode": {
+      "description": "How lexicon terms are counted in text.\n\n``AUTO`` reproduces the prototype exactly: substring counts for terms\ncontaining a space or hyphen, word-boundary regex otherwise, and every term\ncounted independently \u2014 so \"land subsidence\" also counts as \"subsidence\".\n``LONGEST_MATCH`` fixes that double counting.",
+      "enum": [
+        "auto",
+        "word_boundary",
+        "longest_match"
+      ],
+      "title": "MatchMode",
+      "type": "string"
+    },
+    "NarrativeConfig": {
+      "additionalProperties": false,
+      "description": "Settings reserved for the planned narrative-analysis workflow.",
+      "properties": {
+        "segment_words": {
+          "default": 200,
+          "minimum": 10,
+          "title": "Segment Words",
+          "type": "integer"
+        },
+        "max_frames": {
+          "default": 12,
+          "minimum": 1,
+          "title": "Max Frames",
+          "type": "integer"
+        }
+      },
+      "title": "NarrativeConfig",
+      "type": "object"
+    },
+    "OutputConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "dir": {
+          "default": "results",
+          "format": "path",
+          "title": "Dir",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        }
+      },
+      "title": "OutputConfig",
+      "type": "object"
+    },
+    "ScoringConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "default": "keyword",
+          "enum": [
+            "keyword",
+            "semantic"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "match_mode": {
+          "$ref": "#/$defs/MatchMode",
+          "default": "auto"
+        },
+        "case_sensitive": {
+          "default": false,
+          "title": "Case Sensitive",
+          "type": "boolean"
+        },
+        "mapping_method": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "subdiscipline_aware",
+            "embedding"
+          ],
+          "title": "Mapping Method",
+          "type": "string"
+        },
+        "top_n_assignments": {
+          "default": 3,
+          "minimum": 1,
+          "title": "Top N Assignments",
+          "type": "integer"
+        },
+        "unmapped_groups": {
+          "default": "drop",
+          "enum": [
+            "drop",
+            "keep"
+          ],
+          "title": "Unmapped Groups",
+          "type": "string"
+        },
+        "semantic_threshold": {
+          "default": 0.45,
+          "maximum": 1.0,
+          "minimum": -1.0,
+          "title": "Semantic Threshold",
+          "type": "number"
+        },
+        "chunk_words": {
+          "default": 120,
+          "minimum": 10,
+          "title": "Chunk Words",
+          "type": "integer"
+        },
+        "chunk_overlap_words": {
+          "default": 20,
+          "minimum": 0,
+          "title": "Chunk Overlap Words",
+          "type": "integer"
+        }
+      },
+      "title": "ScoringConfig",
+      "type": "object"
+    },
+    "VizConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "per_document_figures": {
+          "default": false,
+          "title": "Per Document Figures",
+          "type": "boolean"
+        },
+        "max_per_document_figures": {
+          "default": 50,
+          "minimum": 0,
+          "title": "Max Per Document Figures",
+          "type": "integer"
+        },
+        "include_plotlyjs": {
+          "default": "cdn",
+          "enum": [
+            "cdn",
+            "inline"
+          ],
+          "title": "Include Plotlyjs",
+          "type": "string"
+        }
+      },
+      "title": "VizConfig",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "workflow": {
+      "default": "dictionary",
+      "enum": [
+        "dictionary",
+        "narrative",
+        "formulation"
+      ],
+      "title": "Workflow",
+      "type": "string"
+    },
+    "log_level": {
+      "default": "INFO",
+      "enum": [
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR"
+      ],
+      "title": "Log Level",
+      "type": "string"
+    },
+    "inputs": {
+      "$ref": "#/$defs/InputsConfig"
+    },
+    "corpus": {
+      "$ref": "#/$defs/CorpusConfig"
+    },
+    "scoring": {
+      "$ref": "#/$defs/ScoringConfig"
+    },
+    "embedding": {
+      "$ref": "#/$defs/BackendConfig"
+    },
+    "chat": {
+      "$ref": "#/$defs/BackendConfig"
+    },
+    "viz": {
+      "$ref": "#/$defs/VizConfig"
+    },
+    "output": {
+      "$ref": "#/$defs/OutputConfig"
+    },
+    "narrative": {
+      "$ref": "#/$defs/NarrativeConfig"
+    },
+    "formulation": {
+      "$ref": "#/$defs/FormulationConfig"
+    }
+  },
+  "title": "RunConfig",
+  "type": "object"
+}

@@ -1,0 +1,19 @@
+# Dictionary workflow with the three prototype scoring issues fixed.
+# Numbers will differ from the original notebook; see docs/dictionary-workflow.md.
+
+workflow: dictionary
+
+inputs:
+  use_sample_corpus: true
+
+scoring:
+  # Overlapping terms ("land subsidence" / "subsidence") count once.
+  match_mode: longest_match
+  # Domain scores are split across subdisciplines using their names,
+  # instead of assigning the first three subdisciplines in file order.
+  mapping_method: subdiscipline_aware
+  # Groups that match no backbone domain keep their weight under "Uncategorized".
+  unmapped_groups: keep
+
+viz:
+  per_document_figures: true
