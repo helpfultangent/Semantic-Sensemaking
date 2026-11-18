@@ -149,7 +149,7 @@
     },
     "FormulationConfig": {
       "additionalProperties": false,
-      "description": "Settings reserved for the planned problem-formulation workflow.",
+      "description": "Settings for the problem-formulation workflow.\n\nKeyword grounding uses ``scoring.match_mode`` and ``scoring.case_sensitive``;\nsemantic grounding uses ``scoring.semantic_threshold``, ``scoring.chunk_words``\nand ``scoring.chunk_overlap_words``; coverage mapping uses\n``scoring.mapping_method`` and ``scoring.top_n_assignments``.",
       "properties": {
         "problem_statement": {
           "anyOf": [
@@ -174,6 +174,38 @@
           "minimum": 1,
           "title": "Max Terms Per Group",
           "type": "integer"
+        },
+        "grounding": {
+          "default": "keyword",
+          "enum": [
+            "keyword",
+            "semantic",
+            "none"
+          ],
+          "title": "Grounding",
+          "type": "string"
+        },
+        "min_term_count": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Min Term Count",
+          "type": "integer"
+        },
+        "min_terms_per_group": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Min Terms Per Group",
+          "type": "integer"
+        },
+        "propose_domains": {
+          "default": false,
+          "title": "Propose Domains",
+          "type": "boolean"
+        },
+        "lexicon_name": {
+          "default": "formulated_lexicon",
+          "title": "Lexicon Name",
+          "type": "string"
         }
       },
       "title": "FormulationConfig",

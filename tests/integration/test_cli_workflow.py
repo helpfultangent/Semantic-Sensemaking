@@ -79,9 +79,11 @@ def test_exit_codes(tmp_path, capsys):
     assert "No corpus" in capsys.readouterr().err
     assert main(["dictionary", "--corpus", str(tmp_path / "missing"), "--output-dir", str(tmp_path)]) == 1
     assert main(["dictionary", "--sample-corpus", "--set", "scoring.matchmode=auto"]) == 2
+    capsys.readouterr()
     assert main(["narrative", "--sample-corpus"]) == 2
+    assert "embedding backend" in capsys.readouterr().err
     assert main(["formulate", "--sample-corpus"]) == 2
-    assert "not implemented" in capsys.readouterr().err
+    assert "problem_statement" in capsys.readouterr().err
 
 
 def test_module_entrypoint_version():
@@ -118,5 +120,33 @@ def test_narrative_run_writes_every_artifact_and_feeds_dictionary(tmp_path):
         [
             "dictionary", "--sample-corpus", "--lexicon", str(run / "frames_lexicon.json"),
             "--output-dir", str(tmp_path), "--run-id", "d1", "--set", "viz.enabled=false",
+        ]
+    ) == 0
+
+
+def test_formulation_checks_an_existing_lexicon_offline(tmp_path):
+    """No chat model: ground the built-in lexicon against the sample corpus and write drafts."""
+    from semantic_sensemaking.data import builtin_path
+
+    code = main(
+        [
+            "formulation", "--sample-corpus", "--lexicon", str(builtin_path("lexicon_subside_v1.json")),
+            "--output-dir", str(tmp_path), "--run-id", "f1",
+        ]
+    )
+    assert code == 0
+    run = tmp_path / "f1"
+    assert {
+        "proposed_groups.csv", "group_coverage.csv", "term_grounding.csv", "lexicon_draft.json",
+        "lexicon_draft.csv", "taxonomy_draft.json", "summary.md", "manifest.json",
+    } <= {p.name for p in run.iterdir()}
+    manifest = json.loads((run / "manifest.json").read_text())
+    assert manifest["workflow"] == "formulation"
+    assert 0 < manifest["stats"]["terms_kept"] <= manifest["stats"]["terms_proposed"]
+    assert main(
+        [
+            "dictionary", "--sample-corpus", "--lexicon", str(run / "lexicon_draft.json"),
+            "--taxonomy", str(run / "taxonomy_draft.json"), "--output-dir", str(tmp_path),
+            "--run-id", "d2", "--set", "viz.enabled=false",
         ]
     ) == 0

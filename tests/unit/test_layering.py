@@ -35,16 +35,19 @@ def test_library_never_blocks_on_input_or_opens_figures():
     assert not [p for p in python_files() if pattern.search(p.read_text())]
 
 
-@pytest.mark.parametrize("name", ["formulation"])
-def test_planned_workflows_are_importable_and_explicit(name):
-    from semantic_sensemaking.core.config import RunConfig
+@pytest.mark.parametrize("name", ["dictionary", "narrative", "formulation"])
+def test_workflows_expose_the_common_interface(name):
     from semantic_sensemaking.workflows import get_workflow
 
     module = get_workflow(name)
-    assert module.IMPLEMENTED is False
+    assert module.IMPLEMENTED is True
+    assert module.DESCRIPTION
+    assert callable(module.run)
+
+
+@pytest.mark.parametrize("name", ["narrative", "formulation"])
+def test_workflows_document_their_pipeline(name):
     assert (SRC / "workflows" / name / "README.md").is_file()
-    with pytest.raises(NotImplementedError, match="README"):
-        module.run(RunConfig.load())
 
 
 def test_committed_json_schemas_are_current():

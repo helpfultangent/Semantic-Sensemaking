@@ -126,11 +126,22 @@ class NarrativeConfig(_Section):
 
 
 class FormulationConfig(_Section):
-    """Settings reserved for the planned problem-formulation workflow."""
+    """Settings for the problem-formulation workflow.
+
+    Keyword grounding uses ``scoring.match_mode`` and ``scoring.case_sensitive``;
+    semantic grounding uses ``scoring.semantic_threshold``, ``scoring.chunk_words``
+    and ``scoring.chunk_overlap_words``; coverage mapping uses
+    ``scoring.mapping_method`` and ``scoring.top_n_assignments``.
+    """
 
     problem_statement: str | None = None
     max_groups: int = Field(20, ge=1)
     max_terms_per_group: int = Field(12, ge=1)
+    grounding: Literal["keyword", "semantic", "none"] = "keyword"
+    min_term_count: int = Field(1, ge=1)
+    min_terms_per_group: int = Field(1, ge=1)
+    propose_domains: bool = False
+    lexicon_name: str = "formulated_lexicon"
 
 
 WorkflowName = Literal["dictionary", "narrative", "formulation"]
