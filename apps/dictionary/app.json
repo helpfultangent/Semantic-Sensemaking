@@ -169,7 +169,7 @@
   "tags": ["portalName: ALL"],
   "notes": {
     "label": "Semantic Sensemaking: dictionary overlay",
-    "helpUrl": "https://github.com/helpfultangent/Semantic-Sensemaking/blob/main/docs/dictionary-workflow.md",
+    "helpUrl": "https://github.com/helpfultangent/Semantic-Sensemaking#readme",
     "helpText": "Counts where each group of a user-defined dictionary appears in a folder of documents, maps the groups onto a science backbone, and writes CSV tables, interactive HTML figures, a Markdown summary, and a manifest.",
     "hideNodeCountAndCoresPerNode": true,
     "isInteractive": false,
