@@ -1,13 +1,13 @@
 {
   "version": 1,
   "meta": {
-    "lastScanned": "2026-11-18T17:36:18.636Z",
-    "fileCount": 106,
+    "lastScanned": "2026-11-18T17:42:50.230Z",
+    "fileCount": 113,
     "hits": 0,
     "misses": 0,
-    "renderedHash": "8792b9db439e8712a033ccafa5bb205a9b9d3ead8f40497662855609c54c3efe",
-    "storeUpdatedAt": "2026-11-18T17:36:18.670Z",
-    "rootHash": "e07ae216d3cb6419"
+    "renderedHash": "1bd7796827e9c2807844d235f8ff7500f5e7eb149ddfd1490b72af653a0c3b01",
+    "storeUpdatedAt": "2026-11-18T17:42:50.247Z",
+    "rootHash": "f5f61c557040bcc8"
   },
   "files": {
     ".gitattributes": {
@@ -147,12 +147,12 @@
     },
     "README.md": {
       "description": "Project documentation",
-      "tokens": 1801,
-      "hash": "d29a3dea3676e284",
-      "size": 7203,
-      "mtimeMs": 1789410803182.6274,
-      "updatedAt": "2026-09-14T19:08:06.181Z",
-      "source": "scan"
+      "tokens": 2244,
+      "hash": "c6b6e59353996f8b",
+      "size": 9002,
+      "mtimeMs": 1795023770190.9438,
+      "updatedAt": "2026-11-18T17:42:50.229Z",
+      "source": "hook"
     },
     "run.sh": {
       "description": "",
@@ -165,11 +165,11 @@
     },
     "src/semantic_sensemaking/core/config.py": {
       "description": "Run configuration shared by the CLI, notebooks, and Tapis apps.",
-      "tokens": 2532,
-      "hash": "a2d8c6bc1883009d",
-      "size": 8866,
-      "mtimeMs": 1795023183206.3235,
-      "updatedAt": "2026-11-18T17:33:03.387Z",
+      "tokens": 2680,
+      "hash": "ec1d6e2e2887e5c6",
+      "size": 9382,
+      "mtimeMs": 1795023557783.2256,
+      "updatedAt": "2026-11-18T17:39:17.978Z",
       "source": "hook",
       "symbols": [
         {
@@ -239,35 +239,35 @@
           "name": "FormulationConfig",
           "kind": "class",
           "startLine": 128,
-          "endLine": 142,
-          "tokens": 124
+          "endLine": 153,
+          "tokens": 271
         },
         {
           "name": "RunConfig",
           "kind": "class",
-          "startLine": 143,
-          "endLine": 212,
+          "startLine": 154,
+          "endLine": 223,
           "tokens": 861
         },
         {
           "name": "parse_set_values",
           "kind": "fn",
-          "startLine": 213,
-          "endLine": 230,
+          "startLine": 224,
+          "endLine": 241,
           "tokens": 214
         },
         {
           "name": "deep_merge",
           "kind": "fn",
-          "startLine": 231,
-          "endLine": 241,
+          "startLine": 242,
+          "endLine": 252,
           "tokens": 114
         },
         {
           "name": "_format_validation_error",
           "kind": "fn",
-          "startLine": 242,
-          "endLine": 249,
+          "startLine": 253,
+          "endLine": 260,
           "tokens": 104
         }
       ]
@@ -1767,21 +1767,21 @@
       "source": "hook"
     },
     "src/semantic_sensemaking/workflows/formulation/__init__.py": {
-      "description": "Semantic problem formulation — planned. See ``README.md`` in this package.",
-      "tokens": 153,
-      "hash": "e4dc803052a4d9ac",
-      "size": 535,
-      "mtimeMs": 1789413356891.893,
-      "updatedAt": "2026-09-14T19:15:56.931Z",
+      "description": "Problem formulation: draft the lexicon and taxonomy the dictionary workflow reads.",
+      "tokens": 331,
+      "hash": "0d080f5128a8128b",
+      "size": 1156,
+      "mtimeMs": 1795023626622.605,
+      "updatedAt": "2026-11-18T17:40:26.657Z",
       "source": "hook"
     },
     "src/semantic_sensemaking/workflows/formulation/README.md": {
       "description": "Project documentation",
-      "tokens": 431,
-      "hash": "c60d1ad32a339895",
-      "size": 1725,
-      "mtimeMs": 1789413365486.4553,
-      "updatedAt": "2026-09-14T19:16:05.531Z",
+      "tokens": 912,
+      "hash": "27c4c55d92714bde",
+      "size": 3660,
+      "mtimeMs": 1795023693704.2437,
+      "updatedAt": "2026-11-18T17:41:33.769Z",
       "source": "hook"
     },
     "src/semantic_sensemaking/cli.py": {
@@ -2710,11 +2710,11 @@
     },
     "tests/unit/test_layering.py": {
       "description": "Architectural rules for the tool-cluster hierarchy.",
-      "tokens": 668,
-      "hash": "2f6f39d6516a0830",
-      "size": 2335,
-      "mtimeMs": 1795023331588.6187,
-      "updatedAt": "2026-11-18T17:35:31.771Z",
+      "tokens": 678,
+      "hash": "7369545e1d6f009a",
+      "size": 2373,
+      "mtimeMs": 1795023653039.108,
+      "updatedAt": "2026-11-18T17:40:53.225Z",
       "source": "hook",
       "symbols": [
         {
@@ -2743,27 +2743,34 @@
           "kind": "fn",
           "startLine": 33,
           "endLine": 38,
-          "tokens": 70
+          "tokens": 77
         },
         {
-          "name": "test_planned_workflows_are_importable_and_explicit",
+          "name": "test_workflows_expose_the_common_interface",
           "kind": "fn",
           "startLine": 39,
-          "endLine": 49,
-          "tokens": 119
+          "endLine": 48,
+          "tokens": 89
+        },
+        {
+          "name": "test_workflows_document_their_pipeline",
+          "kind": "fn",
+          "startLine": 49,
+          "endLine": 52,
+          "tokens": 33
         },
         {
           "name": "test_committed_json_schemas_are_current",
           "kind": "fn",
-          "startLine": 50,
-          "endLine": 57,
+          "startLine": 53,
+          "endLine": 60,
           "tokens": 102
         },
         {
           "name": "test_builtin_data_validates_against_schemas",
           "kind": "fn",
-          "startLine": 58,
-          "endLine": 64,
+          "startLine": 61,
+          "endLine": 67,
           "tokens": 109
         }
       ]
@@ -3234,6 +3241,263 @@
           "tokens": 54
         }
       ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/propose.py": {
+      "description": "Ask a chat model to draft concept groups and, optionally, missing backbone domains.",
+      "tokens": 1352,
+      "hash": "38228fb337fb50d0",
+      "size": 4731,
+      "mtimeMs": 1795023558077.703,
+      "updatedAt": "2026-11-18T17:39:18.111Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "ProposedGroup",
+          "kind": "class",
+          "startLine": 20,
+          "endLine": 28,
+          "tokens": 102
+        },
+        {
+          "name": "ProposedLexicon",
+          "kind": "class",
+          "startLine": 29,
+          "endLine": 32,
+          "tokens": 26
+        },
+        {
+          "name": "ProposedDomain",
+          "kind": "class",
+          "startLine": 33,
+          "endLine": 38,
+          "tokens": 88
+        },
+        {
+          "name": "ProposedDomains",
+          "kind": "class",
+          "startLine": 39,
+          "endLine": 42,
+          "tokens": 20
+        },
+        {
+          "name": "propose_lexicon",
+          "kind": "fn",
+          "startLine": 43,
+          "endLine": 78,
+          "tokens": 498
+        },
+        {
+          "name": "propose_domains",
+          "kind": "fn",
+          "startLine": 79,
+          "endLine": 112,
+          "tokens": 389
+        },
+        {
+          "name": "_clean_terms",
+          "kind": "fn",
+          "startLine": 113,
+          "endLine": 115,
+          "tokens": 44
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/grounding.py": {
+      "description": "Check proposed terms against a seed corpus and keep the ones that occur in it.",
+      "tokens": 1158,
+      "hash": "b6e97aa2941f7f2c",
+      "size": 4057,
+      "mtimeMs": 1795023571651.5244,
+      "updatedAt": "2026-11-18T17:39:31.689Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "TermEvidence",
+          "kind": "class",
+          "startLine": 19,
+          "endLine": 29,
+          "tokens": 73
+        },
+        {
+          "name": "ground_lexicon",
+          "kind": "fn",
+          "startLine": 30,
+          "endLine": 63,
+          "tokens": 382
+        },
+        {
+          "name": "grounded_lexicon",
+          "kind": "fn",
+          "startLine": 64,
+          "endLine": 81,
+          "tokens": 220
+        },
+        {
+          "name": "evidence_frame",
+          "kind": "fn",
+          "startLine": 82,
+          "endLine": 99,
+          "tokens": 163
+        },
+        {
+          "name": "_best_passage_similarity",
+          "kind": "fn",
+          "startLine": 100,
+          "endLine": 111,
+          "tokens": 165
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/result.py": {
+      "description": "The in-memory result of a problem formulation.",
+      "tokens": 921,
+      "hash": "42e9d9d00d902fed",
+      "size": 3222,
+      "mtimeMs": 1795023626506.7854,
+      "updatedAt": "2026-11-18T17:40:26.553Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FormulationResult",
+          "kind": "class",
+          "startLine": 15,
+          "endLine": 84,
+          "tokens": 798
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/pipeline.py": {
+      "description": "Formulation workflow orchestration: propose, ground, check coverage, write drafts.",
+      "tokens": 1875,
+      "hash": "ce8a71c785f0db27",
+      "size": 6564,
+      "mtimeMs": 1795023599437.559,
+      "updatedAt": "2026-11-18T17:39:59.469Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FormulationRun",
+          "kind": "class",
+          "startLine": 26,
+          "endLine": 30,
+          "tokens": 22
+        },
+        {
+          "name": "formulate",
+          "kind": "fn",
+          "startLine": 31,
+          "endLine": 131,
+          "tokens": 1101
+        },
+        {
+          "name": "run",
+          "kind": "fn",
+          "startLine": 132,
+          "endLine": 161,
+          "tokens": 401
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/outputs.py": {
+      "description": "Write a formulation to disk: draft lexicon and taxonomy, evidence tables, summary, manifest.",
+      "tokens": 1316,
+      "hash": "12b36bdf6cf6e20e",
+      "size": 4608,
+      "mtimeMs": 1795023618946.222,
+      "updatedAt": "2026-11-18T17:40:18.980Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_outputs",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 67,
+          "tokens": 580
+        },
+        {
+          "name": "_summary",
+          "kind": "fn",
+          "startLine": 68,
+          "endLine": 106,
+          "tokens": 555
+        }
+      ]
+    },
+    "tests/unit/test_formulation.py": {
+      "description": "Formulation workflow: proposal parsing, grounding, coverage, domain proposals.",
+      "tokens": 1665,
+      "hash": "86000e5772e41137",
+      "size": 5826,
+      "mtimeMs": 1795023653336.7332,
+      "updatedAt": "2026-11-18T17:40:53.369Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FakeChat",
+          "kind": "class",
+          "startLine": 47,
+          "endLine": 64,
+          "tokens": 118
+        },
+        {
+          "name": "test_propose_cleans_terms_dedupes_groups_and_caps",
+          "kind": "fn",
+          "startLine": 65,
+          "endLine": 72,
+          "tokens": 126
+        },
+        {
+          "name": "test_propose_rejects_empty_proposal",
+          "kind": "fn",
+          "startLine": 73,
+          "endLine": 78,
+          "tokens": 85
+        },
+        {
+          "name": "test_keyword_grounding_keeps_terms_found_in_corpus",
+          "kind": "fn",
+          "startLine": 79,
+          "endLine": 89,
+          "tokens": 159
+        },
+        {
+          "name": "test_semantic_grounding_records_similarity",
+          "kind": "fn",
+          "startLine": 90,
+          "endLine": 96,
+          "tokens": 107
+        },
+        {
+          "name": "test_formulate_end_to_end_with_domain_proposal",
+          "kind": "fn",
+          "startLine": 97,
+          "endLine": 121,
+          "tokens": 309
+        },
+        {
+          "name": "test_formulate_without_grounding_and_from_existing_lexicon",
+          "kind": "fn",
+          "startLine": 122,
+          "endLine": 131,
+          "tokens": 146
+        },
+        {
+          "name": "test_formulate_errors_are_explicit",
+          "kind": "fn",
+          "startLine": 132,
+          "endLine": 139,
+          "tokens": 143
+        }
+      ]
+    },
+    "tests/unit/test_apps.py": {
+      "description": "Tapis app definitions stay in sync with the configuration they set.",
+      "tokens": 354,
+      "hash": "6a96e1663d95757b",
+      "size": 1239,
+      "mtimeMs": 1795023728600.6855,
+      "updatedAt": "2026-11-18T17:42:08.639Z",
+      "source": "hook"
     }
   },
   "preamble": [

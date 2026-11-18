@@ -6,7 +6,12 @@ import pytest
 
 from semantic_sensemaking.core.config import CorpusConfig
 from semantic_sensemaking.core.types import Corpus
-from semantic_sensemaking.corpus import extract_json_text, load_corpus, read_document, resolve_document
+from semantic_sensemaking.corpus import (
+    extract_json_text,
+    load_corpus,
+    read_document,
+    resolve_document,
+)
 from semantic_sensemaking.errors import CorpusError, DocumentLookupError, MissingExtraError
 
 

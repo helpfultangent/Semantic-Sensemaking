@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-11-18T17:36:18.636Z
-> Files: 106 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-18T17:42:50.230Z
+> Files: 113 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -19,7 +19,7 @@
 - `environment.yaml` (~40 tok)
 - `package.json` — Node.js package manifest (~16 tok)
 - `pyproject.toml` — Layered tools and TACC cookbooks for semantic sensemaking workflows. (~404 tok)
-- `README.md` — Project documentation (~1801 tok)
+- `README.md` — Project documentation (~2244 tok)
 - `run.sh` (~36 tok)
 
 ## .github/ISSUE_TEMPLATE/
@@ -73,7 +73,7 @@
 ## src/semantic_sensemaking/core/
 
 - `__init__.py` — Shared data types, run configuration, and run context. (~219 tok)
-- `config.py` — Run configuration shared by the CLI, notebooks, and Tapis apps. (~2532 tok)
+- `config.py` — Run configuration shared by the CLI, notebooks, and Tapis apps. (~2680 tok)
 - `context.py` — Per-run output directory and artifact bookkeeping. (~495 tok)
 - `text.py` — Small text utilities shared across layers. (~353 tok)
 - `types.py` — Core data types shared by every tool cluster and workflow. (~2694 tok)
@@ -142,8 +142,13 @@
 
 ## src/semantic_sensemaking/workflows/formulation/
 
-- `__init__.py` — Semantic problem formulation — planned. See ``README.md`` in this package. (~153 tok)
-- `README.md` — Project documentation (~431 tok)
+- `__init__.py` — Problem formulation: draft the lexicon and taxonomy the dictionary workflow reads. (~331 tok)
+- `grounding.py` — Check proposed terms against a seed corpus and keep the ones that occur in it. (~1158 tok)
+- `outputs.py` — Write a formulation to disk: draft lexicon and taxonomy, evidence tables, summary, manifest. (~1316 tok)
+- `pipeline.py` — Formulation workflow orchestration: propose, ground, check coverage, write drafts. (~1875 tok)
+- `propose.py` — Ask a chat model to draft concept groups and, optionally, missing backbone domains. (~1352 tok)
+- `README.md` — Project documentation (~912 tok)
+- `result.py` — The in-memory result of a problem formulation. (~921 tok)
 
 ## src/semantic_sensemaking/workflows/narrative/
 
@@ -174,10 +179,12 @@
 
 ## tests/unit/
 
+- `test_apps.py` — Tapis app definitions stay in sync with the configuration they set. (~354 tok)
 - `test_backends.py` — Recorder: test_hashing_embedding_is_deterministic_normalized_and_word_sensitive, embeddings_response (~1965 tok)
 - `test_config.py` — write_yaml, test_defaults_are_valid, test_precedence_yaml_then_env_then_overrides, test_env_lists_an (~706 tok)
 - `test_corpus.py` — test_sample_corpus_loads_every_file, test_edge_corpus_reads_all_formats_and_reports_skips, test_shar (~1242 tok)
-- `test_layering.py` — Architectural rules for the tool-cluster hierarchy. (~668 tok)
+- `test_formulation.py` — Formulation workflow: proposal parsing, grounding, coverage, domain proposals. (~1665 tok)
+- `test_layering.py` — Architectural rules for the tool-cluster hierarchy. (~678 tok)
 - `test_lexicon_and_taxonomy_io.py` — test_builtin_lexicon_and_taxonomy, test_flat_lexicon_json_with_comment_keys, test_csv_lexicon_preser (~1271 tok)
 - `test_matching.py` — test_auto_uses_word_boundaries_for_single_words, test_auto_substring_matches_inside_words_for_multiw (~542 tok)
 - `test_narrative.py` — Narrative workflow: segmentation, clustering, keywords, labeling, projection. (~1540 tok)
