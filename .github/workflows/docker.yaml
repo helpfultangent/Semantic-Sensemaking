@@ -59,7 +59,9 @@ jobs:
           docker build -f docker/Dockerfile -t ssm-smoke .
           mkdir -p "$RUNNER_TEMP/in" "$RUNNER_TEMP/out"
           cp -r src/semantic_sensemaking/data/sample_corpus "$RUNNER_TEMP/in/corpus"
-          docker run --rm \
+          # Run as the runner's user, as Apptainer does on TACC; the image's
+          # default user cannot write to a bind-mounted host directory.
+          docker run --rm --user "$(id -u):$(id -g)" \
             -e _tapisExecSystemInputDir=/in -e _tapisExecSystemOutputDir=/out \
             -v "$RUNNER_TEMP/in:/in" -v "$RUNNER_TEMP/out:/out" ssm-smoke
           test -f "$RUNNER_TEMP"/out/*/manifest.json
