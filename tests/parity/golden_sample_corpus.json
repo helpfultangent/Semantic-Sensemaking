@@ -1,0 +1,48 @@
+{
+  "domain_weights": {
+    "Chemical, Mechanical, & Civil Engineering": 17.0,
+    "Earth Sciences": 69.99999999999999,
+    "Electrical Engineering & Computer Science": 4.0,
+    "Math & Physics": 9.0,
+    "Social Sciences": 12.0,
+    "Uncategorized": 0.0
+  },
+  "group_totals": {
+    "Coastal": 8,
+    "Flood": 9,
+    "GNSS_GPS": 4,
+    "Groundwater": 16,
+    "InSAR": 11,
+    "Leveling": 2,
+    "LiDAR": 2,
+    "MachineLearning": 4,
+    "Mining": 5,
+    "Modeling": 9,
+    "OilGas": 12,
+    "Policy_Decision": 12,
+    "Remote_Sensing": 5,
+    "Sediment": 3,
+    "Subsidence": 16,
+    "Tectonic": 5,
+    "Uplift_Rebound": 2,
+    "Urban": 9
+  },
+  "source": "tests/parity/prototype_reference.py on the built-in sample corpus",
+  "subdiscipline_weights": {
+    "Chemical, Mechanical, & Civil Engineering :: Geotechnical Engineering": 5.666666666666666,
+    "Chemical, Mechanical, & Civil Engineering :: Mining Engineering": 5.666666666666666,
+    "Chemical, Mechanical, & Civil Engineering :: Petroleum Engineering": 5.666666666666666,
+    "Earth Sciences :: Hydrogeology": 23.333333333333336,
+    "Earth Sciences :: Hydrology": 23.333333333333336,
+    "Earth Sciences :: Sedimentology": 23.333333333333336,
+    "Electrical Engineering & Computer Science :: Machine Learning": 2.0,
+    "Electrical Engineering & Computer Science :: Signal Processing": 2.0,
+    "Math & Physics :: Geophysics": 3.0,
+    "Math & Physics :: Mathematics": 3.0,
+    "Math & Physics :: Statistics": 3.0,
+    "Social Sciences :: Decision Science": 4.0,
+    "Social Sciences :: Geography": 4.0,
+    "Social Sciences :: Public Policy": 4.0,
+    "Uncategorized :: General": 0.0
+  }
+}

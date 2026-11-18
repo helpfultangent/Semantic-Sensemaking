@@ -1,0 +1,32 @@
+# Dictionary workflow with embedding-based matching.
+#
+# A passage counts toward a group when its embedding is similar enough to one of
+# the group's terms, so paraphrases match. Calibrate semantic_threshold for your
+# model with lexicon.explain_semantic_matches before trusting the numbers.
+
+workflow: dictionary
+
+inputs:
+  use_sample_corpus: true
+
+scoring:
+  method: semantic
+  semantic_threshold: 0.45
+  chunk_words: 120
+  chunk_overlap_words: 20
+  mapping_method: embedding
+  unmapped_groups: keep
+
+# An OpenAI-compatible embedding server, e.g. vLLM on a TACC GPU node:
+#   vllm serve BAAI/bge-small-en-v1.5 --task embed --port 8000
+embedding:
+  kind: openai_compatible
+  base_url: http://localhost:8000/v1
+  model: BAAI/bge-small-en-v1.5
+  api_key_env: null          # name of an env var holding a key, if the server needs one
+  batch_size: 64
+  cache_dir: .ssm-cache      # re-runs skip already-embedded text
+
+# Offline dry run with no model at all (not semantically meaningful):
+# embedding:
+#   kind: hashing

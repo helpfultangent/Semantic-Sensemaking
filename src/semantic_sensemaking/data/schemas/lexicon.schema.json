@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "LexiconGroupModel": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "terms": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Terms",
+          "type": "array"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        }
+      },
+      "required": [
+        "name",
+        "terms"
+      ],
+      "title": "LexiconGroupModel",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "JSON Schema source of truth for structured lexicon files.",
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "name": {
+      "default": "lexicon",
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Description"
+    },
+    "groups": {
+      "items": {
+        "$ref": "#/$defs/LexiconGroupModel"
+      },
+      "minItems": 1,
+      "title": "Groups",
+      "type": "array"
+    }
+  },
+  "required": [
+    "groups"
+  ],
+  "title": "Semantic Sensemaking lexicon",
+  "type": "object"
+}

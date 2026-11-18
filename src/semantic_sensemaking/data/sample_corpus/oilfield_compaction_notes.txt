@@ -1,0 +1,17 @@
+Oilfield compaction field notes (synthetic example)
+
+This document is synthetic text written for the semantic-sensemaking examples.
+
+Decades of oil and gas production lowered pore pressure in the reservoir. As the
+formation compacted, the surface above the field subsided and several old wells
+showed casing damage. Reservoir engineers now worry that renewed extraction, or a
+planned CO2 storage project, could reactivate a nearby fault. Seismic monitoring
+has recorded small events near the fault since injection tests began.
+
+To evaluate sequestration safely, the team built a coupled finite element model of
+the reservoir and overburden. The simulation links fluid flow to rock mechanics
+and predicts fault slip tendency for each injection scenario. Earlier modeling
+used a simpler petroleum engineering approach that ignored geomechanics.
+
+Separately, a small coal mine to the east uses longwall methods. Underground mine
+subsidence there is well documented, but it is unrelated to the hydrocarbon field.

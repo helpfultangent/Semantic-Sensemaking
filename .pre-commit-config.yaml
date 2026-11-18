@@ -1,0 +1,12 @@
+# Install once with: pre-commit install
+repos:
+  # Notebooks are committed without outputs, so real data never reaches git history.
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]

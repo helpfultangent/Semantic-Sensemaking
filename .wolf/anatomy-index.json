@@ -1,0 +1,3508 @@
+{
+  "version": 1,
+  "meta": {
+    "lastScanned": "2026-11-18T17:42:50.230Z",
+    "fileCount": 113,
+    "hits": 0,
+    "misses": 0,
+    "renderedHash": "1bd7796827e9c2807844d235f8ff7500f5e7eb149ddfd1490b72af653a0c3b01",
+    "storeUpdatedAt": "2026-11-18T17:42:50.247Z",
+    "rootHash": "f5f61c557040bcc8"
+  },
+  "files": {
+    ".gitattributes": {
+      "description": "Git attributes",
+      "tokens": 18,
+      "hash": "1a1dbe176bc233b4",
+      "size": 66,
+      "mtimeMs": 1789410725889.3254,
+      "updatedAt": "2026-09-14T19:08:06.174Z",
+      "source": "scan"
+    },
+    ".github/ISSUE_TEMPLATE/bug_report.md": {
+      "description": "🐛 Bug Report",
+      "tokens": 154,
+      "hash": "95f2dc836e1181df",
+      "size": 628,
+      "mtimeMs": 1789410725889.4666,
+      "updatedAt": "2026-09-14T19:08:06.175Z",
+      "source": "scan"
+    },
+    ".github/ISSUE_TEMPLATE/config.yml": {
+      "description": "Configuration: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository",
+      "tokens": 45,
+      "hash": "6d82b0b90d0d0a90",
+      "size": 156,
+      "mtimeMs": 1789410725889.5315,
+      "updatedAt": "2026-09-14T19:08:06.175Z",
+      "source": "scan"
+    },
+    ".github/ISSUE_TEMPLATE/feature_request.md": {
+      "description": "🚀 Feature Request",
+      "tokens": 128,
+      "hash": "994a7540a66e5e9f",
+      "size": 524,
+      "mtimeMs": 1789410725889.6,
+      "updatedAt": "2026-09-14T19:08:06.176Z",
+      "source": "scan"
+    },
+    ".github/ISSUE_TEMPLATE/question.md": {
+      "description": "❓ Question",
+      "tokens": 76,
+      "hash": "dbc728d15fbbde5f",
+      "size": 311,
+      "mtimeMs": 1789410725889.663,
+      "updatedAt": "2026-09-14T19:08:06.176Z",
+      "source": "scan"
+    },
+    ".github/workflows/docker.yaml": {
+      "description": "CI: Docker image",
+      "tokens": 584,
+      "hash": "ff60463f71d7024e",
+      "size": 2044,
+      "mtimeMs": 1789494286491.849,
+      "updatedAt": "2026-09-15T17:44:46.538Z",
+      "source": "hook"
+    },
+    ".github/workflows/test.yaml": {
+      "description": "CI: Test",
+      "tokens": 204,
+      "hash": "f48b09d8665ad028",
+      "size": 711,
+      "mtimeMs": 1789412245762.7227,
+      "updatedAt": "2026-09-14T19:08:06.178Z",
+      "source": "scan"
+    },
+    ".gitignore": {
+      "description": "Git ignore rules",
+      "tokens": 242,
+      "hash": "7f6a97aa996cdbba",
+      "size": 908,
+      "mtimeMs": 1789412240040.1577,
+      "updatedAt": "2026-09-14T19:08:06.178Z",
+      "source": "scan"
+    },
+    "app.json": {
+      "description": "",
+      "tokens": 819,
+      "hash": "da0e6c4fe02cc980",
+      "size": 2865,
+      "mtimeMs": 1789410725890.1057,
+      "updatedAt": "2026-09-14T19:08:06.178Z",
+      "source": "scan"
+    },
+    "CITATION.cff": {
+      "description": "This CITATION.cff file was generated with cffinit.",
+      "tokens": 245,
+      "hash": "31f6d735360d1ea6",
+      "size": 917,
+      "mtimeMs": 1789410725889.8965,
+      "updatedAt": "2026-09-14T19:08:06.179Z",
+      "source": "scan"
+    },
+    "CLAUDE.md": {
+      "description": "OpenWolf",
+      "tokens": 99,
+      "hash": "074d6b42b583729a",
+      "size": 395,
+      "mtimeMs": 1789412886143.6443,
+      "updatedAt": "2026-09-14T19:08:06.179Z",
+      "source": "scan"
+    },
+    "Dockerfile": {
+      "description": "Docker container definition",
+      "tokens": 153,
+      "hash": "757c9f03ac1cce12",
+      "size": 573,
+      "mtimeMs": 1789410784004.235,
+      "updatedAt": "2026-09-14T19:08:06.180Z",
+      "source": "scan"
+    },
+    "environment.yaml": {
+      "description": "",
+      "tokens": 40,
+      "hash": "adbcd41e3981a2c3",
+      "size": 139,
+      "mtimeMs": 1789410803182.6619,
+      "updatedAt": "2026-09-14T19:08:06.180Z",
+      "source": "scan"
+    },
+    "package.json": {
+      "description": "Node.js package manifest",
+      "tokens": 16,
+      "hash": "80add76fcc9c4712",
+      "size": 53,
+      "mtimeMs": 1789412752186.0942,
+      "updatedAt": "2026-09-14T19:08:06.181Z",
+      "source": "scan"
+    },
+    "pyproject.toml": {
+      "description": "Layered tools and TACC cookbooks for semantic sensemaking workflows.",
+      "tokens": 404,
+      "hash": "a8549d2b28b414a0",
+      "size": 1515,
+      "mtimeMs": 1789494284650.5095,
+      "updatedAt": "2026-09-15T17:44:44.690Z",
+      "source": "hook"
+    },
+    "README.md": {
+      "description": "Project documentation",
+      "tokens": 2244,
+      "hash": "c6b6e59353996f8b",
+      "size": 9002,
+      "mtimeMs": 1795023770190.9438,
+      "updatedAt": "2026-11-18T17:42:50.229Z",
+      "source": "hook"
+    },
+    "run.sh": {
+      "description": "",
+      "tokens": 36,
+      "hash": "6897531532f4f5de",
+      "size": 124,
+      "mtimeMs": 1789410725891.4373,
+      "updatedAt": "2026-09-14T19:08:06.181Z",
+      "source": "scan"
+    },
+    "src/semantic_sensemaking/core/config.py": {
+      "description": "Run configuration shared by the CLI, notebooks, and Tapis apps.",
+      "tokens": 2680,
+      "hash": "ec1d6e2e2887e5c6",
+      "size": 9382,
+      "mtimeMs": 1795023557783.2256,
+      "updatedAt": "2026-11-18T17:39:17.978Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "MatchMode",
+          "kind": "class",
+          "startLine": 36,
+          "endLine": 49,
+          "tokens": 131
+        },
+        {
+          "name": "_Section",
+          "kind": "class",
+          "startLine": 50,
+          "endLine": 53,
+          "tokens": 22
+        },
+        {
+          "name": "InputsConfig",
+          "kind": "class",
+          "startLine": 54,
+          "endLine": 61,
+          "tokens": 58
+        },
+        {
+          "name": "CorpusConfig",
+          "kind": "class",
+          "startLine": 62,
+          "endLine": 70,
+          "tokens": 93
+        },
+        {
+          "name": "ScoringConfig",
+          "kind": "class",
+          "startLine": 71,
+          "endLine": 85,
+          "tokens": 170
+        },
+        {
+          "name": "BackendConfig",
+          "kind": "class",
+          "startLine": 86,
+          "endLine": 98,
+          "tokens": 109
+        },
+        {
+          "name": "VizConfig",
+          "kind": "class",
+          "startLine": 99,
+          "endLine": 105,
+          "tokens": 57
+        },
+        {
+          "name": "OutputConfig",
+          "kind": "class",
+          "startLine": 106,
+          "endLine": 110,
+          "tokens": 27
+        },
+        {
+          "name": "NarrativeConfig",
+          "kind": "class",
+          "startLine": 111,
+          "endLine": 127,
+          "tokens": 162
+        },
+        {
+          "name": "FormulationConfig",
+          "kind": "class",
+          "startLine": 128,
+          "endLine": 153,
+          "tokens": 271
+        },
+        {
+          "name": "RunConfig",
+          "kind": "class",
+          "startLine": 154,
+          "endLine": 223,
+          "tokens": 861
+        },
+        {
+          "name": "parse_set_values",
+          "kind": "fn",
+          "startLine": 224,
+          "endLine": 241,
+          "tokens": 214
+        },
+        {
+          "name": "deep_merge",
+          "kind": "fn",
+          "startLine": 242,
+          "endLine": 252,
+          "tokens": 114
+        },
+        {
+          "name": "_format_validation_error",
+          "kind": "fn",
+          "startLine": 253,
+          "endLine": 260,
+          "tokens": 104
+        }
+      ]
+    },
+    "src/semantic_sensemaking/core/context.py": {
+      "description": "Per-run output directory and artifact bookkeeping.",
+      "tokens": 495,
+      "hash": "35ec36dc74979085",
+      "size": 1731,
+      "mtimeMs": 1789412637549.2856,
+      "updatedAt": "2026-09-14T19:08:06.183Z",
+      "source": "scan"
+    },
+    "src/semantic_sensemaking/core/text.py": {
+      "description": "Small text utilities shared across layers.",
+      "tokens": 353,
+      "hash": "2cb6cf808aedc659",
+      "size": 1234,
+      "mtimeMs": 1789412598755.0752,
+      "updatedAt": "2026-09-14T19:08:06.184Z",
+      "source": "scan"
+    },
+    "src/semantic_sensemaking/core/types.py": {
+      "description": "Core data types shared by every tool cluster and workflow.",
+      "tokens": 2694,
+      "hash": "81070ce13728ed7b",
+      "size": 9723,
+      "mtimeMs": 1789412593424.3745,
+      "updatedAt": "2026-09-14T19:08:06.184Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "Document",
+          "kind": "class",
+          "startLine": 24,
+          "endLine": 45,
+          "tokens": 183
+        },
+        {
+          "name": "SkippedFile",
+          "kind": "class",
+          "startLine": 49,
+          "endLine": 53,
+          "tokens": 36
+        },
+        {
+          "name": "Corpus",
+          "kind": "class",
+          "startLine": 57,
+          "endLine": 122,
+          "tokens": 668
+        },
+        {
+          "name": "Corpus.__post_init__",
+          "kind": "method",
+          "startLine": 64,
+          "endLine": 71,
+          "tokens": 110
+        },
+        {
+          "name": "Corpus.__len__",
+          "kind": "method",
+          "startLine": 82,
+          "endLine": 83,
+          "tokens": 19
+        },
+        {
+          "name": "Corpus.__iter__",
+          "kind": "method",
+          "startLine": 85,
+          "endLine": 86,
+          "tokens": 24
+        },
+        {
+          "name": "Corpus.__getitem__",
+          "kind": "method",
+          "startLine": 88,
+          "endLine": 91,
+          "tokens": 46
+        },
+        {
+          "name": "Corpus.__contains__",
+          "kind": "method",
+          "startLine": 93,
+          "endLine": 94,
+          "tokens": 26
+        },
+        {
+          "name": "Corpus.ids",
+          "kind": "method",
+          "startLine": 96,
+          "endLine": 97,
+          "tokens": 28
+        },
+        {
+          "name": "Corpus.subset",
+          "kind": "method",
+          "startLine": 99,
+          "endLine": 103,
+          "tokens": 60
+        },
+        {
+          "name": "Corpus.total_words",
+          "kind": "method",
+          "startLine": 105,
+          "endLine": 106,
+          "tokens": 26
+        },
+        {
+          "name": "Corpus.describe",
+          "kind": "method",
+          "startLine": 108,
+          "endLine": 122,
+          "tokens": 162
+        },
+        {
+          "name": "LexiconEntry",
+          "kind": "class",
+          "startLine": 129,
+          "endLine": 144,
+          "tokens": 200
+        },
+        {
+          "name": "LexiconEntry.__post_init__",
+          "kind": "method",
+          "startLine": 136,
+          "endLine": 144,
+          "tokens": 148
+        },
+        {
+          "name": "Lexicon",
+          "kind": "class",
+          "startLine": 148,
+          "endLine": 192,
+          "tokens": 400
+        },
+        {
+          "name": "Lexicon.__post_init__",
+          "kind": "method",
+          "startLine": 155,
+          "endLine": 160,
+          "tokens": 87
+        },
+        {
+          "name": "Lexicon.to_mapping",
+          "kind": "method",
+          "startLine": 176,
+          "endLine": 177,
+          "tokens": 32
+        },
+        {
+          "name": "Lexicon.names",
+          "kind": "method",
+          "startLine": 179,
+          "endLine": 180,
+          "tokens": 26
+        },
+        {
+          "name": "Lexicon.__getitem__",
+          "kind": "method",
+          "startLine": 182,
+          "endLine": 186,
+          "tokens": 52
+        },
+        {
+          "name": "Lexicon.__len__",
+          "kind": "method",
+          "startLine": 188,
+          "endLine": 189,
+          "tokens": 18
+        },
+        {
+          "name": "Lexicon.__iter__",
+          "kind": "method",
+          "startLine": 191,
+          "endLine": 192,
+          "tokens": 24
+        },
+        {
+          "name": "TaxonomyNode",
+          "kind": "class",
+          "startLine": 199,
+          "endLine": 220,
+          "tokens": 224
+        },
+        {
+          "name": "TaxonomyNode.__post_init__",
+          "kind": "method",
+          "startLine": 210,
+          "endLine": 212,
+          "tokens": 51
+        },
+        {
+          "name": "Taxonomy",
+          "kind": "class",
+          "startLine": 224,
+          "endLine": 295,
+          "tokens": 723
+        },
+        {
+          "name": "Taxonomy.__post_init__",
+          "kind": "method",
+          "startLine": 233,
+          "endLine": 238,
+          "tokens": 87
+        },
+        {
+          "name": "Taxonomy.to_mapping",
+          "kind": "method",
+          "startLine": 267,
+          "endLine": 271,
+          "tokens": 60
+        },
+        {
+          "name": "Taxonomy.domains",
+          "kind": "method",
+          "startLine": 273,
+          "endLine": 274,
+          "tokens": 27
+        },
+        {
+          "name": "Taxonomy.pairs",
+          "kind": "method",
+          "startLine": 276,
+          "endLine": 280,
+          "tokens": 71
+        },
+        {
+          "name": "Taxonomy.__getitem__",
+          "kind": "method",
+          "startLine": 282,
+          "endLine": 286,
+          "tokens": 53
+        },
+        {
+          "name": "Taxonomy.__contains__",
+          "kind": "method",
+          "startLine": 288,
+          "endLine": 289,
+          "tokens": 32
+        }
+      ],
+      "symbolSource": "ts",
+      "skeleton": "class Document:\nclass SkippedFile:\nclass Corpus:\n    def __post_init__(self) -> None:\n    def __len__(self) -> int:\n    def __iter__(self) -> Iterator[Document]:\n    def __getitem__(self, key: int | str) -> Document:\n    def __contains__(self, doc_id: object) -> bool:\n    def ids(self) -> tuple[str, ...]:\n    def subset(self, doc_ids: Iterable[str]) -> Corpus:\n    def total_words(self) -> int:\n    def describe(self) -> pd.DataFrame:\nclass LexiconEntry:\n    def __post_init__(self) -> None:\nclass Lexicon:\n    def __post_init__(self) -> None:\n    def to_mapping(self) -> dict[str, list[str]]:\n    def names(self) -> tuple[str, ...]:\n    def __getitem__(self, name: str) -> LexiconEntry:\n    def __len__(self) -> int:\n    def __iter__(self) -> Iterator[LexiconEntry]:\nclass TaxonomyNode:\n    def __post_init__(self) -> None:\nclass Taxonomy:\n    def __post_init__(self) -> None:\n    def to_mapping(self) -> dict[str, dict[str, list[str]]]:\n    def domains(self) -> tuple[str, ...]:\n    def pairs(self) -> Iterator[tuple[str, str]]:\n    def __getitem__(self, domain: str) -> TaxonomyNode:\n    def __contains__(self, domain: object) -> bool:"
+    },
+    "src/semantic_sensemaking/corpus/json_text.py": {
+      "description": "Extract prose from transcript-shaped JSON.",
+      "tokens": 306,
+      "hash": "4ee0d1d763bdd7f9",
+      "size": 1070,
+      "mtimeMs": 1789412641927.3765,
+      "updatedAt": "2026-09-14T19:08:06.185Z",
+      "source": "scan"
+    },
+    "src/semantic_sensemaking/corpus/loader.py": {
+      "description": "Load a file or directory into a :class:`~semantic_sensemaking.core.types.Corpus`.",
+      "tokens": 1068,
+      "hash": "9ef971dd87e73a8e",
+      "size": 3738,
+      "mtimeMs": 1789412665181.1406,
+      "updatedAt": "2026-09-14T19:08:06.185Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "load_corpus",
+          "kind": "fn",
+          "startLine": 18,
+          "endLine": 75,
+          "tokens": 665
+        },
+        {
+          "name": "_discover",
+          "kind": "fn",
+          "startLine": 78,
+          "endLine": 91,
+          "tokens": 159
+        },
+        {
+          "name": "_is_ignored",
+          "kind": "fn",
+          "startLine": 94,
+          "endLine": 99,
+          "tokens": 59
+        },
+        {
+          "name": "_rel",
+          "kind": "fn",
+          "startLine": 102,
+          "endLine": 106,
+          "tokens": 42
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/corpus/readers.py": {
+      "description": "File readers keyed by suffix. Register more with :func:`register_reader`.",
+      "tokens": 705,
+      "hash": "d1f82c91a25093dc",
+      "size": 2469,
+      "mtimeMs": 1789412651941.6128,
+      "updatedAt": "2026-09-14T19:08:06.185Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "_read_plain",
+          "kind": "fn",
+          "startLine": 15,
+          "endLine": 16,
+          "tokens": 33
+        },
+        {
+          "name": "_read_json",
+          "kind": "fn",
+          "startLine": 19,
+          "endLine": 21,
+          "tokens": 46
+        },
+        {
+          "name": "_read_docx",
+          "kind": "fn",
+          "startLine": 24,
+          "endLine": 27,
+          "tokens": 62
+        },
+        {
+          "name": "_read_pdf",
+          "kind": "fn",
+          "startLine": 30,
+          "endLine": 33,
+          "tokens": 67
+        },
+        {
+          "name": "register_reader",
+          "kind": "fn",
+          "startLine": 45,
+          "endLine": 48,
+          "tokens": 76
+        },
+        {
+          "name": "supported_suffixes",
+          "kind": "fn",
+          "startLine": 51,
+          "endLine": 52,
+          "tokens": 23
+        },
+        {
+          "name": "read_document",
+          "kind": "fn",
+          "startLine": 55,
+          "endLine": 72,
+          "tokens": 226
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/corpus/select.py": {
+      "description": "Resolve a user-supplied document spec to one document.",
+      "tokens": 513,
+      "hash": "dabb5fcd3f2e8653",
+      "size": 1797,
+      "mtimeMs": 1789494271913.5417,
+      "updatedAt": "2026-09-15T17:44:31.953Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "resolve_document",
+          "kind": "fn",
+          "startLine": 9,
+          "endLine": 40,
+          "tokens": 392
+        },
+        {
+          "name": "_by_index",
+          "kind": "fn",
+          "startLine": 41,
+          "endLine": 45,
+          "tokens": 58
+        }
+      ]
+    },
+    "src/semantic_sensemaking/errors.py": {
+      "description": "Exception hierarchy shared by every tool cluster.",
+      "tokens": 600,
+      "hash": "be73eb50beadca45",
+      "size": 2097,
+      "mtimeMs": 1789494277522.445,
+      "updatedAt": "2026-09-15T17:44:37.562Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "SemanticSensemakingError",
+          "kind": "class",
+          "startLine": 15,
+          "endLine": 18,
+          "tokens": 33
+        },
+        {
+          "name": "ConfigError",
+          "kind": "class",
+          "startLine": 19,
+          "endLine": 22,
+          "tokens": 34
+        },
+        {
+          "name": "InputFormatError",
+          "kind": "class",
+          "startLine": 23,
+          "endLine": 26,
+          "tokens": 40
+        },
+        {
+          "name": "CorpusError",
+          "kind": "class",
+          "startLine": 27,
+          "endLine": 30,
+          "tokens": 28
+        },
+        {
+          "name": "DocumentLookupError",
+          "kind": "class",
+          "startLine": 31,
+          "endLine": 34,
+          "tokens": 34
+        },
+        {
+          "name": "BackendError",
+          "kind": "class",
+          "startLine": 35,
+          "endLine": 38,
+          "tokens": 34
+        },
+        {
+          "name": "MissingExtraError",
+          "kind": "class",
+          "startLine": 39,
+          "endLine": 51,
+          "tokens": 147
+        },
+        {
+          "name": "optional_import",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 62,
+          "tokens": 140
+        }
+      ]
+    },
+    "src/semantic_sensemaking/lexicon/io.py": {
+      "description": "Read and write user-defined dictionaries (lexicons).",
+      "tokens": 1926,
+      "hash": "afc8aac63ad24557",
+      "size": 6740,
+      "mtimeMs": 1789412827919.9263,
+      "updatedAt": "2026-09-14T19:08:06.186Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "LexiconGroupModel",
+          "kind": "class",
+          "startLine": 36,
+          "endLine": 41,
+          "tokens": 56
+        },
+        {
+          "name": "LexiconFileModel",
+          "kind": "class",
+          "startLine": 44,
+          "endLine": 52,
+          "tokens": 98
+        },
+        {
+          "name": "lexicon_json_schema",
+          "kind": "fn",
+          "startLine": 55,
+          "endLine": 56,
+          "tokens": 27
+        },
+        {
+          "name": "load_lexicon",
+          "kind": "fn",
+          "startLine": 59,
+          "endLine": 72,
+          "tokens": 168
+        },
+        {
+          "name": "save_lexicon",
+          "kind": "fn",
+          "startLine": 75,
+          "endLine": 95,
+          "tokens": 260
+        },
+        {
+          "name": "_load_json",
+          "kind": "fn",
+          "startLine": 98,
+          "endLine": 130,
+          "tokens": 402
+        },
+        {
+          "name": "_load_csv",
+          "kind": "fn",
+          "startLine": 133,
+          "endLine": 160,
+          "tokens": 365
+        },
+        {
+          "name": "_entry",
+          "kind": "fn",
+          "startLine": 163,
+          "endLine": 167,
+          "tokens": 75
+        },
+        {
+          "name": "_build",
+          "kind": "fn",
+          "startLine": 170,
+          "endLine": 174,
+          "tokens": 72
+        },
+        {
+          "name": "_describe",
+          "kind": "fn",
+          "startLine": 177,
+          "endLine": 182,
+          "tokens": 81
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/lexicon/matching.py": {
+      "description": "Count lexicon terms in text.",
+      "tokens": 1191,
+      "hash": "2786a56b9d778672",
+      "size": 4173,
+      "mtimeMs": 1789412803877.5105,
+      "updatedAt": "2026-09-14T19:08:06.187Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "TermMatcher",
+          "kind": "class",
+          "startLine": 13,
+          "endLine": 88,
+          "tokens": 984
+        },
+        {
+          "name": "TermMatcher.__init__",
+          "kind": "method",
+          "startLine": 31,
+          "endLine": 62,
+          "tokens": 358
+        },
+        {
+          "name": "TermMatcher._normalize",
+          "kind": "method",
+          "startLine": 64,
+          "endLine": 66,
+          "tokens": 45
+        },
+        {
+          "name": "TermMatcher.count",
+          "kind": "method",
+          "startLine": 68,
+          "endLine": 69,
+          "tokens": 27
+        },
+        {
+          "name": "TermMatcher.count_detailed",
+          "kind": "method",
+          "startLine": 71,
+          "endLine": 88,
+          "tokens": 263
+        },
+        {
+          "name": "count_terms",
+          "kind": "fn",
+          "startLine": 91,
+          "endLine": 99,
+          "tokens": 94
+        },
+        {
+          "name": "_bounded",
+          "kind": "fn",
+          "startLine": 102,
+          "endLine": 104,
+          "tokens": 45
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/lexicon/scoring.py": {
+      "description": "Score a corpus against a lexicon: the document × group count table.",
+      "tokens": 1213,
+      "hash": "b0883b2470d059be",
+      "size": 4246,
+      "mtimeMs": 1789412843732.3486,
+      "updatedAt": "2026-09-14T19:08:06.187Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "DocGroupScore",
+          "kind": "class",
+          "startLine": 17,
+          "endLine": 26,
+          "tokens": 64
+        },
+        {
+          "name": "LexiconScores",
+          "kind": "class",
+          "startLine": 30,
+          "endLine": 98,
+          "tokens": 823
+        },
+        {
+          "name": "LexiconScores.to_frame",
+          "kind": "method",
+          "startLine": 44,
+          "endLine": 59,
+          "tokens": 157
+        },
+        {
+          "name": "LexiconScores.group_weights",
+          "kind": "method",
+          "startLine": 61,
+          "endLine": 66,
+          "tokens": 77
+        },
+        {
+          "name": "LexiconScores.group_totals",
+          "kind": "method",
+          "startLine": 68,
+          "endLine": 74,
+          "tokens": 114
+        },
+        {
+          "name": "LexiconScores.total_matches",
+          "kind": "method",
+          "startLine": 76,
+          "endLine": 77,
+          "tokens": 24
+        },
+        {
+          "name": "LexiconScores.for_document",
+          "kind": "method",
+          "startLine": 79,
+          "endLine": 83,
+          "tokens": 72
+        },
+        {
+          "name": "LexiconScores.top_groups",
+          "kind": "method",
+          "startLine": 85,
+          "endLine": 88,
+          "tokens": 75
+        },
+        {
+          "name": "LexiconScores.pivot",
+          "kind": "method",
+          "startLine": 90,
+          "endLine": 98,
+          "tokens": 154
+        },
+        {
+          "name": "score_corpus",
+          "kind": "fn",
+          "startLine": 101,
+          "endLine": 117,
+          "tokens": 187
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/lexicon/semantic.py": {
+      "description": "Embedding-based lexicon matching.",
+      "tokens": 1119,
+      "hash": "c0d6a876158e0971",
+      "size": 3918,
+      "mtimeMs": 1789412858851.843,
+      "updatedAt": "2026-09-14T19:08:06.187Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "score_corpus_semantic",
+          "kind": "fn",
+          "startLine": 26,
+          "endLine": 43,
+          "tokens": 224
+        },
+        {
+          "name": "explain_semantic_matches",
+          "kind": "fn",
+          "startLine": 46,
+          "endLine": 80,
+          "tokens": 396
+        },
+        {
+          "name": "_embed_terms",
+          "kind": "fn",
+          "startLine": 83,
+          "endLine": 85,
+          "tokens": 64
+        },
+        {
+          "name": "_best_group_similarity",
+          "kind": "fn",
+          "startLine": 88,
+          "endLine": 104,
+          "tokens": 154
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/taxonomy/io.py": {
+      "description": "Read and write taxonomies (science backbones).",
+      "tokens": 1912,
+      "hash": "e3f73f8b9bc0cce5",
+      "size": 6692,
+      "mtimeMs": 1789412881914.7976,
+      "updatedAt": "2026-09-14T19:08:06.187Z",
+      "source": "scan",
+      "symbols": [
+        {
+          "name": "TaxonomyDomainModel",
+          "kind": "class",
+          "startLine": 42,
+          "endLine": 47,
+          "tokens": 67
+        },
+        {
+          "name": "TaxonomyFileModel",
+          "kind": "class",
+          "startLine": 50,
+          "endLine": 60,
+          "tokens": 118
+        },
+        {
+          "name": "taxonomy_json_schema",
+          "kind": "fn",
+          "startLine": 63,
+          "endLine": 64,
+          "tokens": 27
+        },
+        {
+          "name": "load_taxonomy",
+          "kind": "fn",
+          "startLine": 67,
+          "endLine": 83,
+          "tokens": 182
+        },
+        {
+          "name": "save_taxonomy",
+          "kind": "fn",
+          "startLine": 86,
+          "endLine": 101,
+          "tokens": 168
+        },
+        {
+          "name": "_load",
+          "kind": "fn",
+          "startLine": 104,
+          "endLine": 156,
+          "tokens": 631
+        },
+        {
+          "name": "_build",
+          "kind": "fn",
+          "startLine": 159,
+          "endLine": 174,
+          "tokens": 242
+        },
+        {
+          "name": "_describe",
+          "kind": "fn",
+          "startLine": 177,
+          "endLine": 182,
+          "tokens": 82
+        }
+      ],
+      "symbolSource": "ts"
+    },
+    "src/semantic_sensemaking/taxonomy/projection.py": {
+      "description": "Project label weights onto a taxonomy and compare distributions.",
+      "tokens": 1145,
+      "hash": "0176c8a3e88c8a85",
+      "size": 4012,
+      "mtimeMs": 1789412925711.1147,
+      "updatedAt": "2026-09-14T19:08:45.776Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Projection",
+          "kind": "class",
+          "startLine": 19,
+          "endLine": 40,
+          "tokens": 256
+        },
+        {
+          "name": "project_weights",
+          "kind": "fn",
+          "startLine": 41,
+          "endLine": 77,
+          "tokens": 453
+        },
+        {
+          "name": "compare_distributions",
+          "kind": "fn",
+          "startLine": 78,
+          "endLine": 97,
+          "tokens": 304
+        }
+      ]
+    },
+    "src/semantic_sensemaking/backends/base.py": {
+      "description": "Backend protocols shared by every workflow.",
+      "tokens": 864,
+      "hash": "f9c339c8f919ac08",
+      "size": 3024,
+      "mtimeMs": 1789412936772.7322,
+      "updatedAt": "2026-09-14T19:08:56.841Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Usage",
+          "kind": "class",
+          "startLine": 26,
+          "endLine": 31,
+          "tokens": 26
+        },
+        {
+          "name": "ChatResponse",
+          "kind": "class",
+          "startLine": 32,
+          "endLine": 39,
+          "tokens": 44
+        },
+        {
+          "name": "EmbeddingBackend",
+          "kind": "class",
+          "startLine": 40,
+          "endLine": 51,
+          "tokens": 88
+        },
+        {
+          "name": "ChatBackend",
+          "kind": "class",
+          "startLine": 52,
+          "endLine": 81,
+          "tokens": 198
+        },
+        {
+          "name": "l2_normalize",
+          "kind": "fn",
+          "startLine": 82,
+          "endLine": 92,
+          "tokens": 110
+        },
+        {
+          "name": "parse_json_model",
+          "kind": "fn",
+          "startLine": 93,
+          "endLine": 104,
+          "tokens": 139
+        },
+        {
+          "name": "json_instruction",
+          "kind": "fn",
+          "startLine": 105,
+          "endLine": 110,
+          "tokens": 67
+        }
+      ]
+    },
+    "src/semantic_sensemaking/backends/hashing.py": {
+      "description": "Deterministic, dependency-free embeddings for tests and offline dry runs.",
+      "tokens": 392,
+      "hash": "565ae943804a37ab",
+      "size": 1372,
+      "mtimeMs": 1789412942956.6726,
+      "updatedAt": "2026-09-14T19:09:03.001Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/backends/openai_compatible.py": {
+      "description": "Backend for any OpenAI-compatible HTTP API: vLLM or Ollama on TACC, or a hosted service.",
+      "tokens": 1920,
+      "hash": "8f57161ca68bbfc0",
+      "size": 6718,
+      "mtimeMs": 1789412965093.155,
+      "updatedAt": "2026-09-14T19:09:25.135Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "OpenAICompatibleBackend",
+          "kind": "class",
+          "startLine": 34,
+          "endLine": 176,
+          "tokens": 1699
+        }
+      ]
+    },
+    "src/semantic_sensemaking/backends/huggingface_local.py": {
+      "description": "Local sentence-transformers embeddings (``pip install 'semantic-sensemaking[embed]'``).",
+      "tokens": 380,
+      "hash": "e65f6dc6abf2378f",
+      "size": 1328,
+      "mtimeMs": 1789412970463.796,
+      "updatedAt": "2026-09-14T19:09:30.501Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/backends/anthropic_claude.py": {
+      "description": "Claude chat backend (``pip install 'semantic-sensemaking[llm]'``).",
+      "tokens": 1248,
+      "hash": "db18d37554154c54",
+      "size": 4366,
+      "mtimeMs": 1789412985228.7998,
+      "updatedAt": "2026-09-14T19:09:45.274Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "AnthropicClaudeBackend",
+          "kind": "class",
+          "startLine": 23,
+          "endLine": 116,
+          "tokens": 952
+        },
+        {
+          "name": "_raise_on_refusal",
+          "kind": "fn",
+          "startLine": 117,
+          "endLine": 122,
+          "tokens": 83
+        }
+      ]
+    },
+    "src/semantic_sensemaking/backends/cache.py": {
+      "description": "On-disk embedding cache, so reruns over the same corpus don't re-embed it.",
+      "tokens": 675,
+      "hash": "3c56a3b8d0089c61",
+      "size": 2361,
+      "mtimeMs": 1789412994144.0378,
+      "updatedAt": "2026-09-14T19:09:54.189Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "CachedEmbeddingBackend",
+          "kind": "class",
+          "startLine": 15,
+          "endLine": 60,
+          "tokens": 587
+        }
+      ]
+    },
+    "src/semantic_sensemaking/backends/factory.py": {
+      "description": "Build backends from :class:`~semantic_sensemaking.core.config.BackendConfig`.",
+      "tokens": 996,
+      "hash": "f799bb5eeddd3b6e",
+      "size": 3484,
+      "mtimeMs": 1789413006193.5378,
+      "updatedAt": "2026-09-14T19:10:06.246Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "get_embedding_backend",
+          "kind": "fn",
+          "startLine": 14,
+          "endLine": 55,
+          "tokens": 455
+        },
+        {
+          "name": "get_chat_backend",
+          "kind": "fn",
+          "startLine": 56,
+          "endLine": 86,
+          "tokens": 316
+        },
+        {
+          "name": "_require",
+          "kind": "fn",
+          "startLine": 87,
+          "endLine": 93,
+          "tokens": 59
+        },
+        {
+          "name": "_api_key",
+          "kind": "fn",
+          "startLine": 94,
+          "endLine": 97,
+          "tokens": 48
+        }
+      ]
+    },
+    "src/semantic_sensemaking/data/__init__.py": {
+      "description": "Package data: built-in lexicons, taxonomies, JSON schemas, and a sample corpus.",
+      "tokens": 182,
+      "hash": "d4b84b1eb5c96271",
+      "size": 634,
+      "mtimeMs": 1789413009392.9128,
+      "updatedAt": "2026-09-14T19:10:09.435Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/lexicon_subside_v1.json": {
+      "description": "",
+      "tokens": 702,
+      "hash": "7760fe4f0587c593",
+      "size": 2454,
+      "mtimeMs": 1789413019106.626,
+      "updatedAt": "2026-09-14T19:10:19.147Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/taxonomy_subside_v1.json": {
+      "description": "",
+      "tokens": 494,
+      "hash": "573880e0786b2ccb",
+      "size": 1726,
+      "mtimeMs": 1789413026025.1099,
+      "updatedAt": "2026-09-14T19:10:26.070Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/sample_corpus/coastal_subsidence_briefing.md": {
+      "description": "Coastal subsidence briefing (synthetic example)",
+      "tokens": 261,
+      "hash": "b25c4705c8ba09bc",
+      "size": 1041,
+      "mtimeMs": 1789413032206.8306,
+      "updatedAt": "2026-09-14T19:10:32.246Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/sample_corpus/aquifer_management_panel.json": {
+      "description": "",
+      "tokens": 358,
+      "hash": "08c3bba578eef4e0",
+      "size": 1251,
+      "mtimeMs": 1789413039708.239,
+      "updatedAt": "2026-09-14T19:10:39.752Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/sample_corpus/insar_methods_lecture.json": {
+      "description": "",
+      "tokens": 349,
+      "hash": "2344730c58c43d62",
+      "size": 1220,
+      "mtimeMs": 1789413047092.9907,
+      "updatedAt": "2026-09-14T19:10:47.138Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/sample_corpus/oilfield_compaction_notes.txt": {
+      "description": "",
+      "tokens": 253,
+      "hash": "49f874f29eb2c666",
+      "size": 1009,
+      "mtimeMs": 1789413053850.109,
+      "updatedAt": "2026-09-14T19:10:53.888Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/data/sample_corpus/urban_flood_workshop.txt": {
+      "description": "",
+      "tokens": 247,
+      "hash": "aef80277c3735c1a",
+      "size": 985,
+      "mtimeMs": 1789413060280.8865,
+      "updatedAt": "2026-09-14T19:11:00.321Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/_version.py": {
+      "description": "",
+      "tokens": 66,
+      "hash": "f7fb7bf0c6311307",
+      "size": 231,
+      "mtimeMs": 1789413151880.6702,
+      "updatedAt": "2026-09-14T19:12:31.931Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/__init__.py": {
+      "description": "Semantic Sensemaking: layered tools for semantic workflows on TACC.",
+      "tokens": 413,
+      "hash": "64eb66cbd2b4b709",
+      "size": 1461,
+      "mtimeMs": 1789413158162.9397,
+      "updatedAt": "2026-09-14T19:12:38.221Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/core/__init__.py": {
+      "description": "Shared data types, run configuration, and run context.",
+      "tokens": 219,
+      "hash": "903bae70083cacb5",
+      "size": 765,
+      "mtimeMs": 1789413161964.8938,
+      "updatedAt": "2026-09-14T19:12:42.012Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/corpus/__init__.py": {
+      "description": "Turn files and directories into a :class:`~semantic_sensemaking.core.types.Corpus`.",
+      "tokens": 153,
+      "hash": "179b36f46e4fac82",
+      "size": 534,
+      "mtimeMs": 1789413164638.9417,
+      "updatedAt": "2026-09-14T19:12:44.678Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/lexicon/__init__.py": {
+      "description": "User-defined dictionaries: load, match terms, and score corpora.",
+      "tokens": 200,
+      "hash": "9e2fdd14324872ed",
+      "size": 700,
+      "mtimeMs": 1789413168215.863,
+      "updatedAt": "2026-09-14T19:12:48.265Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/taxonomy/__init__.py": {
+      "description": "Science backbones: load, map concepts onto them, and project weights.",
+      "tokens": 234,
+      "hash": "fb833e32d44173cb",
+      "size": 819,
+      "mtimeMs": 1789413172250.3125,
+      "updatedAt": "2026-09-14T19:12:52.291Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/backends/__init__.py": {
+      "description": "Embedding and chat backends behind shared protocols.",
+      "tokens": 317,
+      "hash": "08084cfaabfa1907",
+      "size": 1108,
+      "mtimeMs": 1789413177137.2437,
+      "updatedAt": "2026-09-14T19:12:57.180Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/viz/palette.py": {
+      "description": "Colors and domain ordering for backbone figures.",
+      "tokens": 859,
+      "hash": "0b453924c7db560d",
+      "size": 3005,
+      "mtimeMs": 1789413190919.5103,
+      "updatedAt": "2026-09-14T19:13:10.960Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "hex_to_rgba",
+          "kind": "fn",
+          "startLine": 46,
+          "endLine": 59,
+          "tokens": 157
+        },
+        {
+          "name": "heat_color",
+          "kind": "fn",
+          "startLine": 60,
+          "endLine": 66,
+          "tokens": 106
+        },
+        {
+          "name": "order_domains",
+          "kind": "fn",
+          "startLine": 67,
+          "endLine": 74,
+          "tokens": 92
+        },
+        {
+          "name": "domain_colors",
+          "kind": "fn",
+          "startLine": 75,
+          "endLine": 86,
+          "tokens": 117
+        },
+        {
+          "name": "_hex_rgb",
+          "kind": "fn",
+          "startLine": 87,
+          "endLine": 90,
+          "tokens": 40
+        }
+      ]
+    },
+    "src/semantic_sensemaking/viz/geometry.py": {
+      "description": "Radial layout and polygon helpers for backbone figures (no plotting dependency).",
+      "tokens": 1769,
+      "hash": "b95f6b5c98e35da0",
+      "size": 6190,
+      "mtimeMs": 1789494282671.0825,
+      "updatedAt": "2026-09-15T17:44:42.713Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Radii",
+          "kind": "class",
+          "startLine": 16,
+          "endLine": 22,
+          "tokens": 33
+        },
+        {
+          "name": "subdiscipline_key",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 26,
+          "tokens": 31
+        },
+        {
+          "name": "outer_key",
+          "kind": "fn",
+          "startLine": 27,
+          "endLine": 30,
+          "tokens": 19
+        },
+        {
+          "name": "fan",
+          "kind": "fn",
+          "startLine": 31,
+          "endLine": 45,
+          "tokens": 132
+        },
+        {
+          "name": "convex_hull",
+          "kind": "fn",
+          "startLine": 46,
+          "endLine": 67,
+          "tokens": 210
+        },
+        {
+          "name": "inflate_hull",
+          "kind": "fn",
+          "startLine": 68,
+          "endLine": 81,
+          "tokens": 138
+        },
+        {
+          "name": "petal_outline",
+          "kind": "fn",
+          "startLine": 82,
+          "endLine": 97,
+          "tokens": 196
+        },
+        {
+          "name": "label_position",
+          "kind": "fn",
+          "startLine": 98,
+          "endLine": 117,
+          "tokens": 156
+        },
+        {
+          "name": "RadialLayout",
+          "kind": "class",
+          "startLine": 118,
+          "endLine": 125,
+          "tokens": 64
+        },
+        {
+          "name": "radial_layout",
+          "kind": "fn",
+          "startLine": 126,
+          "endLine": 179,
+          "tokens": 674
+        }
+      ]
+    },
+    "src/semantic_sensemaking/viz/overlay_data.py": {
+      "description": "The neutral data contract consumed by the backbone overlay renderer.",
+      "tokens": 375,
+      "hash": "d1e978ffbf8281bc",
+      "size": 1313,
+      "mtimeMs": 1789413220396.1814,
+      "updatedAt": "2026-09-14T19:13:40.443Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/viz/backbone_map.py": {
+      "description": "Radial \"soft petal\" backbone overlay figure.",
+      "tokens": 2879,
+      "hash": "83b0127709e14242",
+      "size": 10079,
+      "mtimeMs": 1789413256402.977,
+      "updatedAt": "2026-09-14T19:14:16.468Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "OverlayStyle",
+          "kind": "class",
+          "startLine": 44,
+          "endLine": 58,
+          "tokens": 110
+        },
+        {
+          "name": "render_backbone_overlay",
+          "kind": "fn",
+          "startLine": 59,
+          "endLine": 260,
+          "tokens": 2289
+        },
+        {
+          "name": "_edge_coordinates",
+          "kind": "fn",
+          "startLine": 261,
+          "endLine": 271,
+          "tokens": 111
+        }
+      ]
+    },
+    "src/semantic_sensemaking/viz/comparison.py": {
+      "description": "Base-layer vs projected attention bar chart.",
+      "tokens": 478,
+      "hash": "94b8e8f3671a75b9",
+      "size": 1674,
+      "mtimeMs": 1789413262243.2812,
+      "updatedAt": "2026-09-14T19:14:22.298Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/viz/heatmap.py": {
+      "description": "Document × group heatmap.",
+      "tokens": 376,
+      "hash": "2da2d72e174179be",
+      "size": 1318,
+      "mtimeMs": 1789413267959.3684,
+      "updatedAt": "2026-09-14T19:14:28.027Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/viz/__init__.py": {
+      "description": "Figures for semantic workflows (``pip install 'semantic-sensemaking[viz]'``).",
+      "tokens": 437,
+      "hash": "286276b61920364c",
+      "size": 1529,
+      "mtimeMs": 1789413275060.009,
+      "updatedAt": "2026-09-14T19:14:35.147Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/report/__init__.py": {
+      "description": "Writers shared by every workflow: tables, Markdown summaries, run manifests.",
+      "tokens": 702,
+      "hash": "1af4f15f3fe7dcc4",
+      "size": 2455,
+      "mtimeMs": 1789413285252.6782,
+      "updatedAt": "2026-09-14T19:14:45.308Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_csv",
+          "kind": "fn",
+          "startLine": 20,
+          "endLine": 26,
+          "tokens": 67
+        },
+        {
+          "name": "markdown_table",
+          "kind": "fn",
+          "startLine": 27,
+          "endLine": 32,
+          "tokens": 52
+        },
+        {
+          "name": "render_summary",
+          "kind": "fn",
+          "startLine": 33,
+          "endLine": 42,
+          "tokens": 96
+        },
+        {
+          "name": "file_sha256",
+          "kind": "fn",
+          "startLine": 43,
+          "endLine": 50,
+          "tokens": 65
+        },
+        {
+          "name": "write_manifest",
+          "kind": "fn",
+          "startLine": 51,
+          "endLine": 81,
+          "tokens": 295
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/__init__.py": {
+      "description": "End-to-end workflows built from the shared tool clusters.",
+      "tokens": 217,
+      "hash": "50391ba87672cf9d",
+      "size": 759,
+      "mtimeMs": 1789413288356.3606,
+      "updatedAt": "2026-09-14T19:14:48.410Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/dictionary/__init__.py": {
+      "description": "User-defined dictionary-driven semantic analysis.",
+      "tokens": 210,
+      "hash": "6945fa9d60fde24f",
+      "size": 737,
+      "mtimeMs": 1789413292342.0454,
+      "updatedAt": "2026-09-14T19:14:52.386Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/dictionary/result.py": {
+      "description": "The in-memory result of a dictionary analysis.",
+      "tokens": 1246,
+      "hash": "e10784e85b4c98c4",
+      "size": 4368,
+      "mtimeMs": 1789413306920.4736,
+      "updatedAt": "2026-09-14T19:15:06.963Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "DictionaryResult",
+          "kind": "class",
+          "startLine": 24,
+          "endLine": 105,
+          "tokens": 1037
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/dictionary/pipeline.py": {
+      "description": "Dictionary workflow orchestration: load inputs, analyze, write outputs.",
+      "tokens": 1076,
+      "hash": "612a4824243e983e",
+      "size": 3768,
+      "mtimeMs": 1795023261247.3528,
+      "updatedAt": "2026-11-18T17:34:21.281Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "DictionaryRun",
+          "kind": "class",
+          "startLine": 28,
+          "endLine": 32,
+          "tokens": 22
+        },
+        {
+          "name": "analyze",
+          "kind": "fn",
+          "startLine": 33,
+          "endLine": 72,
+          "tokens": 427
+        },
+        {
+          "name": "load_inputs",
+          "kind": "fn",
+          "startLine": 73,
+          "endLine": 80,
+          "tokens": 86
+        },
+        {
+          "name": "run",
+          "kind": "fn",
+          "startLine": 81,
+          "endLine": 94,
+          "tokens": 190
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/dictionary/outputs.py": {
+      "description": "Write a dictionary analysis to disk: tables, figures, summary, manifest.",
+      "tokens": 1598,
+      "hash": "16f604c1e9f60251",
+      "size": 5594,
+      "mtimeMs": 1789413342614.281,
+      "updatedAt": "2026-09-14T19:15:42.661Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_outputs",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 48,
+          "tokens": 273
+        },
+        {
+          "name": "_write_figures",
+          "kind": "fn",
+          "startLine": 49,
+          "endLine": 96,
+          "tokens": 477
+        },
+        {
+          "name": "_summary",
+          "kind": "fn",
+          "startLine": 97,
+          "endLine": 127,
+          "tokens": 459
+        },
+        {
+          "name": "_inputs",
+          "kind": "fn",
+          "startLine": 128,
+          "endLine": 147,
+          "tokens": 214
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/narrative/__init__.py": {
+      "description": "Narrative analysis: find the frames a corpus uses and place them on a science backbone.",
+      "tokens": 348,
+      "hash": "41cfcc8437e1721b",
+      "size": 1215,
+      "mtimeMs": 1795023298707.7236,
+      "updatedAt": "2026-11-18T17:34:58.742Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/narrative/README.md": {
+      "description": "Project documentation",
+      "tokens": 917,
+      "hash": "55d92aca247e86cf",
+      "size": 3683,
+      "mtimeMs": 1795023378600.4236,
+      "updatedAt": "2026-11-18T17:36:18.635Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/formulation/__init__.py": {
+      "description": "Problem formulation: draft the lexicon and taxonomy the dictionary workflow reads.",
+      "tokens": 331,
+      "hash": "0d080f5128a8128b",
+      "size": 1156,
+      "mtimeMs": 1795023626622.605,
+      "updatedAt": "2026-11-18T17:40:26.657Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/formulation/README.md": {
+      "description": "Project documentation",
+      "tokens": 912,
+      "hash": "27c4c55d92714bde",
+      "size": 3660,
+      "mtimeMs": 1795023693704.2437,
+      "updatedAt": "2026-11-18T17:41:33.769Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/cli.py": {
+      "description": "``semantic-sensemaking`` command line: one entrypoint, one subcommand per workflow.",
+      "tokens": 1607,
+      "hash": "a95d9bd062e34ea7",
+      "size": 5623,
+      "mtimeMs": 1789413459500.3718,
+      "updatedAt": "2026-09-14T19:17:39.570Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "build_parser",
+          "kind": "fn",
+          "startLine": 25,
+          "endLine": 51,
+          "tokens": 351
+        },
+        {
+          "name": "_add_run_arguments",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 73,
+          "tokens": 336
+        },
+        {
+          "name": "config_from_args",
+          "kind": "fn",
+          "startLine": 74,
+          "endLine": 98,
+          "tokens": 256
+        },
+        {
+          "name": "main",
+          "kind": "fn",
+          "startLine": 99,
+          "endLine": 123,
+          "tokens": 264
+        },
+        {
+          "name": "_write_schemas",
+          "kind": "fn",
+          "startLine": 124,
+          "endLine": 132,
+          "tokens": 89
+        },
+        {
+          "name": "schema_documents",
+          "kind": "fn",
+          "startLine": 133,
+          "endLine": 146,
+          "tokens": 117
+        }
+      ]
+    },
+    "tests/conftest.py": {
+      "description": "sample_corpus, subside_lexicon, subside_taxonomy, write_pdf",
+      "tokens": 914,
+      "hash": "477aa6c0950f0c27",
+      "size": 3198,
+      "mtimeMs": 1789413528122.7632,
+      "updatedAt": "2026-09-14T19:18:48.169Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "_isolate_ssm_environment",
+          "kind": "fn",
+          "startLine": 13,
+          "endLine": 20,
+          "tokens": 83
+        },
+        {
+          "name": "sample_corpus",
+          "kind": "fn",
+          "startLine": 21,
+          "endLine": 25,
+          "tokens": 29
+        },
+        {
+          "name": "subside_lexicon",
+          "kind": "fn",
+          "startLine": 26,
+          "endLine": 30,
+          "tokens": 24
+        },
+        {
+          "name": "subside_taxonomy",
+          "kind": "fn",
+          "startLine": 31,
+          "endLine": 40,
+          "tokens": 71
+        },
+        {
+          "name": "write_pdf",
+          "kind": "fn",
+          "startLine": 41,
+          "endLine": 65,
+          "tokens": 326
+        },
+        {
+          "name": "edge_corpus",
+          "kind": "fn",
+          "startLine": 66,
+          "endLine": 88,
+          "tokens": 318
+        }
+      ]
+    },
+    "tests/parity/prototype_reference.py": {
+      "description": "Test oracle: the SUBSIDE Backbone Overlay prototype's analysis, ported verbatim.",
+      "tokens": 2480,
+      "hash": "5888716c12a26224",
+      "size": 9265,
+      "mtimeMs": 1789413529178.2566,
+      "updatedAt": "2026-09-14T19:18:49.218Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "_extract_json_text",
+          "kind": "fn",
+          "startLine": 21,
+          "endLine": 40,
+          "tokens": 222
+        },
+        {
+          "name": "load_overlay_file",
+          "kind": "fn",
+          "startLine": 41,
+          "endLine": 64,
+          "tokens": 261
+        },
+        {
+          "name": "load_overlay_corpus",
+          "kind": "fn",
+          "startLine": 65,
+          "endLine": 99,
+          "tokens": 340
+        },
+        {
+          "name": "map_terms_to_backbone",
+          "kind": "fn",
+          "startLine": 100,
+          "endLine": 114,
+          "tokens": 168
+        },
+        {
+          "name": "build_group_mapping_df",
+          "kind": "fn",
+          "startLine": 115,
+          "endLine": 125,
+          "tokens": 119
+        },
+        {
+          "name": "count_group_in_text",
+          "kind": "fn",
+          "startLine": 126,
+          "endLine": 137,
+          "tokens": 89
+        },
+        {
+          "name": "project_overlay",
+          "kind": "fn",
+          "startLine": 138,
+          "endLine": 184,
+          "tokens": 531
+        },
+        {
+          "name": "comparison_table",
+          "kind": "fn",
+          "startLine": 185,
+          "endLine": 203,
+          "tokens": 262
+        },
+        {
+          "name": "keyword_groups_from_file",
+          "kind": "fn",
+          "startLine": 204,
+          "endLine": 208,
+          "tokens": 48
+        },
+        {
+          "name": "backbone_from_file",
+          "kind": "fn",
+          "startLine": 209,
+          "endLine": 215,
+          "tokens": 64
+        },
+        {
+          "name": "run_prototype",
+          "kind": "fn",
+          "startLine": 216,
+          "endLine": 230,
+          "tokens": 184
+        }
+      ]
+    },
+    "tests/parity/test_prototype_parity.py": {
+      "description": "The library with legacy settings reproduces the prototype notebook's numbers.",
+      "tokens": 1000,
+      "hash": "aca6a351a8652633",
+      "size": 3500,
+      "mtimeMs": 1789413530241.4,
+      "updatedAt": "2026-09-14T19:18:50.283Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "prototype",
+          "kind": "fn",
+          "startLine": 29,
+          "endLine": 37,
+          "tokens": 62
+        },
+        {
+          "name": "library",
+          "kind": "fn",
+          "startLine": 38,
+          "endLine": 41,
+          "tokens": 41
+        },
+        {
+          "name": "test_legacy_settings_are_the_defaults",
+          "kind": "fn",
+          "startLine": 42,
+          "endLine": 47,
+          "tokens": 52
+        },
+        {
+          "name": "test_same_documents_loaded",
+          "kind": "fn",
+          "startLine": 48,
+          "endLine": 51,
+          "tokens": 37
+        },
+        {
+          "name": "test_same_group_mapping",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 58,
+          "tokens": 76
+        },
+        {
+          "name": "test_same_doc_group_counts",
+          "kind": "fn",
+          "startLine": 59,
+          "endLine": 65,
+          "tokens": 111
+        },
+        {
+          "name": "test_same_group_totals",
+          "kind": "fn",
+          "startLine": 66,
+          "endLine": 70,
+          "tokens": 61
+        },
+        {
+          "name": "test_same_projection",
+          "kind": "fn",
+          "startLine": 71,
+          "endLine": 75,
+          "tokens": 70
+        },
+        {
+          "name": "test_same_comparison",
+          "kind": "fn",
+          "startLine": 76,
+          "endLine": 82,
+          "tokens": 112
+        },
+        {
+          "name": "test_matches_frozen_golden",
+          "kind": "fn",
+          "startLine": 83,
+          "endLine": 90,
+          "tokens": 122
+        }
+      ]
+    },
+    "tests/parity/make_golden.py": {
+      "description": "Regenerate ``golden_sample_corpus.json`` from the prototype oracle.",
+      "tokens": 370,
+      "hash": "7c66c3c7734a9c8a",
+      "size": 1295,
+      "mtimeMs": 1789413531298.6501,
+      "updatedAt": "2026-09-14T19:18:51.336Z",
+      "source": "hook"
+    },
+    "tests/parity/__init__.py": {
+      "description": "",
+      "tokens": 0,
+      "hash": "e3b0c44298fc1c14",
+      "size": 0,
+      "mtimeMs": 1789413532350.8909,
+      "updatedAt": "2026-09-14T19:18:52.388Z",
+      "source": "hook"
+    },
+    "tests/parity/test_bug_fixes.py": {
+      "description": "Each prototype scoring bug, shown under legacy settings and fixed under the opt-in setting.",
+      "tokens": 1219,
+      "hash": "0067cb563e39a486",
+      "size": 4266,
+      "mtimeMs": 1789413543930.1108,
+      "updatedAt": "2026-09-14T19:19:03.981Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "TestBug1OverlappingTermsDoubleCount",
+          "kind": "class",
+          "startLine": 17,
+          "endLine": 49,
+          "tokens": 421
+        },
+        {
+          "name": "TestBug2SubdisciplineScoresIgnoreSubdiscipline",
+          "kind": "class",
+          "startLine": 50,
+          "endLine": 71,
+          "tokens": 325
+        },
+        {
+          "name": "TestBug3UnmappedGroupsVanish",
+          "kind": "class",
+          "startLine": 72,
+          "endLine": 89,
+          "tokens": 313
+        }
+      ]
+    },
+    "tests/unit/test_matching.py": {
+      "description": "test_auto_uses_word_boundaries_for_single_words, test_auto_substring_matches_inside_words_for_multiw",
+      "tokens": 542,
+      "hash": "559516a49a80ecf7",
+      "size": 1894,
+      "mtimeMs": 1789413552476.6682,
+      "updatedAt": "2026-09-14T19:19:12.516Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_auto_uses_word_boundaries_for_single_words",
+          "kind": "fn",
+          "startLine": 6,
+          "endLine": 9,
+          "tokens": 34
+        },
+        {
+          "name": "test_auto_substring_matches_inside_words_for_multiword_and_hyphenated_terms",
+          "kind": "fn",
+          "startLine": 10,
+          "endLine": 15,
+          "tokens": 88
+        },
+        {
+          "name": "test_auto_counts_duplicate_terms_twice",
+          "kind": "fn",
+          "startLine": 16,
+          "endLine": 19,
+          "tokens": 32
+        },
+        {
+          "name": "test_auto_is_case_insensitive_by_default_and_can_be_case_sensitive",
+          "kind": "fn",
+          "startLine": 20,
+          "endLine": 24,
+          "tokens": 59
+        },
+        {
+          "name": "test_word_boundary_matches_multiword_terms_across_line_breaks_but_not_inside_words",
+          "kind": "fn",
+          "startLine": 25,
+          "endLine": 30,
+          "tokens": 91
+        },
+        {
+          "name": "test_word_boundary_still_counts_overlapping_terms_independently",
+          "kind": "fn",
+          "startLine": 31,
+          "endLine": 35,
+          "tokens": 55
+        },
+        {
+          "name": "test_longest_match_consumes_text_once",
+          "kind": "fn",
+          "startLine": 36,
+          "endLine": 43,
+          "tokens": 92
+        },
+        {
+          "name": "test_longest_match_reports_terms_as_written",
+          "kind": "fn",
+          "startLine": 44,
+          "endLine": 47,
+          "tokens": 59
+        }
+      ]
+    },
+    "tests/unit/test_corpus.py": {
+      "description": "test_sample_corpus_loads_every_file, test_edge_corpus_reads_all_formats_and_reports_skips, test_shar",
+      "tokens": 1242,
+      "hash": "85ade25f125f11b9",
+      "size": 4344,
+      "mtimeMs": 1789494276191.3406,
+      "updatedAt": "2026-09-15T17:44:36.256Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_sample_corpus_loads_every_file",
+          "kind": "fn",
+          "startLine": 13,
+          "endLine": 18,
+          "tokens": 59
+        },
+        {
+          "name": "test_edge_corpus_reads_all_formats_and_reports_skips",
+          "kind": "fn",
+          "startLine": 19,
+          "endLine": 29,
+          "tokens": 142
+        },
+        {
+          "name": "test_shared_stems_get_unique_labels_instead_of_overwriting",
+          "kind": "fn",
+          "startLine": 30,
+          "endLine": 36,
+          "tokens": 72
+        },
+        {
+          "name": "test_max_files_truncates_and_records_the_rest",
+          "kind": "fn",
+          "startLine": 37,
+          "endLine": 42,
+          "tokens": 69
+        },
+        {
+          "name": "test_recursive_discovery_ignores_hidden_directories",
+          "kind": "fn",
+          "startLine": 43,
+          "endLine": 51,
+          "tokens": 118
+        },
+        {
+          "name": "test_single_file_and_missing_path",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 59,
+          "tokens": 67
+        },
+        {
+          "name": "test_missing_optional_reader_becomes_skip_reason_with_install_hint",
+          "kind": "fn",
+          "startLine": 60,
+          "endLine": 83,
+          "tokens": 234
+        },
+        {
+          "name": "test_extract_json_text_shapes",
+          "kind": "fn",
+          "startLine": 84,
+          "endLine": 87,
+          "tokens": 29
+        },
+        {
+          "name": "test_extract_json_text_falls_back_to_serialized_json",
+          "kind": "fn",
+          "startLine": 88,
+          "endLine": 91,
+          "tokens": 38
+        },
+        {
+          "name": "test_resolve_document",
+          "kind": "fn",
+          "startLine": 92,
+          "endLine": 106,
+          "tokens": 246
+        },
+        {
+          "name": "test_corpus_rejects_duplicate_ids",
+          "kind": "fn",
+          "startLine": 107,
+          "endLine": 112,
+          "tokens": 64
+        }
+      ]
+    },
+    "tests/unit/test_lexicon_and_taxonomy_io.py": {
+      "description": "test_builtin_lexicon_and_taxonomy, test_flat_lexicon_json_with_comment_keys, test_csv_lexicon_preser",
+      "tokens": 1271,
+      "hash": "71e48b9d4d164a8d",
+      "size": 4446,
+      "mtimeMs": 1789413588855.842,
+      "updatedAt": "2026-09-14T19:19:48.901Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_builtin_lexicon_and_taxonomy",
+          "kind": "fn",
+          "startLine": 12,
+          "endLine": 19,
+          "tokens": 94
+        },
+        {
+          "name": "test_flat_lexicon_json_with_comment_keys",
+          "kind": "fn",
+          "startLine": 20,
+          "endLine": 27,
+          "tokens": 106
+        },
+        {
+          "name": "test_csv_lexicon_preserves_group_order_and_descriptions",
+          "kind": "fn",
+          "startLine": 28,
+          "endLine": 39,
+          "tokens": 140
+        },
+        {
+          "name": "test_lexicon_round_trip",
+          "kind": "fn",
+          "startLine": 40,
+          "endLine": 54,
+          "tokens": 191
+        },
+        {
+          "name": "test_invalid_lexicons_name_the_problem",
+          "kind": "fn",
+          "startLine": 55,
+          "endLine": 61,
+          "tokens": 66
+        },
+        {
+          "name": "test_csv_lexicon_requires_columns",
+          "kind": "fn",
+          "startLine": 62,
+          "endLine": 80,
+          "tokens": 158
+        },
+        {
+          "name": "test_layered_backbone_uses_selected_layer_and_strips_metadata",
+          "kind": "fn",
+          "startLine": 81,
+          "endLine": 89,
+          "tokens": 119
+        },
+        {
+          "name": "test_layered_backbone_falls_back_like_the_prototype",
+          "kind": "fn",
+          "startLine": 90,
+          "endLine": 98,
+          "tokens": 117
+        },
+        {
+          "name": "test_flat_taxonomy_and_default_subdiscipline",
+          "kind": "fn",
+          "startLine": 99,
+          "endLine": 105,
+          "tokens": 77
+        },
+        {
+          "name": "test_taxonomy_round_trip",
+          "kind": "fn",
+          "startLine": 106,
+          "endLine": 110,
+          "tokens": 58
+        },
+        {
+          "name": "test_invalid_taxonomy",
+          "kind": "fn",
+          "startLine": 111,
+          "endLine": 116,
+          "tokens": 70
+        }
+      ]
+    },
+    "tests/unit/test_taxonomy_projection.py": {
+      "description": "test_no_hits_maps_to_uncategorized, test_top_n_limits_legacy_assignments, test_projection_splits_wei",
+      "tokens": 674,
+      "hash": "5c71d1af1c913261",
+      "size": 2357,
+      "mtimeMs": 1789413599169.4,
+      "updatedAt": "2026-09-14T19:19:59.216Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_no_hits_maps_to_uncategorized",
+          "kind": "fn",
+          "startLine": 17,
+          "endLine": 21,
+          "tokens": 64
+        },
+        {
+          "name": "test_top_n_limits_legacy_assignments",
+          "kind": "fn",
+          "startLine": 22,
+          "endLine": 25,
+          "tokens": 44
+        },
+        {
+          "name": "test_projection_splits_weight_in_proportion_to_score",
+          "kind": "fn",
+          "startLine": 26,
+          "endLine": 39,
+          "tokens": 153
+        },
+        {
+          "name": "test_compare_distributions_percentages_sum_to_100",
+          "kind": "fn",
+          "startLine": 40,
+          "endLine": 50,
+          "tokens": 157
+        },
+        {
+          "name": "test_mapping_frame_is_readable",
+          "kind": "fn",
+          "startLine": 51,
+          "endLine": 57,
+          "tokens": 98
+        },
+        {
+          "name": "test_embedding_mapping_requires_backend",
+          "kind": "fn",
+          "startLine": 58,
+          "endLine": 61,
+          "tokens": 66
+        }
+      ]
+    },
+    "tests/unit/test_config.py": {
+      "description": "write_yaml, test_defaults_are_valid, test_precedence_yaml_then_env_then_overrides, test_env_lists_an",
+      "tokens": 706,
+      "hash": "9572c7f96c780018",
+      "size": 2468,
+      "mtimeMs": 1789413610020.5452,
+      "updatedAt": "2026-09-14T19:20:10.065Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_yaml",
+          "kind": "fn",
+          "startLine": 11,
+          "endLine": 16,
+          "tokens": 37
+        },
+        {
+          "name": "test_defaults_are_valid",
+          "kind": "fn",
+          "startLine": 17,
+          "endLine": 23,
+          "tokens": 58
+        },
+        {
+          "name": "test_precedence_yaml_then_env_then_overrides",
+          "kind": "fn",
+          "startLine": 24,
+          "endLine": 36,
+          "tokens": 186
+        },
+        {
+          "name": "test_env_lists_and_enums",
+          "kind": "fn",
+          "startLine": 37,
+          "endLine": 44,
+          "tokens": 98
+        },
+        {
+          "name": "test_unknown_keys_fail_loudly",
+          "kind": "fn",
+          "startLine": 45,
+          "endLine": 52,
+          "tokens": 94
+        },
+        {
+          "name": "test_missing_config_file",
+          "kind": "fn",
+          "startLine": 53,
+          "endLine": 57,
+          "tokens": 39
+        },
+        {
+          "name": "test_parse_set_values_types",
+          "kind": "fn",
+          "startLine": 58,
+          "endLine": 65,
+          "tokens": 72
+        },
+        {
+          "name": "test_yaml_round_trip",
+          "kind": "fn",
+          "startLine": 66,
+          "endLine": 70,
+          "tokens": 62
+        }
+      ]
+    },
+    "tests/unit/test_backends.py": {
+      "description": "Recorder: test_hashing_embedding_is_deterministic_normalized_and_word_sensitive, embeddings_response",
+      "tokens": 1965,
+      "hash": "934152bad5b8145f",
+      "size": 6877,
+      "mtimeMs": 1789413636180.7864,
+      "updatedAt": "2026-09-14T19:20:36.224Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_hashing_embedding_is_deterministic_normalized_and_word_sensitive",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 32,
+          "tokens": 125
+        },
+        {
+          "name": "Recorder",
+          "kind": "class",
+          "startLine": 33,
+          "endLine": 45,
+          "tokens": 129
+        },
+        {
+          "name": "embeddings_response",
+          "kind": "fn",
+          "startLine": 46,
+          "endLine": 51,
+          "tokens": 79
+        },
+        {
+          "name": "make_backend",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 61,
+          "tokens": 100
+        },
+        {
+          "name": "test_openai_embeddings_batch_reorder_and_normalize",
+          "kind": "fn",
+          "startLine": 62,
+          "endLine": 72,
+          "tokens": 164
+        },
+        {
+          "name": "test_openai_retries_transient_errors_then_raises_on_client_errors",
+          "kind": "fn",
+          "startLine": 73,
+          "endLine": 84,
+          "tokens": 145
+        },
+        {
+          "name": "test_openai_gives_up_after_max_retries",
+          "kind": "fn",
+          "startLine": 85,
+          "endLine": 90,
+          "tokens": 62
+        },
+        {
+          "name": "chat_reply",
+          "kind": "fn",
+          "startLine": 91,
+          "endLine": 101,
+          "tokens": 82
+        },
+        {
+          "name": "test_openai_chat_request_shape_and_response",
+          "kind": "fn",
+          "startLine": 102,
+          "endLine": 114,
+          "tokens": 178
+        },
+        {
+          "name": "Frame",
+          "kind": "class",
+          "startLine": 115,
+          "endLine": 119,
+          "tokens": 18
+        },
+        {
+          "name": "test_openai_complete_json_reasks_after_invalid_output",
+          "kind": "fn",
+          "startLine": 120,
+          "endLine": 128,
+          "tokens": 147
+        },
+        {
+          "name": "CountingBackend",
+          "kind": "class",
+          "startLine": 129,
+          "endLine": 138,
+          "tokens": 81
+        },
+        {
+          "name": "test_cache_only_embeds_new_texts",
+          "kind": "fn",
+          "startLine": 139,
+          "endLine": 150,
+          "tokens": 132
+        },
+        {
+          "name": "test_factory",
+          "kind": "fn",
+          "startLine": 151,
+          "endLine": 165,
+          "tokens": 225
+        },
+        {
+          "name": "test_missing_sdk_extras_name_the_install_command",
+          "kind": "fn",
+          "startLine": 166,
+          "endLine": 178,
+          "tokens": 159
+        }
+      ]
+    },
+    "tests/unit/test_semantic.py": {
+      "description": "test_semantic_scores_count_matching_passages, test_threshold_above_one_matches_nothing, test_explain",
+      "tokens": 710,
+      "hash": "36509af5b94ef0c8",
+      "size": 2482,
+      "mtimeMs": 1789413646795.9712,
+      "updatedAt": "2026-09-14T19:20:46.837Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_semantic_scores_count_matching_passages",
+          "kind": "fn",
+          "startLine": 21,
+          "endLine": 31,
+          "tokens": 152
+        },
+        {
+          "name": "test_threshold_above_one_matches_nothing",
+          "kind": "fn",
+          "startLine": 32,
+          "endLine": 36,
+          "tokens": 54
+        },
+        {
+          "name": "test_explain_semantic_matches_ranks_passages",
+          "kind": "fn",
+          "startLine": 37,
+          "endLine": 44,
+          "tokens": 140
+        },
+        {
+          "name": "test_semantic_method_needs_a_backend",
+          "kind": "fn",
+          "startLine": 45,
+          "endLine": 49,
+          "tokens": 60
+        },
+        {
+          "name": "test_semantic_analysis_end_to_end",
+          "kind": "fn",
+          "startLine": 50,
+          "endLine": 58,
+          "tokens": 106
+        }
+      ]
+    },
+    "tests/unit/test_viz.py": {
+      "description": "test_hex_to_rgba, test_heat_color_endpoints, test_geometry_helpers, test_domain_order_puts_known_dom",
+      "tokens": 857,
+      "hash": "e1e38a5ada8c6f41",
+      "size": 2999,
+      "mtimeMs": 1789413659516.2935,
+      "updatedAt": "2026-09-14T19:20:59.563Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_hex_to_rgba",
+          "kind": "fn",
+          "startLine": 17,
+          "endLine": 20,
+          "tokens": 25
+        },
+        {
+          "name": "test_heat_color_endpoints",
+          "kind": "fn",
+          "startLine": 21,
+          "endLine": 26,
+          "tokens": 52
+        },
+        {
+          "name": "test_geometry_helpers",
+          "kind": "fn",
+          "startLine": 27,
+          "endLine": 35,
+          "tokens": 102
+        },
+        {
+          "name": "test_domain_order_puts_known_domains_first",
+          "kind": "fn",
+          "startLine": 36,
+          "endLine": 41,
+          "tokens": 56
+        },
+        {
+          "name": "test_importing_viz_does_not_import_plotly",
+          "kind": "fn",
+          "startLine": 42,
+          "endLine": 47,
+          "tokens": 96
+        },
+        {
+          "name": "result",
+          "kind": "fn",
+          "startLine": 48,
+          "endLine": 51,
+          "tokens": 38
+        },
+        {
+          "name": "test_corpus_overlay_figure",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 60,
+          "tokens": 98
+        },
+        {
+          "name": "test_single_document_figure_labels_include_counts",
+          "kind": "fn",
+          "startLine": 61,
+          "endLine": 70,
+          "tokens": 158
+        },
+        {
+          "name": "test_comparison_and_heatmap_figures",
+          "kind": "fn",
+          "startLine": 71,
+          "endLine": 77,
+          "tokens": 95
+        }
+      ]
+    },
+    "tests/unit/test_layering.py": {
+      "description": "Architectural rules for the tool-cluster hierarchy.",
+      "tokens": 678,
+      "hash": "7369545e1d6f009a",
+      "size": 2373,
+      "mtimeMs": 1795023653039.108,
+      "updatedAt": "2026-11-18T17:40:53.225Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "python_files",
+          "kind": "fn",
+          "startLine": 18,
+          "endLine": 22,
+          "tokens": 40
+        },
+        {
+          "name": "test_tool_clusters_never_import_workflows",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 27,
+          "tokens": 54
+        },
+        {
+          "name": "test_core_depends_on_nothing_above_it",
+          "kind": "fn",
+          "startLine": 28,
+          "endLine": 32,
+          "tokens": 68
+        },
+        {
+          "name": "test_library_never_blocks_on_input_or_opens_figures",
+          "kind": "fn",
+          "startLine": 33,
+          "endLine": 38,
+          "tokens": 77
+        },
+        {
+          "name": "test_workflows_expose_the_common_interface",
+          "kind": "fn",
+          "startLine": 39,
+          "endLine": 48,
+          "tokens": 89
+        },
+        {
+          "name": "test_workflows_document_their_pipeline",
+          "kind": "fn",
+          "startLine": 49,
+          "endLine": 52,
+          "tokens": 33
+        },
+        {
+          "name": "test_committed_json_schemas_are_current",
+          "kind": "fn",
+          "startLine": 53,
+          "endLine": 60,
+          "tokens": 102
+        },
+        {
+          "name": "test_builtin_data_validates_against_schemas",
+          "kind": "fn",
+          "startLine": 61,
+          "endLine": 67,
+          "tokens": 109
+        }
+      ]
+    },
+    "tests/integration/test_cli_workflow.py": {
+      "description": "End-to-end runs through the same entrypoint the Tapis app uses.",
+      "tokens": 1061,
+      "hash": "9532c6e30e06f306",
+      "size": 3713,
+      "mtimeMs": 1789494182014.8972,
+      "updatedAt": "2026-09-15T17:43:02.057Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "test_dictionary_run_writes_every_artifact",
+          "kind": "fn",
+          "startLine": 27,
+          "endLine": 51,
+          "tokens": 294
+        },
+        {
+          "name": "test_user_dictionary_job_file_and_no_figures",
+          "kind": "fn",
+          "startLine": 52,
+          "endLine": 69,
+          "tokens": 267
+        },
+        {
+          "name": "test_config_show_prints_resolved_yaml",
+          "kind": "fn",
+          "startLine": 70,
+          "endLine": 76,
+          "tokens": 94
+        },
+        {
+          "name": "test_exit_codes",
+          "kind": "fn",
+          "startLine": 77,
+          "endLine": 86,
+          "tokens": 150
+        },
+        {
+          "name": "test_module_entrypoint_version",
+          "kind": "fn",
+          "startLine": 87,
+          "endLine": 92,
+          "tokens": 74
+        }
+      ]
+    },
+    "docker/Dockerfile": {
+      "description": "Docker container definition",
+      "tokens": 350,
+      "hash": "3a44532868170462",
+      "size": 1311,
+      "mtimeMs": 1789494293476.5454,
+      "updatedAt": "2026-09-15T17:44:53.518Z",
+      "source": "hook"
+    },
+    "docker/environment.yaml": {
+      "description": "Runtime environment for the container image. Python packages come from",
+      "tokens": 91,
+      "hash": "4a55c57003e4d941",
+      "size": 318,
+      "mtimeMs": 1789494295621.2063,
+      "updatedAt": "2026-09-15T17:44:55.655Z",
+      "source": "hook"
+    },
+    "docker/run.sh": {
+      "description": "Tapis entrypoint shared by every Semantic Sensemaking app.",
+      "tokens": 383,
+      "hash": "aa1e7659d52fc870",
+      "size": 1435,
+      "mtimeMs": 1789494302973.0796,
+      "updatedAt": "2026-09-15T17:45:03.007Z",
+      "source": "hook"
+    },
+    "apps/dictionary/app.json": {
+      "description": "",
+      "tokens": 1926,
+      "hash": "c5fbdd9e356a86cf",
+      "size": 6739,
+      "mtimeMs": 1789494328478.2178,
+      "updatedAt": "2026-09-15T17:45:28.527Z",
+      "source": "hook"
+    },
+    "configs/dictionary-example.yaml": {
+      "description": "Dictionary workflow job file.",
+      "tokens": 479,
+      "hash": "e8b6a373e3f17bfd",
+      "size": 1675,
+      "mtimeMs": 1789494336704.3738,
+      "updatedAt": "2026-09-15T17:45:36.740Z",
+      "source": "hook"
+    },
+    "configs/dictionary-corrected.yaml": {
+      "description": "Dictionary workflow with the three prototype scoring issues fixed.",
+      "tokens": 182,
+      "hash": "88d4fcdbb6a17662",
+      "size": 635,
+      "mtimeMs": 1789494339778.058,
+      "updatedAt": "2026-09-15T17:45:39.820Z",
+      "source": "hook"
+    },
+    "configs/dictionary-semantic.yaml": {
+      "description": "Dictionary workflow with embedding-based matching.",
+      "tokens": 291,
+      "hash": "5028f4d8a39bd4b6",
+      "size": 1017,
+      "mtimeMs": 1789494345006.768,
+      "updatedAt": "2026-09-15T17:45:45.042Z",
+      "source": "hook"
+    },
+    "configs/lexicon-template.csv": {
+      "description": "",
+      "tokens": 91,
+      "hash": "228b89ec7dda7e63",
+      "size": 341,
+      "mtimeMs": 1789494347278.1008,
+      "updatedAt": "2026-09-15T17:45:47.313Z",
+      "source": "hook"
+    },
+    "configs/lexicon-template.json": {
+      "description": "",
+      "tokens": 192,
+      "hash": "e59c4d0e22d85313",
+      "size": 669,
+      "mtimeMs": 1789494350278.61,
+      "updatedAt": "2026-09-15T17:45:50.322Z",
+      "source": "hook"
+    },
+    ".pre-commit-config.yaml": {
+      "description": "Install once with: pre-commit install",
+      "tokens": 100,
+      "hash": "d4591c6f9c6f0a47",
+      "size": 348,
+      "mtimeMs": 1789494357649.0757,
+      "updatedAt": "2026-09-15T17:45:57.725Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/narrative/cluster.py": {
+      "description": "Group passage embeddings into candidate frames with spherical k-means.",
+      "tokens": 1162,
+      "hash": "5774b82ceef52576",
+      "size": 4065,
+      "mtimeMs": 1795023183517.5686,
+      "updatedAt": "2026-11-18T17:33:03.551Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Clustering",
+          "kind": "class",
+          "startLine": 16,
+          "endLine": 33,
+          "tokens": 175
+        },
+        {
+          "name": "cluster_passages",
+          "kind": "fn",
+          "startLine": 34,
+          "endLine": 84,
+          "tokens": 592
+        },
+        {
+          "name": "_kmeans_pp",
+          "kind": "fn",
+          "startLine": 85,
+          "endLine": 97,
+          "tokens": 152
+        },
+        {
+          "name": "_recompute",
+          "kind": "fn",
+          "startLine": 98,
+          "endLine": 106,
+          "tokens": 84
+        },
+        {
+          "name": "_normalize",
+          "kind": "fn",
+          "startLine": 107,
+          "endLine": 110,
+          "tokens": 42
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/narrative/keywords.py": {
+      "description": "Distinctive terms per cluster (class-based TF-IDF).",
+      "tokens": 1128,
+      "hash": "73801bd4a1f4ca8d",
+      "size": 3947,
+      "mtimeMs": 1795023201346.2698,
+      "updatedAt": "2026-11-18T17:33:21.380Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "tokenize",
+          "kind": "fn",
+          "startLine": 37,
+          "endLine": 41,
+          "tokens": 59
+        },
+        {
+          "name": "cluster_keywords",
+          "kind": "fn",
+          "startLine": 42,
+          "endLine": 94,
+          "tokens": 547
+        },
+        {
+          "name": "_grams",
+          "kind": "fn",
+          "startLine": 95,
+          "endLine": 97,
+          "tokens": 33
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/narrative/labeling.py": {
+      "description": "Turn clusters into named frames, with a chat model or from keywords alone.",
+      "tokens": 1448,
+      "hash": "b0cdce5f51ae57d5",
+      "size": 5068,
+      "mtimeMs": 1795023225883.5635,
+      "updatedAt": "2026-11-18T17:33:45.917Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Frame",
+          "kind": "class",
+          "startLine": 21,
+          "endLine": 40,
+          "tokens": 174
+        },
+        {
+          "name": "FrameLabel",
+          "kind": "class",
+          "startLine": 41,
+          "endLine": 58,
+          "tokens": 202
+        },
+        {
+          "name": "keyword_name",
+          "kind": "fn",
+          "startLine": 59,
+          "endLine": 63,
+          "tokens": 45
+        },
+        {
+          "name": "label_frames",
+          "kind": "fn",
+          "startLine": 64,
+          "endLine": 111,
+          "tokens": 532
+        },
+        {
+          "name": "frames_to_lexicon",
+          "kind": "fn",
+          "startLine": 112,
+          "endLine": 120,
+          "tokens": 103
+        },
+        {
+          "name": "_prompt",
+          "kind": "fn",
+          "startLine": 121,
+          "endLine": 134,
+          "tokens": 157
+        },
+        {
+          "name": "_unique",
+          "kind": "fn",
+          "startLine": 135,
+          "endLine": 138,
+          "tokens": 32
+        },
+        {
+          "name": "_unique_name",
+          "kind": "fn",
+          "startLine": 139,
+          "endLine": 145,
+          "tokens": 57
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/narrative/result.py": {
+      "description": "The in-memory result of a narrative analysis.",
+      "tokens": 2394,
+      "hash": "852a882a24f3a2b3",
+      "size": 8751,
+      "mtimeMs": 1795023248979.9946,
+      "updatedAt": "2026-11-18T17:34:09.015Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "Passage",
+          "kind": "class",
+          "startLine": 26,
+          "endLine": 33,
+          "tokens": 40
+        },
+        {
+          "name": "NarrativeResult",
+          "kind": "class",
+          "startLine": 34,
+          "endLine": 200,
+          "tokens": 2087
+        },
+        {
+          "name": "_snippet",
+          "kind": "fn",
+          "startLine": 201,
+          "endLine": 204,
+          "tokens": 46
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/_inputs.py": {
+      "description": "Input loading shared by workflows.",
+      "tokens": 352,
+      "hash": "d3af633f1f421b03",
+      "size": 1229,
+      "mtimeMs": 1795023260932.9277,
+      "updatedAt": "2026-11-18T17:34:20.984Z",
+      "source": "hook"
+    },
+    "src/semantic_sensemaking/workflows/narrative/pipeline.py": {
+      "description": "Narrative workflow orchestration: segment, embed, cluster, label, map, project.",
+      "tokens": 1546,
+      "hash": "48c9302379e06b94",
+      "size": 5410,
+      "mtimeMs": 1795023298329.3372,
+      "updatedAt": "2026-11-18T17:34:58.504Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "NarrativeRun",
+          "kind": "class",
+          "startLine": 31,
+          "endLine": 35,
+          "tokens": 21
+        },
+        {
+          "name": "segment_corpus",
+          "kind": "fn",
+          "startLine": 36,
+          "endLine": 46,
+          "tokens": 125
+        },
+        {
+          "name": "analyze",
+          "kind": "fn",
+          "startLine": 47,
+          "endLine": 111,
+          "tokens": 697
+        },
+        {
+          "name": "run",
+          "kind": "fn",
+          "startLine": 112,
+          "endLine": 133,
+          "tokens": 293
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/narrative/outputs.py": {
+      "description": "Write a narrative analysis to disk: tables, frame lexicon, figures, summary, manifest.",
+      "tokens": 1644,
+      "hash": "0f1a77b8bcf78b9e",
+      "size": 5756,
+      "mtimeMs": 1795023298613.8557,
+      "updatedAt": "2026-11-18T17:34:58.647Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_outputs",
+          "kind": "fn",
+          "startLine": 24,
+          "endLine": 66,
+          "tokens": 476
+        },
+        {
+          "name": "_write_figures",
+          "kind": "fn",
+          "startLine": 67,
+          "endLine": 111,
+          "tokens": 460
+        },
+        {
+          "name": "_summary",
+          "kind": "fn",
+          "startLine": 112,
+          "endLine": 142,
+          "tokens": 515
+        }
+      ]
+    },
+    "tests/unit/test_narrative.py": {
+      "description": "Narrative workflow: segmentation, clustering, keywords, labeling, projection.",
+      "tokens": 1540,
+      "hash": "fc33d3f6067d7c39",
+      "size": 5390,
+      "mtimeMs": 1795023331890.9773,
+      "updatedAt": "2026-11-18T17:35:31.926Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "two_topic_corpus",
+          "kind": "fn",
+          "startLine": 25,
+          "endLine": 34,
+          "tokens": 61
+        },
+        {
+          "name": "test_segment_corpus_keeps_document_and_position",
+          "kind": "fn",
+          "startLine": 35,
+          "endLine": 43,
+          "tokens": 112
+        },
+        {
+          "name": "test_clustering_separates_clear_groups_and_is_deterministic",
+          "kind": "fn",
+          "startLine": 44,
+          "endLine": 55,
+          "tokens": 152
+        },
+        {
+          "name": "test_clustering_respects_min_size_and_orders_largest_first",
+          "kind": "fn",
+          "startLine": 56,
+          "endLine": 68,
+          "tokens": 144
+        },
+        {
+          "name": "test_keywords_are_distinctive_and_skip_stopwords",
+          "kind": "fn",
+          "startLine": 69,
+          "endLine": 78,
+          "tokens": 120
+        },
+        {
+          "name": "FakeChat",
+          "kind": "class",
+          "startLine": 79,
+          "endLine": 97,
+          "tokens": 153
+        },
+        {
+          "name": "test_label_frames_with_chat_dedupes_names_and_falls_back_per_frame",
+          "kind": "fn",
+          "startLine": 98,
+          "endLine": 106,
+          "tokens": 132
+        },
+        {
+          "name": "test_analyze_end_to_end_offline",
+          "kind": "fn",
+          "startLine": 107,
+          "endLine": 133,
+          "tokens": 340
+        },
+        {
+          "name": "test_analyze_requires_embedding_backend",
+          "kind": "fn",
+          "startLine": 134,
+          "endLine": 137,
+          "tokens": 54
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/propose.py": {
+      "description": "Ask a chat model to draft concept groups and, optionally, missing backbone domains.",
+      "tokens": 1352,
+      "hash": "38228fb337fb50d0",
+      "size": 4731,
+      "mtimeMs": 1795023558077.703,
+      "updatedAt": "2026-11-18T17:39:18.111Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "ProposedGroup",
+          "kind": "class",
+          "startLine": 20,
+          "endLine": 28,
+          "tokens": 102
+        },
+        {
+          "name": "ProposedLexicon",
+          "kind": "class",
+          "startLine": 29,
+          "endLine": 32,
+          "tokens": 26
+        },
+        {
+          "name": "ProposedDomain",
+          "kind": "class",
+          "startLine": 33,
+          "endLine": 38,
+          "tokens": 88
+        },
+        {
+          "name": "ProposedDomains",
+          "kind": "class",
+          "startLine": 39,
+          "endLine": 42,
+          "tokens": 20
+        },
+        {
+          "name": "propose_lexicon",
+          "kind": "fn",
+          "startLine": 43,
+          "endLine": 78,
+          "tokens": 498
+        },
+        {
+          "name": "propose_domains",
+          "kind": "fn",
+          "startLine": 79,
+          "endLine": 112,
+          "tokens": 389
+        },
+        {
+          "name": "_clean_terms",
+          "kind": "fn",
+          "startLine": 113,
+          "endLine": 115,
+          "tokens": 44
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/grounding.py": {
+      "description": "Check proposed terms against a seed corpus and keep the ones that occur in it.",
+      "tokens": 1158,
+      "hash": "b6e97aa2941f7f2c",
+      "size": 4057,
+      "mtimeMs": 1795023571651.5244,
+      "updatedAt": "2026-11-18T17:39:31.689Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "TermEvidence",
+          "kind": "class",
+          "startLine": 19,
+          "endLine": 29,
+          "tokens": 73
+        },
+        {
+          "name": "ground_lexicon",
+          "kind": "fn",
+          "startLine": 30,
+          "endLine": 63,
+          "tokens": 382
+        },
+        {
+          "name": "grounded_lexicon",
+          "kind": "fn",
+          "startLine": 64,
+          "endLine": 81,
+          "tokens": 220
+        },
+        {
+          "name": "evidence_frame",
+          "kind": "fn",
+          "startLine": 82,
+          "endLine": 99,
+          "tokens": 163
+        },
+        {
+          "name": "_best_passage_similarity",
+          "kind": "fn",
+          "startLine": 100,
+          "endLine": 111,
+          "tokens": 165
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/result.py": {
+      "description": "The in-memory result of a problem formulation.",
+      "tokens": 921,
+      "hash": "42e9d9d00d902fed",
+      "size": 3222,
+      "mtimeMs": 1795023626506.7854,
+      "updatedAt": "2026-11-18T17:40:26.553Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FormulationResult",
+          "kind": "class",
+          "startLine": 15,
+          "endLine": 84,
+          "tokens": 798
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/pipeline.py": {
+      "description": "Formulation workflow orchestration: propose, ground, check coverage, write drafts.",
+      "tokens": 1875,
+      "hash": "ce8a71c785f0db27",
+      "size": 6564,
+      "mtimeMs": 1795023599437.559,
+      "updatedAt": "2026-11-18T17:39:59.469Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FormulationRun",
+          "kind": "class",
+          "startLine": 26,
+          "endLine": 30,
+          "tokens": 22
+        },
+        {
+          "name": "formulate",
+          "kind": "fn",
+          "startLine": 31,
+          "endLine": 131,
+          "tokens": 1101
+        },
+        {
+          "name": "run",
+          "kind": "fn",
+          "startLine": 132,
+          "endLine": 161,
+          "tokens": 401
+        }
+      ]
+    },
+    "src/semantic_sensemaking/workflows/formulation/outputs.py": {
+      "description": "Write a formulation to disk: draft lexicon and taxonomy, evidence tables, summary, manifest.",
+      "tokens": 1316,
+      "hash": "12b36bdf6cf6e20e",
+      "size": 4608,
+      "mtimeMs": 1795023618946.222,
+      "updatedAt": "2026-11-18T17:40:18.980Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "write_outputs",
+          "kind": "fn",
+          "startLine": 23,
+          "endLine": 67,
+          "tokens": 580
+        },
+        {
+          "name": "_summary",
+          "kind": "fn",
+          "startLine": 68,
+          "endLine": 106,
+          "tokens": 555
+        }
+      ]
+    },
+    "tests/unit/test_formulation.py": {
+      "description": "Formulation workflow: proposal parsing, grounding, coverage, domain proposals.",
+      "tokens": 1665,
+      "hash": "86000e5772e41137",
+      "size": 5826,
+      "mtimeMs": 1795023653336.7332,
+      "updatedAt": "2026-11-18T17:40:53.369Z",
+      "source": "hook",
+      "symbols": [
+        {
+          "name": "FakeChat",
+          "kind": "class",
+          "startLine": 47,
+          "endLine": 64,
+          "tokens": 118
+        },
+        {
+          "name": "test_propose_cleans_terms_dedupes_groups_and_caps",
+          "kind": "fn",
+          "startLine": 65,
+          "endLine": 72,
+          "tokens": 126
+        },
+        {
+          "name": "test_propose_rejects_empty_proposal",
+          "kind": "fn",
+          "startLine": 73,
+          "endLine": 78,
+          "tokens": 85
+        },
+        {
+          "name": "test_keyword_grounding_keeps_terms_found_in_corpus",
+          "kind": "fn",
+          "startLine": 79,
+          "endLine": 89,
+          "tokens": 159
+        },
+        {
+          "name": "test_semantic_grounding_records_similarity",
+          "kind": "fn",
+          "startLine": 90,
+          "endLine": 96,
+          "tokens": 107
+        },
+        {
+          "name": "test_formulate_end_to_end_with_domain_proposal",
+          "kind": "fn",
+          "startLine": 97,
+          "endLine": 121,
+          "tokens": 309
+        },
+        {
+          "name": "test_formulate_without_grounding_and_from_existing_lexicon",
+          "kind": "fn",
+          "startLine": 122,
+          "endLine": 131,
+          "tokens": 146
+        },
+        {
+          "name": "test_formulate_errors_are_explicit",
+          "kind": "fn",
+          "startLine": 132,
+          "endLine": 139,
+          "tokens": 143
+        }
+      ]
+    },
+    "tests/unit/test_apps.py": {
+      "description": "Tapis app definitions stay in sync with the configuration they set.",
+      "tokens": 354,
+      "hash": "6a96e1663d95757b",
+      "size": 1239,
+      "mtimeMs": 1795023728600.6855,
+      "updatedAt": "2026-11-18T17:42:08.639Z",
+      "source": "hook"
+    }
+  },
+  "preamble": [
+    "> Project structure index. Auto-maintained by OpenWolf hooks and daemon.",
+    "> Run `openwolf scan` to generate, or wait for the first Claude Code session.",
+    "> Status: Pending initial scan"
+  ]
+}

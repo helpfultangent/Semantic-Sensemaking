@@ -1,0 +1,233 @@
+{
+  "id": "semantic-sensemaking-narrative",
+  "version": "0.1.0",
+  "description": "Find the narrative frames in a document collection and project them onto a science backbone.",
+  "owner": "${apiUserId}",
+  "enabled": true,
+  "runtime": "SINGULARITY",
+  "runtimeVersion": null,
+  "runtimeOptions": [
+    "SINGULARITY_RUN"
+  ],
+  "containerImage": "docker://ghcr.io/helpfultangent/semantic-sensemaking:0.1.0",
+  "jobType": "BATCH",
+  "maxJobs": -1,
+  "maxJobsPerUser": -1,
+  "strictFileInputs": true,
+  "jobAttributes": {
+    "description": null,
+    "dynamicExecSystem": false,
+    "execSystemConstraints": null,
+    "execSystemId": "ls6",
+    "execSystemExecDir": "${JobWorkingDir}",
+    "execSystemInputDir": "${JobWorkingDir}",
+    "execSystemOutputDir": "${JobWorkingDir}/output",
+    "execSystemLogicalQueue": "development",
+    "archiveSystemId": "cloud.data",
+    "archiveSystemDir": "HOST_EVAL($HOME)/tapis-jobs-archive/${JobCreateDate}/${JobName}-${JobUUID}",
+    "archiveOnAppError": true,
+    "isMpi": false,
+    "mpiCmd": null,
+    "cmdPrefix": "mkdir $PWD/work $PWD/home $PWD/scratch;",
+    "parameterSet": {
+      "appArgs": [],
+      "schedulerOptions": [
+        {
+          "name": "TACC Scheduler Profile",
+          "description": "Scheduler profile for HPC clusters at TACC",
+          "inputMode": "FIXED",
+          "arg": "--tapis-profile tacc-apptainer",
+          "notes": {
+            "isHidden": true
+          }
+        },
+        {
+          "name": "TAP Session Substring",
+          "description": "TAP Functions require the substring 'tap_' and in the slurm job name in order to function.",
+          "inputMode": "FIXED",
+          "arg": "--job-name ${JobName}-tap_",
+          "notes": {
+            "isHidden": true
+          }
+        }
+      ],
+      "envVariables": [
+        {
+          "key": "SSM_WORKFLOW",
+          "value": "narrative",
+          "description": "Workflow run by the shared image.",
+          "inputMode": "FIXED",
+          "notes": {
+            "isHidden": true
+          }
+        },
+        {
+          "key": "SSM_EMBEDDING__KIND",
+          "value": "openai_compatible",
+          "description": "Embedding backend. openai_compatible: an embedding server such as vLLM or Ollama (set the URL and model below). hashing: offline word hashing, only for checking that a job runs; its frames are not meaningful.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_EMBEDDING__BASE_URL",
+          "value": "http://localhost:8000/v1",
+          "description": "URL of the OpenAI-compatible embedding server, ending in /v1. Must be reachable from the compute node.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_EMBEDDING__MODEL",
+          "value": "BAAI/bge-small-en-v1.5",
+          "description": "Embedding model name served at that URL.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CHAT__KIND",
+          "value": "none",
+          "description": "Optional chat model to name frames. none: frames are named by their distinctive keywords. openai_compatible: a chat server (set the URL and model below).",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CHAT__BASE_URL",
+          "value": "http://localhost:8001/v1",
+          "description": "URL of the OpenAI-compatible chat server, ending in /v1.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CHAT__MODEL",
+          "value": "meta-llama/Llama-3.1-8B-Instruct",
+          "description": "Chat model name served at that URL.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_NARRATIVE__MAX_FRAMES",
+          "value": "12",
+          "description": "Upper bound on the number of frames. Small collections get fewer.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_NARRATIVE__SEGMENT_WORDS",
+          "value": "200",
+          "description": "Passage length in words. Each passage is assigned to one frame.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_NARRATIVE__MIN_FRAME_PASSAGES",
+          "value": "2",
+          "description": "Frames with fewer passages are folded into the nearest frame.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_SCORING__MAPPING_METHOD",
+          "value": "embedding",
+          "description": "How frames map onto the backbone. embedding: by meaning, using the embedding server. legacy or subdiscipline_aware: by matching frame terms to backbone terms.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_SCORING__UNMAPPED_GROUPS",
+          "value": "keep",
+          "description": "Frames that match no backbone domain. keep: reported under Uncategorized. drop: given weight 0.",
+          "inputMode": "INCLUDE_BY_DEFAULT",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CORPUS__GLOB_PATTERNS",
+          "value": "[\"*\"]",
+          "description": "JSON list of file name patterns to include, e.g. [\"*Brown_Bag*\"].",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CORPUS__MAX_FILES",
+          "value": "200",
+          "description": "Maximum number of files to read from the corpus folder.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_CORPUS__MIN_CHARS",
+          "value": "200",
+          "description": "Skip files with fewer characters of text than this.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_VIZ__PER_DOCUMENT_FIGURES",
+          "value": "false",
+          "description": "Also write one backbone figure per document.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        },
+        {
+          "key": "SSM_LOG_LEVEL",
+          "value": "INFO",
+          "description": "DEBUG, INFO, WARNING, or ERROR.",
+          "inputMode": "INCLUDE_ON_DEMAND",
+          "notes": {}
+        }
+      ],
+      "archiveFilter": {
+        "includes": [],
+        "excludes": [],
+        "includeLaunchFiles": true
+      }
+    },
+    "fileInputs": [
+      {
+        "name": "Corpus",
+        "description": "Folder of documents to analyze: .txt, .md, .json transcripts, .docx, or .pdf (text layer).",
+        "inputMode": "REQUIRED",
+        "autoMountLocal": true,
+        "sourceUrl": null,
+        "targetPath": "corpus"
+      },
+      {
+        "name": "Science backbone (JSON)",
+        "description": "Optional. A science_backbone.json or structured taxonomy file. Omit to use the built-in SUBSIDE backbone.",
+        "inputMode": "OPTIONAL",
+        "autoMountLocal": true,
+        "sourceUrl": null,
+        "targetPath": "taxonomy.json"
+      },
+      {
+        "name": "Job configuration (YAML)",
+        "description": "Optional. Full settings file; see configs/narrative-example.yaml in the repository.",
+        "inputMode": "OPTIONAL",
+        "autoMountLocal": true,
+        "sourceUrl": null,
+        "targetPath": "job.yaml"
+      }
+    ],
+    "fileInputArrays": [],
+    "nodeCount": 1,
+    "coresPerNode": 1,
+    "memoryMB": 8000,
+    "maxMinutes": 60,
+    "subscriptions": [],
+    "tags": []
+  },
+  "tags": [
+    "portalName: ALL"
+  ],
+  "notes": {
+    "label": "Semantic Sensemaking: narrative frames",
+    "helpUrl": "https://github.com/helpfultangent/Semantic-Sensemaking/blob/main/src/semantic_sensemaking/workflows/narrative/README.md",
+    "helpText": "Splits a folder of documents into passages, groups passages that discuss similar things into narrative frames, names each frame, and places the frames on a science backbone. Writes CSV tables, the frames as an editable dictionary (frames_lexicon.json) for the dictionary app, interactive HTML figures, a Markdown summary, and a manifest. Needs an embedding server.",
+    "hideNodeCountAndCoresPerNode": true,
+    "isInteractive": false,
+    "icon": "jupyter",
+    "category": "Data Processing",
+    "queueFilter": [
+      "development",
+      "normal"
+    ]
+  }
+}

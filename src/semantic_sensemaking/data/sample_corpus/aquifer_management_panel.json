@@ -1,0 +1,10 @@
+{
+  "title": "Aquifer management panel (synthetic example)",
+  "speakers": [
+    {"speaker": "Moderator", "text": "Welcome to the panel. Today we are discussing how the groundwater management area responds when monitoring shows the aquifer is still declining."},
+    {"speaker": "District manager", "text": "Our groundwater conservation district adopted new pumping rules last year. Withdrawal permits now depend on drawdown measured at the monitoring wells, and the GCD board reviews them each season."},
+    {"speaker": "Hydrogeologist", "text": "The extensometers tell the real story. Compaction in the clay layers continues even after water levels recover, so land subsidence we see today reflects depletion from twenty years ago. A MODFLOW model with subsidence packages helps us explain that lag to stakeholders."},
+    {"speaker": "Policy analyst", "text": "Governance is the hard part. Regulation has to balance agricultural production, municipal supply for growing cities, and long-term protection of the aquifer. Decision support tools only help if the management rules are transparent."},
+    {"speaker": "Moderator", "text": "Thank you all. The GMA will publish the updated desired future conditions for public comment next month."}
+  ]
+}

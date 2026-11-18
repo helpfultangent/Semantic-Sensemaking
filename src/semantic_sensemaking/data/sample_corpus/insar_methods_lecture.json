@@ -1,0 +1,10 @@
+{
+  "title": "Remote sensing methods lecture (synthetic example)",
+  "chunks": [
+    {"timestamp": [0.0, 45.0], "text": "Today we cover interferometric synthetic aperture radar. InSAR measures ground displacement by comparing the phase of two radar acquisitions over the same area."},
+    {"timestamp": [45.0, 110.0], "text": "Persistent scatterer techniques, often called PSInSAR, track stable reflectors such as buildings across hundreds of Sentinel-1 scenes. Older missions like ALOS and Envisat extend the record back in time."},
+    {"timestamp": [110.0, 170.0], "text": "Satellite observations need ground truth. We tie the interferogram to GNSS stations and to leveling surveys so the geodetic reference frame is consistent."},
+    {"timestamp": [170.0, 240.0], "text": "Airborne lidar adds high resolution elevation models, which help separate natural compaction of deltaic sediment from subsidence caused by pumping."},
+    {"timestamp": [240.0, 320.0], "text": "Finally, machine learning is increasingly used here. A convolutional neural network can flag unwrapping errors, and an LSTM can forecast displacement time series, but a physics-based numerical model is still needed to interpret the causes."}
+  ]
+}

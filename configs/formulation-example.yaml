@@ -1,0 +1,42 @@
+# Formulation workflow: draft a lexicon and taxonomy for a problem statement.
+#
+# A chat model proposes concept groups; terms that never occur in the seed corpus
+# are dropped; the rest are mapped onto the backbone so gaps are flagged. Edit the
+# drafts it writes (lexicon_draft.json, taxonomy_draft.json), then run the
+# dictionary workflow with them.
+
+workflow: formulation
+
+inputs:
+  use_sample_corpus: true     # replace with corpus: path/to/seed_documents
+  # taxonomy: path/to/science_backbone.json   # default: built-in subside_v1
+  # lexicon: path/to/existing.csv             # check this lexicon instead of drafting one
+
+formulation:
+  problem_statement: >
+    How does groundwater policy interact with coastal subsidence research?
+  max_groups: 20
+  max_terms_per_group: 12
+  grounding: keyword          # keyword | semantic | none
+  min_term_count: 1
+  min_terms_per_group: 1
+  propose_domains: true       # ask the model for domains covering uncategorized groups
+  lexicon_name: groundwater_policy_v1
+
+# Grounding counts terms exactly as the dictionary workflow will.
+scoring:
+  match_mode: longest_match
+  mapping_method: subdiscipline_aware
+
+chat:
+  kind: anthropic             # reads ANTHROPIC_API_KEY
+# chat:
+#   kind: openai_compatible
+#   base_url: http://localhost:8001/v1
+#   model: meta-llama/Llama-3.1-8B-Instruct
+
+# Needed only for grounding: semantic or mapping_method: embedding
+# embedding:
+#   kind: openai_compatible
+#   base_url: http://localhost:8000/v1
+#   model: BAAI/bge-small-en-v1.5

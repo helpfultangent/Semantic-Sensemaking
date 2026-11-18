@@ -1,143 +1,208 @@
-This template is the first in a [series of templates](#next-templates) that will guide you through the process of creating a cookbook and running it on TACC systems. From simple ones that run a command to more complex ones that run a Python script using conda or a Jupyter Notebook.
+# Semantic Sensemaking
 
-## Requirements
+A Python library and set of TACC cookbook apps for making sense of document
+collections — transcripts, papers, reports, notes — by placing what they talk
+about on a shared **science backbone** (a taxonomy of research domains and
+subdisciplines).
 
-- A GitHub account
-- TACC account. If you don't have one, you can request one [here](https://accounts.tacc.utexas.edu/register).
-- To access TACC systems, you should have an [allocation](https://tacc.utexas.edu/use-tacc/allocations/).
-  - You can see your allocations [here](https://ptdatax.tacc.utexas.edu/workbench/allocations/approved).
-  - If you don't have an allocation, you can request one [here](https://portal.tacc.utexas.edu/allocation-request).
+Three workflows share one set of tools:
 
-## Template Overview
+| Workflow | Question it answers | Reads | Writes |
+|---|---|---|---|
+| **formulation** | *What concepts and vocabulary does our problem involve?* | a problem statement, a seed corpus | a draft lexicon and taxonomy |
+| **dictionary** | *Where, and how much, does this collection talk about each concept?* | a corpus, a lexicon, a taxonomy | counts, backbone projection, figures |
+| **narrative** | *What recurring stories or frames does this collection contain?* | a corpus, a taxonomy | frames, backbone projection, figures, frames as a lexicon |
 
-This template creates a simple Python script that will be used to demonstrate how to run a cookbook on a TACC cluster and obtain the output using a UI. The cookbook will use a CSV file stored on TACC storage and run a Python script that reads it, calculates the average of the values in the first column, and writes the result to a file.
+They chain: formulation drafts the lexicon the dictionary workflow reads, and
+narrative exports its frames as a lexicon the dictionary workflow can count
+across other collections.
 
-In this case, the file is small for demonstration purposes. However, you can use the same process to analyze large files.
-
-### How does it work?
-
-1. [`app.json`](app.json) file: contains the definition of the Tapis application, including the application's name, description, Docker image, input files, and advanced options.
-2. [`Dockerfile`](Dockerfile): a Docker image is built from the [`Dockerfile`](./Dockerfile). The Docker image defines the runtime environment for the application and the files that will be used by the application.
-3. [`run.sh`](run.sh): contains all the commands that will be executed on the TACC cluster.
-
-### Upload files to TACC storage
-
-One of the goals of the template is to demonstrate how to use the TACC storage system to store the input and output files. So, you should upload the CSV file to the TACC storage system.
-
-1. Go to the [TACC Portal](https://portal.tacc.utexas.edu).
-2. Click on the "Data Files" tab.
-3. Click on the "Add +" button.
-   ![alt text](images/image.png)
-4. Click on the "Upload" button.
-   ![alt text](images/image-1.png)
-5. Select the file you want to upload and click `Upload Selected`.
-
-### Modify the Dockerfile
-
-The `Dockerfile` is used to create a Docker image that will be used to run the Python script. In this case, the Docker image is created using the `microconda` base image, which is a minimal image that contains conda.
-
-For example, the Dockerfile below installs `curl` using `apt-get`. This is useful if you need to install packages that are not available in conda.
-
-```Dockerfile
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+```mermaid
+flowchart LR
+    P[Problem statement + seed corpus] --> F[formulation]
+    F -->|lexicon_draft.json<br>taxonomy_draft.json| D[dictionary]
+    C[Corpus] --> D
+    C --> N[narrative]
+    N -->|frames_lexicon.json| D
+    D --> O[Backbone overlay, tables, summary]
+    N --> O
 ```
 
-### Define conda dependencies using `environment.yaml`
-
-The `environment.yaml` file is used to define the conda environment that will be used to run the Python script. In this case, the `environment.yaml` file contains the dependencies needed to run the Python script.
-
-```yaml
-name: base
-channels:
-  - conda-forge
-dependencies:
-  - python=3.9.1
-  - pandas=1.2.1
-```
-
-### Job run script
-
-The `run.sh` file is used to run the Python script. It activates the conda environment and runs the Python script.
+## Install
 
 ```bash
-#!/bin/bash
-set -xe
-
-cd ${_tapisExecSystemInputDir}
-python /code/main.py billing.csv ${_tapisExecSystemOutputDir}/output.txt
+conda env create -f environment.yaml
+conda activate semantic-sensemaking
+python -m pip install -e ".[dev]"      # library + readers + figures + test tools
 ```
 
-The `run.sh` has two variables that are used to define the input and output directories. These variables are `_tapisExecSystemInputDir` and `_tapisExecSystemOutputDir` which are automatically set by the Tapis system.
+Optional extras: `readers` (`.docx`, `.pdf`), `viz` (Plotly figures), `embed`
+(local Hugging Face embeddings, pulls in PyTorch), `llm` (Anthropic SDK), `all`.
 
-- \_tapisExecSystemInputDir: The directory where the input files are staged
-- \_tapisExecSystemOutputDir: The directory where the application writes the output files
+## Quick start
 
-## Create your cookbook
-
-You can use this repository as a template to create your cookbook. Follow the steps below to create your cookbook.
-
-### Create a new repository
-
-1. Click on the "Use this template" button to create a new repository
-2. Fill in the form with the information for your new repository
-
-### Build the Docker image
-
-1. Clone the repository
-2. Build the Docker image using the command below
+Every workflow runs from the `semantic-sensemaking` command and writes one run
+directory under `results/` containing CSV tables, a `summary.md`, a
+`manifest.json` (inputs, hashes, versions, settings), and HTML figures where
+relevant. These commands use the built-in sample corpus and need no model:
 
 ```bash
-docker build -t cookbook-python .
+# Count the built-in SUBSIDE dictionary in the sample corpus
+semantic-sensemaking dictionary --sample-corpus
+
+# Find frames (hashing embeddings: checks the pipeline, frames are not meaningful)
+semantic-sensemaking narrative --sample-corpus --set embedding.kind=hashing --set narrative.segment_words=40
+
+# Check an existing lexicon against a seed corpus and write review drafts
+semantic-sensemaking formulation --sample-corpus --lexicon my_lexicon.csv
 ```
 
-3. Push the Docker image to a container registry
+With your own data and models, use a job file — annotated examples are in
+[`configs/`](configs/):
 
 ```bash
-docker tag cookbook-python <your-registry>/cookbook-python
-docker push <your-registry>/cookbook-python
+semantic-sensemaking dictionary  --config configs/dictionary-example.yaml  --corpus path/to/docs
+semantic-sensemaking narrative   --config configs/narrative-example.yaml   --corpus path/to/docs
+semantic-sensemaking formulation --config configs/formulation-example.yaml --corpus path/to/seed_docs
 ```
 
-### Modify the `app.json` file
+Settings are layered: defaults < job file < `SSM_*` environment variables
+(`SSM_CORPUS__MAX_FILES=50`) < command-line flags and `--set key=value`.
+Unknown keys are errors. `semantic-sensemaking config show --workflow narrative ...`
+prints the resolved settings; `semantic-sensemaking schema <dir>` writes JSON Schemas for
+lexicon, taxonomy, and job files.
 
-Each app has a unique `id` and `description`. So, you should change these fields to match your app's name and description.
+### Models
 
-1. Download the `app.json` file
-2. Change the values `id` and `description` fields with the name and description as you wish.
+Embedding and chat models sit behind one interface, chosen in the `embedding`
+and `chat` sections:
 
-### Create a New Application on the Cookbook UI
+| `kind` | Embeddings | Chat | Notes |
+|---|---|---|---|
+| `openai_compatible` | yes | yes | Any `/v1` server: vLLM or Ollama on a TACC node, or a hosted API |
+| `anthropic` | — | yes | Claude; reads `ANTHROPIC_API_KEY` (or `api_key_env`) |
+| `huggingface_local` | yes | — | Needs the `embed` extra |
+| `hashing` | yes | — | Deterministic and offline; for tests only |
+| `none` | — | — | Default |
 
-1. Go to [Cookbook UI](https://in-for-disaster-analytics.github.io/cookbooks-ui/#/apps)
-2. Click on the "Create Application" button
-3. Fill in the form with the information from your `app.json` file
-4. Click "Create Application"
-5. A new application will be created, and you will be redirected to the application's page
+API keys are read from the environment variable named by `api_key_env` (default
+`OPENAI_API_KEY` or `ANTHROPIC_API_KEY`); job
+files and manifests hold the variable's name, never its value.
 
-### Run your Cookbook
+| Workflow | Embedding | Chat |
+|---|---|---|
+| dictionary | only for `scoring.method: semantic` or `mapping_method: embedding` | not used |
+| narrative | required | optional (names frames; otherwise keywords) |
+| formulation | only for semantic grounding or embedding mapping | required to draft a lexicon; not needed to check an existing one |
 
-1. Go to the application's page on the Cookbook UI, if you are not already there
-2. Click on the "Run" button on the right side of the page. This will open the Portal UI
-3. Click on the "Select" button to choose the input file
-   ![alt text](images/image-2.png)
-4. Click "Run"
+### Inputs
 
-### Check the output
+- **Corpus**: a folder of `.txt`, `.md`, `.json` transcripts (`text`, `content`,
+  `chunks`, or `speakers` layouts), `.docx`, or `.pdf` with a text layer. Filter
+  with `corpus.glob_patterns`, `corpus.max_files`, `corpus.min_chars`.
+- **Lexicon**: JSON (`{"Group": ["term", ...]}` or the structured format) or CSV
+  with `group,term` columns — see [`configs/lexicon-template.json`](configs/lexicon-template.json)
+  and [`configs/lexicon-template.csv`](configs/lexicon-template.csv). Defaults to
+  the built-in SUBSIDE lexicon.
+- **Taxonomy**: a `science_backbone.json` or structured taxonomy file. Defaults
+  to the built-in SUBSIDE backbone.
 
-1. After the job finishes, you can check the output by clicking on the "Output location" link on the job's page
-   ![Show a job finished ](images/job-finished.png)
-2. You will be redirected to the output location, where you can see the output files generated by the job
-   ![alt text](images/image-4.png)
-3. Click on a file to see its content. In this case, the file is named `output.txt`
-   ![alt text](images/image-3.png)
+## Using the library
 
-## Next templates
+Each workflow has a pure `analyze`/`formulate` function for notebooks, separate
+from the file-writing `run`:
 
-- [Running a command](https://github.com/In-For-Disaster-Analytics/Cookbook-Docker-Template)
-- [Running a Python script using conda](https://github.com/In-For-Disaster-Analytics/Cookbook-Conda-Template)
-- [Running a Jupyter Notebook](https://github.com/In-For-Disaster-Analytics/Cookbook-Jupyter-Template)
+```python
+from semantic_sensemaking import load_corpus, load_lexicon, load_taxonomy, sample_corpus_path
+from semantic_sensemaking.workflows.dictionary import analyze
+
+result = analyze(load_corpus(sample_corpus_path()), load_lexicon(), load_taxonomy())
+result.projection.domain_totals()
+```
+
+The package is layered; lower layers never import higher ones (enforced by
+[`tests/unit/test_layering.py`](tests/unit/test_layering.py)):
+
+| Package | Role |
+|---|---|
+| `core` | Config, data types, run context, text helpers |
+| `corpus` | Read and select documents |
+| `lexicon` | Load/save lexicons; keyword and semantic matching and scoring |
+| `taxonomy` | Load/save taxonomies; map term sets onto them; project weights |
+| `backends` | Embedding and chat backends |
+| `viz` | Backbone overlay, comparison, and heatmap figures |
+| `report` | CSV, Markdown summary, and manifest writers |
+| `workflows` | `dictionary`, `narrative`, `formulation` — each built only from the layers above |
+
+Design notes for the newer workflows:
+[narrative](src/semantic_sensemaking/workflows/narrative/README.md),
+[formulation](src/semantic_sensemaking/workflows/formulation/README.md).
+
+## Running on TACC
+
+One container image serves every workflow; each Tapis app picks its workflow with
+`SSM_WORKFLOW` and exposes settings as `SSM_*` environment variables.
+
+| File | Purpose |
+|---|---|
+| [`docker/Dockerfile`](docker/Dockerfile) | Image: installs the package with the `tacc` extra (readers + figures, no PyTorch) |
+| [`docker/run.sh`](docker/run.sh) | Entrypoint: finds staged inputs (`corpus/`, `lexicon.json`/`.csv`, `taxonomy.json`, `job.yaml`) and runs the workflow |
+| [`apps/dictionary/app.json`](apps/dictionary/app.json) | Tapis app for the dictionary workflow |
+| [`apps/narrative/app.json`](apps/narrative/app.json) | Tapis app for the narrative workflow — needs an embedding server reachable from the compute node (e.g. vLLM); `SSM_EMBEDDING__KIND=hashing` runs without one for a smoke test |
+
+[`.github/workflows/docker.yaml`](.github/workflows/docker.yaml) builds the image
+and pushes it to `ghcr.io` on pushes to `main` and version tags. To build it
+yourself:
+
+```bash
+docker build -f docker/Dockerfile -t semantic-sensemaking .
+docker tag semantic-sensemaking <your-registry>/semantic-sensemaking:0.1.0
+docker push <your-registry>/semantic-sensemaking:0.1.0
+```
+
+### Requirements
+
+- A TACC account ([request one](https://accounts.tacc.utexas.edu/register)) and an
+  [allocation](https://tacc.utexas.edu/use-tacc/allocations/).
+
+### Register and run an app
+
+1. Upload your corpus folder (and optional lexicon, taxonomy, or job file) in the
+   [TACC Portal](https://portal.tacc.utexas.edu) under **Data Files → Add + → Upload**.
+   ![Add files](images/image.png)
+2. In the [Cookbook UI](https://in-for-disaster-analytics.github.io/cookbooks-ui/#/apps),
+   click **Create Application** and fill in the form from
+   `apps/<workflow>/app.json`. If you host your own image, change
+   `containerImage`; change `id` if you register a variant.
+3. On the app's page, click **Run**, select the input files, and submit.
+   ![Select inputs](images/image-2.png)
+4. When the job finishes, open **Output location** on the job page. The run
+   directory holds the tables, figures, `summary.md`, and `manifest.json`.
+   ![Job finished](images/job-finished.png)
+
+## Development
+
+```bash
+python -m pytest                 # unit, integration, and prototype-parity tests
+ruff check src tests
+python -m pytest --nbmake notebooks/01_dictionary_overlay.ipynb   # example notebook, as CI runs it
+pre-commit install               # ruff + notebook output stripping on commit
+```
+
+The repository includes [Claude Code](https://claude.com/claude-code) project
+settings that call [OpenWolf](https://www.npmjs.com/package/openwolf) hooks.
+The hook scripts are machine-local; to use them after cloning, run
+`npm install && npx openwolf init`. Without them, Claude Code reports failed hooks
+but works normally.
+
+Tests needing a live model endpoint are marked `integration` and read
+`SSM_TEST_BASE_URL`. The parity tests in `tests/parity/` pin the dictionary
+workflow to the original SUBSIDE prototype notebook
+([`notebooks/_prototype/`](notebooks/_prototype/)).
 
 ## Authors
 
 - William Mobley - wmobley@tacc.utexas.edu
 - Maximiliano Osorio - maxiosorio@gmail.com
+
+Started from the TACC [cookbook templates](https://github.com/In-For-Disaster-Analytics/Cookbook-Conda-Template).
