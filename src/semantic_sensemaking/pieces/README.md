@@ -79,6 +79,15 @@ A registered piece is wired to its Tapis token and its required arguments only
 (`output_uri`, plus `source_uri` for `ingest_corpus`). To expose a setting as a
 run argument, name it: `registration("score_lexicon", sha, optional=("lexicon_uri",))`.
 
+Each contract names one input, the one that places the piece in a chain, and
+lists the output it hands on first. A planner that chains pieces by matching
+output to input would otherwise skip a step: `render_report` also reads term
+counts, and declaring that would let it follow `score_lexicon` directly.
+`score_lexicon` and `discover_frames` both turn a corpus into term counts, so
+such a planner cannot tell the dictionary flow from the narrative flow by
+contract alone; register only the pieces of the flow you mean to run, or choose
+the piece explicitly.
+
 ## Limits
 
 - No piece has been run on Tapis yet. Installing the library inside a function

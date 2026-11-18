@@ -257,6 +257,24 @@ def test_only_required_arguments_are_bound_unless_a_setting_is_asked_for():
         registration("score_lexicon", "0123abc", optional=("nope",))
 
 
+def test_contracts_chain_each_flow_by_first_output_and_single_input():
+    def chain(*names):
+        for earlier, later in zip(names, names[1:]):
+            assert SPECS[earlier].outputs[0] == SPECS[later].inputs[0], (earlier, later)
+    for spec in SPECS.values():
+        assert len(spec.inputs) == 1, spec.name
+    chain("ingest_corpus", "score_lexicon", "map_and_project", "render_report")
+    chain("ingest_corpus", "discover_frames", "map_and_project", "render_report")
+    chain("ingest_corpus", "draft_lexicon")
+
+
+def test_engine_supplied_arguments_are_bound_but_not_declared():
+    args = registration("ingest_corpus", "0123abc")
+    assert args["env_from_args"]["SOURCE_URI"] == "source_uri"
+    assert set(args["parameters"]["properties"]) == {"output_uri"}
+    assert args["parameters"]["required"] == ["output_uri"]
+
+
 def test_stored_source_can_install_from_a_fork():
     source = stored_source("score_lexicon", "0123abc", repository="someone/Semantic-Sensemaking")
     assert "github.com/someone/Semantic-Sensemaking/archive/0123abc.tar.gz" in source

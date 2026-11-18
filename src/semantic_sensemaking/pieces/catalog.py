@@ -14,6 +14,9 @@ VARIABLE_PREFIX = "https://w3id.org/okn/i/mint/"
 REPOSITORY = "helpfultangent/Semantic-Sensemaking"
 ARCHIVE_URL = "https://github.com/{repository}/archive/{ref}.tar.gz"
 
+# Arguments the workflow engine fills in itself; a piece binds but never declares them.
+ENGINE_SUPPLIED = frozenset({"tapis_token", "source_uri"})
+
 CORPUS = "document_collection__text"
 LEXICON = "lexicon__term_set"
 BACKBONE = "science_backbone__domain_set"
@@ -29,6 +32,11 @@ class PieceSpec:
     name: str
     label: str
     description: str
+    # (standard variable, format). A planner chains pieces by matching one
+    # piece's first output to the next piece's input, so ``inputs`` names only
+    # the input that places the piece in a chain and the first of ``outputs``
+    # is the one handed on. Everything else a piece reads (lexicon, backbone,
+    # earlier tables) reaches it through the carried result or a default.
     inputs: tuple[tuple[str, str], ...]
     outputs: tuple[tuple[str, str], ...]
     # Run arguments the piece accepts, beyond the Tapis token: {argument: description}.
@@ -51,13 +59,13 @@ class PieceSpec:
 
     def parameters_schema(self, optional: tuple[str, ...] = ()) -> dict[str, object]:
         """JSON Schema for the run arguments that are bound."""
-        names = [*self.required, *optional]
+        names = [n for n in (*self.required, *optional) if n not in ENGINE_SUPPLIED]
         return {
             "type": "object",
             "properties": {
                 name: {"type": "string", "description": self.arguments[name]} for name in names
             },
-            "required": list(self.required),
+            "required": [n for n in self.required if n not in ENGINE_SUPPLIED],
         }
 
 
@@ -100,7 +108,7 @@ SPECS: dict[str, PieceSpec] = {
             "score_lexicon",
             "Sensemaking: score lexicon",
             "Count how often each lexicon group's terms occur in each document.",
-            inputs=((CORPUS, "json"), (LEXICON, "json")),
+            inputs=((CORPUS, "json"),),
             outputs=((TERM_COUNTS, "csv"),),
             arguments={
                 **_OUTPUT,
@@ -112,7 +120,7 @@ SPECS: dict[str, PieceSpec] = {
             "map_and_project",
             "Sensemaking: map and project",
             "Assign lexicon groups to science-backbone domains and project the counts onto them.",
-            inputs=((TERM_COUNTS, "csv"), (LEXICON, "json"), (BACKBONE, "json")),
+            inputs=((TERM_COUNTS, "csv"),),
             outputs=((DOMAIN_WEIGHTS, "csv"), (ASSIGNMENT, "csv")),
             arguments={
                 **_OUTPUT,
@@ -126,7 +134,7 @@ SPECS: dict[str, PieceSpec] = {
             "Find the recurring frames in a corpus by embedding and clustering its passages, "
             "and export them as a lexicon.",
             inputs=((CORPUS, "json"),),
-            outputs=((FRAMES, "csv"), (LEXICON, "json"), (TERM_COUNTS, "csv")),
+            outputs=((TERM_COUNTS, "csv"), (FRAMES, "csv"), (LEXICON, "json")),
             arguments={
                 **_OUTPUT,
                 **_EMBEDDING,
@@ -140,7 +148,7 @@ SPECS: dict[str, PieceSpec] = {
             "Sensemaking: draft lexicon",
             "Draft a lexicon for a problem statement and keep the terms a seed corpus supports. "
             "The result is a draft for a person to review.",
-            inputs=((CORPUS, "json"), (BACKBONE, "json")),
+            inputs=((CORPUS, "json"),),
             outputs=((LEXICON, "json"), (BACKBONE, "json")),
             arguments={
                 **_OUTPUT,
@@ -155,7 +163,7 @@ SPECS: dict[str, PieceSpec] = {
             "render_report",
             "Sensemaking: render report",
             "Write a Markdown summary of the backbone projection, group counts and frames.",
-            inputs=((DOMAIN_WEIGHTS, "csv"), (ASSIGNMENT, "csv"), (TERM_COUNTS, "csv")),
+            inputs=((DOMAIN_WEIGHTS, "csv"),),
             outputs=((REPORT, "md"),),
             arguments={**_OUTPUT},
         ),
