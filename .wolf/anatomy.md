@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-09-15T17:45:57.727Z
-> Files: 98 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-11-18T17:36:18.636Z
+> Files: 106 tracked | Anatomy hits: 0 | Misses: 0
 
 > Project structure index. Auto-maintained by OpenWolf hooks and daemon.
 > Run `openwolf scan` to generate, or wait for the first Claude Code session.
@@ -73,7 +73,7 @@
 ## src/semantic_sensemaking/core/
 
 - `__init__.py` — Shared data types, run configuration, and run context. (~219 tok)
-- `config.py` — Run configuration shared by the CLI, notebooks, and Tapis apps. (~2425 tok)
+- `config.py` — Run configuration shared by the CLI, notebooks, and Tapis apps. (~2532 tok)
 - `context.py` — Per-run output directory and artifact bookkeeping. (~495 tok)
 - `text.py` — Small text utilities shared across layers. (~353 tok)
 - `types.py` — Core data types shared by every tool cluster and workflow. (~2694 tok)
@@ -131,12 +131,13 @@
 ## src/semantic_sensemaking/workflows/
 
 - `__init__.py` — End-to-end workflows built from the shared tool clusters. (~217 tok)
+- `_inputs.py` — Input loading shared by workflows. (~352 tok)
 
 ## src/semantic_sensemaking/workflows/dictionary/
 
 - `__init__.py` — User-defined dictionary-driven semantic analysis. (~210 tok)
 - `outputs.py` — Write a dictionary analysis to disk: tables, figures, summary, manifest. (~1598 tok)
-- `pipeline.py` — Dictionary workflow orchestration: load inputs, analyze, write outputs. (~1256 tok)
+- `pipeline.py` — Dictionary workflow orchestration: load inputs, analyze, write outputs. (~1076 tok)
 - `result.py` — The in-memory result of a dictionary analysis. (~1246 tok)
 
 ## src/semantic_sensemaking/workflows/formulation/
@@ -146,8 +147,14 @@
 
 ## src/semantic_sensemaking/workflows/narrative/
 
-- `__init__.py` — Semantic narrative analysis — planned. See ``README.md`` in this package. (~152 tok)
-- `README.md` — Project documentation (~438 tok)
+- `__init__.py` — Narrative analysis: find the frames a corpus uses and place them on a science backbone. (~348 tok)
+- `cluster.py` — Group passage embeddings into candidate frames with spherical k-means. (~1162 tok)
+- `keywords.py` — Distinctive terms per cluster (class-based TF-IDF). (~1128 tok)
+- `labeling.py` — Turn clusters into named frames, with a chat model or from keywords alone. (~1448 tok)
+- `outputs.py` — Write a narrative analysis to disk: tables, frame lexicon, figures, summary, manifest. (~1644 tok)
+- `pipeline.py` — Narrative workflow orchestration: segment, embed, cluster, label, map, project. (~1546 tok)
+- `README.md` — Project documentation (~917 tok)
+- `result.py` — The in-memory result of a narrative analysis. (~2394 tok)
 
 ## tests/
 
@@ -170,9 +177,10 @@
 - `test_backends.py` — Recorder: test_hashing_embedding_is_deterministic_normalized_and_word_sensitive, embeddings_response (~1965 tok)
 - `test_config.py` — write_yaml, test_defaults_are_valid, test_precedence_yaml_then_env_then_overrides, test_env_lists_an (~706 tok)
 - `test_corpus.py` — test_sample_corpus_loads_every_file, test_edge_corpus_reads_all_formats_and_reports_skips, test_shar (~1242 tok)
-- `test_layering.py` — Architectural rules for the tool-cluster hierarchy. (~671 tok)
+- `test_layering.py` — Architectural rules for the tool-cluster hierarchy. (~668 tok)
 - `test_lexicon_and_taxonomy_io.py` — test_builtin_lexicon_and_taxonomy, test_flat_lexicon_json_with_comment_keys, test_csv_lexicon_preser (~1271 tok)
 - `test_matching.py` — test_auto_uses_word_boundaries_for_single_words, test_auto_substring_matches_inside_words_for_multiw (~542 tok)
+- `test_narrative.py` — Narrative workflow: segmentation, clustering, keywords, labeling, projection. (~1540 tok)
 - `test_semantic.py` — test_semantic_scores_count_matching_passages, test_threshold_above_one_matches_nothing, test_explain (~710 tok)
 - `test_taxonomy_projection.py` — test_no_hits_maps_to_uncategorized, test_top_n_limits_legacy_assignments, test_projection_splits_wei (~674 tok)
 - `test_viz.py` — test_hex_to_rgba, test_heat_color_endpoints, test_geometry_helpers, test_domain_order_puts_known_dom (~857 tok)

@@ -89,3 +89,34 @@ def test_module_entrypoint_version():
         [sys.executable, "-m", "semantic_sensemaking.cli", "--version"], capture_output=True, text=True, check=True
     ).stdout
     assert out.strip() == f"semantic-sensemaking {__version__}"
+
+
+def test_narrative_run_writes_every_artifact_and_feeds_dictionary(tmp_path):
+    code = main(
+        [
+            "narrative", "--sample-corpus", "--output-dir", str(tmp_path), "--run-id", "n1",
+            "--set", "embedding.kind=hashing", "--set", "narrative.segment_words=40",
+            "--set", "viz.per_document_figures=true",
+        ]
+    )
+    assert code == 0
+    run = tmp_path / "n1"
+    expected = {
+        "frames.csv", "passage_frames.csv", "doc_frame_counts.csv", "frame_mapping.csv",
+        "frame_domain_totals.csv", "frame_subdiscipline_totals.csv",
+        "comparison_base_vs_frames.csv", "corpus_documents.csv", "skipped_files.csv",
+        "frames_lexicon.json", "narrative_backbone.html", "narrative_vs_base.html",
+        "narrative_per_doc_heatmap.html", "resolved_config.yaml", "summary.md", "manifest.json",
+    }
+    assert expected <= {p.name for p in run.iterdir()}
+    assert len(list((run / "per_document").glob("narrative_single_*.html"))) == 5
+    manifest = json.loads((run / "manifest.json").read_text())
+    assert manifest["workflow"] == "narrative"
+    assert manifest["stats"]["frames"] == len(pd.read_csv(run / "frames.csv"))
+
+    assert main(
+        [
+            "dictionary", "--sample-corpus", "--lexicon", str(run / "frames_lexicon.json"),
+            "--output-dir", str(tmp_path), "--run-id", "d1", "--set", "viz.enabled=false",
+        ]
+    ) == 0

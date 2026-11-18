@@ -1,0 +1,46 @@
+# Narrative workflow: find the frames a corpus uses and place them on the backbone.
+#
+# Documents are split into passages, embedded, and clustered. Each cluster becomes
+# a frame, named by the chat model when `chat` is set and by its distinctive
+# keywords otherwise. The run writes frames_lexicon.json, which you can edit and
+# feed back into the dictionary workflow with --lexicon.
+
+workflow: narrative
+
+inputs:
+  use_sample_corpus: true
+  # taxonomy: path/to/science_backbone.json   # default: built-in subside_v1
+
+narrative:
+  segment_words: 200          # passage length; ~100-300 works for transcripts
+  segment_overlap_words: 0
+  max_frames: 12              # upper bound; small corpora get fewer
+  min_frame_passages: 2       # smaller clusters are folded into their nearest frame
+  terms_per_frame: 8
+  representative_passages: 3  # passages shown to the chat model per frame
+  seed: 0                     # clustering is deterministic for a given seed
+
+# Frames are mapped onto the taxonomy with the same settings as dictionary groups.
+scoring:
+  mapping_method: embedding
+  unmapped_groups: keep
+
+embedding:
+  kind: openai_compatible
+  base_url: http://localhost:8000/v1
+  model: BAAI/bge-small-en-v1.5
+  cache_dir: .ssm-cache
+
+# Optional: name frames with a chat model. Omit (or kind: none) to use keywords.
+chat:
+  kind: openai_compatible
+  base_url: http://localhost:8001/v1
+  model: meta-llama/Llama-3.1-8B-Instruct
+# chat:
+#   kind: anthropic           # reads ANTHROPIC_API_KEY
+
+# Offline dry run with no model at all (frames are not semantically meaningful):
+# embedding:
+#   kind: hashing
+# chat:
+#   kind: none

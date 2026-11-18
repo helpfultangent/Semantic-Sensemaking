@@ -10,15 +10,14 @@ from semantic_sensemaking.backends.factory import get_embedding_backend
 from semantic_sensemaking.core.config import RunConfig, ScoringConfig
 from semantic_sensemaking.core.context import RunContext
 from semantic_sensemaking.core.types import Corpus, Lexicon, Taxonomy
-from semantic_sensemaking.corpus.loader import load_corpus
-from semantic_sensemaking.data import sample_corpus_path
-from semantic_sensemaking.errors import ConfigError, CorpusError
+from semantic_sensemaking.errors import ConfigError
 from semantic_sensemaking.lexicon.io import load_lexicon
 from semantic_sensemaking.lexicon.scoring import score_corpus
 from semantic_sensemaking.lexicon.semantic import score_corpus_semantic
 from semantic_sensemaking.taxonomy.io import load_taxonomy
 from semantic_sensemaking.taxonomy.mapping import map_lexicon_to_taxonomy
 from semantic_sensemaking.taxonomy.projection import project_weights
+from semantic_sensemaking.workflows._inputs import load_configured_corpus
 from semantic_sensemaking.workflows.dictionary.outputs import write_outputs
 from semantic_sensemaking.workflows.dictionary.result import DictionaryResult
 
@@ -73,19 +72,7 @@ def analyze(
 
 def load_inputs(config: RunConfig) -> tuple[Corpus, Lexicon, Taxonomy]:
     inputs = config.inputs
-    if inputs.corpus is not None:
-        corpus_path = inputs.corpus
-    elif inputs.use_sample_corpus:
-        corpus_path = sample_corpus_path()
-        log.warning("No corpus given; using the built-in synthetic sample corpus")
-    else:
-        raise ConfigError(
-            "No corpus: set inputs.corpus (or --corpus), or inputs.use_sample_corpus: true"
-        )
-    corpus = load_corpus(corpus_path, config.corpus)
-    if not len(corpus):
-        reasons = "; ".join(f"{s.path}: {s.reason}" for s in corpus.skipped[:5])
-        raise CorpusError(f"No documents loaded from {corpus_path}. {reasons}".strip())
+    corpus = load_configured_corpus(config)
     lexicon = load_lexicon(inputs.lexicon)
     taxonomy = load_taxonomy(inputs.taxonomy, layer=inputs.taxonomy_layer)
     return corpus, lexicon, taxonomy

@@ -9,8 +9,8 @@ Tool clusters (each importable on its own):
 - ``backends``   — embedding and chat backends behind one protocol
 - ``viz``        — backbone overlay, comparison and heatmap figures
 - ``report``     — CSV, Markdown summary and manifest writers
-- ``workflows``  — end-to-end pipelines: ``dictionary`` (implemented),
-  ``narrative`` and ``formulation`` (planned)
+- ``workflows``  — end-to-end pipelines: ``dictionary`` and ``narrative``
+  (implemented), ``formulation`` (planned)
 """
 
 from semantic_sensemaking._version import __version__

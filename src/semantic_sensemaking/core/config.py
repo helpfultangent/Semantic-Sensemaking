@@ -109,10 +109,20 @@ class OutputConfig(_Section):
 
 
 class NarrativeConfig(_Section):
-    """Settings reserved for the planned narrative-analysis workflow."""
+    """Settings for the narrative-analysis workflow.
+
+    Taxonomy mapping reuses ``scoring.mapping_method``, ``scoring.top_n_assignments``
+    and ``scoring.unmapped_groups`` so frames and dictionary groups are mapped the
+    same way.
+    """
 
     segment_words: int = Field(200, ge=10)
+    segment_overlap_words: int = Field(0, ge=0)
     max_frames: int = Field(12, ge=1)
+    min_frame_passages: int = Field(2, ge=1)
+    terms_per_frame: int = Field(8, ge=1)
+    representative_passages: int = Field(3, ge=1)
+    seed: int = 0
 
 
 class FormulationConfig(_Section):

@@ -35,7 +35,7 @@ def test_library_never_blocks_on_input_or_opens_figures():
     assert not [p for p in python_files() if pattern.search(p.read_text())]
 
 
-@pytest.mark.parametrize("name", ["narrative", "formulation"])
+@pytest.mark.parametrize("name", ["formulation"])
 def test_planned_workflows_are_importable_and_explicit(name):
     from semantic_sensemaking.core.config import RunConfig
     from semantic_sensemaking.workflows import get_workflow

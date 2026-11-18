@@ -254,7 +254,7 @@
     },
     "NarrativeConfig": {
       "additionalProperties": false,
-      "description": "Settings reserved for the planned narrative-analysis workflow.",
+      "description": "Settings for the narrative-analysis workflow.\n\nTaxonomy mapping reuses ``scoring.mapping_method``, ``scoring.top_n_assignments``\nand ``scoring.unmapped_groups`` so frames and dictionary groups are mapped the\nsame way.",
       "properties": {
         "segment_words": {
           "default": 200,
@@ -262,10 +262,39 @@
           "title": "Segment Words",
           "type": "integer"
         },
+        "segment_overlap_words": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Segment Overlap Words",
+          "type": "integer"
+        },
         "max_frames": {
           "default": 12,
           "minimum": 1,
           "title": "Max Frames",
+          "type": "integer"
+        },
+        "min_frame_passages": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Min Frame Passages",
+          "type": "integer"
+        },
+        "terms_per_frame": {
+          "default": 8,
+          "minimum": 1,
+          "title": "Terms Per Frame",
+          "type": "integer"
+        },
+        "representative_passages": {
+          "default": 3,
+          "minimum": 1,
+          "title": "Representative Passages",
+          "type": "integer"
+        },
+        "seed": {
+          "default": 0,
+          "title": "Seed",
           "type": "integer"
         }
       },
