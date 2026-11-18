@@ -236,9 +236,31 @@ def test_stored_source_rejects_a_ref_that_could_alter_the_install_line():
 def test_registration_matches_the_dynamo_tool_and_binds_no_other_secret():
     args = registration("score_lexicon", "0123abc")
     assert set(args) == {"label", "description", "inputs", "outputs", "python_source", "entrypoint",
-                         "env_from_args", "version"}
+                         "env_from_args", "parameters", "version"}
     assert args["inputs"][0] == {
         "standard_variable_uri": "https://w3id.org/okn/i/mint/document_collection__text", "format": "json"}
-    env = args["env_from_args"]
-    assert env["TAPIS_TOKEN"] == "tapis_token" and env["OUTPUT_URI"] == "output_uri"
-    assert not {"signal_token", "token_fetch_token", "ckan_token", "credentials_url"} & set(env.values())
+    assert args["env_from_args"] == {"TAPIS_TOKEN": "tapis_token", "OUTPUT_URI": "output_uri"}
+    assert args["parameters"]["required"] == ["output_uri"]
+    assert set(args["parameters"]["properties"]) == {"output_uri"}
+    assert not {"signal_token", "token_fetch_token", "ckan_token", "credentials_url"} & set(
+        args["env_from_args"].values())
+
+
+def test_only_required_arguments_are_bound_unless_a_setting_is_asked_for():
+    assert registration("ingest_corpus", "0123abc")["env_from_args"] == {
+        "TAPIS_TOKEN": "tapis_token", "SOURCE_URI": "source_uri", "OUTPUT_URI": "output_uri"}
+    args = registration("score_lexicon", "0123abc", optional=("lexicon_uri", "match_mode"))
+    assert args["env_from_args"]["LEXICON_URI"] == "lexicon_uri"
+    assert set(args["parameters"]["properties"]) == {"output_uri", "lexicon_uri", "match_mode"}
+    assert args["parameters"]["required"] == ["output_uri"]
+    with pytest.raises(ValueError, match="no argument named"):
+        registration("score_lexicon", "0123abc", optional=("nope",))
+
+
+def test_stored_source_can_install_from_a_fork():
+    source = stored_source("score_lexicon", "0123abc", repository="someone/Semantic-Sensemaking")
+    assert "github.com/someone/Semantic-Sensemaking/archive/0123abc.tar.gz" in source
+    assert "github.com/helpfultangent/Semantic-Sensemaking/archive/0123abc.tar.gz" in stored_source(
+        "score_lexicon", "0123abc")
+    with pytest.raises(ValueError, match="owner/name"):
+        stored_source("score_lexicon", "0123abc", repository="evil.example/x/y")

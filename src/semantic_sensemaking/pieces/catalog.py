@@ -11,7 +11,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 VARIABLE_PREFIX = "https://w3id.org/okn/i/mint/"
-ARCHIVE_URL = "https://github.com/helpfultangent/Semantic-Sensemaking/archive/{ref}.tar.gz"
+REPOSITORY = "helpfultangent/Semantic-Sensemaking"
+ARCHIVE_URL = "https://github.com/{repository}/archive/{ref}.tar.gz"
 
 CORPUS = "document_collection__text"
 LEXICON = "lexicon__term_set"
@@ -32,12 +33,32 @@ class PieceSpec:
     outputs: tuple[tuple[str, str], ...]
     # Run arguments the piece accepts, beyond the Tapis token: {argument: description}.
     arguments: dict[str, str] = field(default_factory=dict)
+    # The arguments a run must supply. Only these are wired in by default.
+    required: tuple[str, ...] = ("output_uri",)
     extras: str = ""
 
-    def env_from_args(self) -> dict[str, str]:
-        """Task input name -> pipeline argument, for every argument the piece reads."""
-        names = ["tapis_token", *self.arguments]
-        return {name.upper(): name for name in names}
+    def env_from_args(self, optional: tuple[str, ...] = ()) -> dict[str, str]:
+        """Task input name -> pipeline argument.
+
+        Only the Tapis token and the required arguments are bound by default.
+        A workflow engine may refuse a task whose bound argument was not given,
+        so an optional setting is bound only when asked for by name.
+        """
+        unknown = sorted(set(optional) - set(self.arguments))
+        if unknown:
+            raise ValueError(f"{self.name} has no argument named: {', '.join(unknown)}")
+        return {name.upper(): name for name in ("tapis_token", *self.required, *optional)}
+
+    def parameters_schema(self, optional: tuple[str, ...] = ()) -> dict[str, object]:
+        """JSON Schema for the run arguments that are bound."""
+        names = [*self.required, *optional]
+        return {
+            "type": "object",
+            "properties": {
+                name: {"type": "string", "description": self.arguments[name]} for name in names
+            },
+            "required": list(self.required),
+        }
 
 
 _OUTPUT = {"output_uri": "Folder the piece writes its outputs into (tapis://system/path)."}
@@ -72,6 +93,7 @@ SPECS: dict[str, PieceSpec] = {
                 "max_files": "Largest number of files to read.",
                 "min_chars": "Skip documents shorter than this many characters.",
             },
+            required=("source_uri", "output_uri"),
             extras="readers",
         ),
         PieceSpec(
@@ -158,21 +180,36 @@ def transform(inputs):
 '''
 
 
-def stored_source(name: str, ref: str) -> str:
-    """The Python source to store with the piece, pinned to library commit ``ref``."""
+def _safe(value: str, extra: str) -> bool:
+    return bool(value) and all(c.isalnum() or c in extra for c in value)
+
+
+def stored_source(name: str, ref: str, *, repository: str = REPOSITORY) -> str:
+    """The Python source to store with the piece, pinned to library commit ``ref``.
+
+    ``repository`` is the GitHub ``owner/name`` the library is installed from,
+    for running a piece from a fork before its commit is upstream.
+    """
     spec = SPECS[name]
-    if not ref or not all(c.isalnum() or c in "._-" for c in ref):
+    if not _safe(ref, "._-"):
         raise ValueError(f"Not a usable git ref: {ref!r}")
+    if repository.count("/") != 1 or not _safe(repository, "._-/"):
+        raise ValueError(f"Not a GitHub owner/name: {repository!r}")
     return _SOURCE.format(
         name=spec.name,
         ref=ref,
         extras=f"[{spec.extras}]" if spec.extras else "",
-        archive=ARCHIVE_URL.format(ref=ref),
+        archive=ARCHIVE_URL.format(repository=repository, ref=ref),
     )
 
 
-def registration(name: str, ref: str) -> dict[str, object]:
-    """Arguments for the dso-dynamo MCP tool ``create_etl_function_piece``."""
+def registration(
+    name: str, ref: str, *, repository: str = REPOSITORY, optional: tuple[str, ...] = ()
+) -> dict[str, object]:
+    """Arguments for the dso-dynamo MCP tool ``create_etl_function_piece``.
+
+    ``optional`` names extra settings to wire in besides the required arguments.
+    """
     spec = SPECS[name]
 
     def contracts(pairs: tuple[tuple[str, str], ...]) -> list[dict[str, str]]:
@@ -183,8 +220,9 @@ def registration(name: str, ref: str) -> dict[str, object]:
         "description": spec.description,
         "inputs": contracts(spec.inputs),
         "outputs": contracts(spec.outputs),
-        "python_source": stored_source(name, ref),
+        "python_source": stored_source(name, ref, repository=repository),
         "entrypoint": "transform",
-        "env_from_args": spec.env_from_args(),
+        "env_from_args": spec.env_from_args(optional),
+        "parameters": spec.parameters_schema(optional),
         "version": ref,
     }

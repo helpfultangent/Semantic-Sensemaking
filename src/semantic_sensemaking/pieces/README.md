@@ -72,7 +72,12 @@ args = registration("score_lexicon", "<commit sha>")   # for the dso-dynamo tool
 
 The stored source installs this library from GitHub at that commit and calls
 `run_piece`, so what runs is this repository's code at that commit. The commit
-must be pushed before the piece can run.
+must be pushed before the piece can run. Pass `repository="owner/name"` to
+install from a fork.
+
+A registered piece is wired to its Tapis token and its required arguments only
+(`output_uri`, plus `source_uri` for `ingest_corpus`). To expose a setting as a
+run argument, name it: `registration("score_lexicon", sha, optional=("lexicon_uri",))`.
 
 ## Limits
 
