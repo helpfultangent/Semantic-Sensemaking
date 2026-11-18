@@ -133,6 +133,9 @@ The package is layered; lower layers never import higher ones (enforced by
 | `viz` | Backbone overlay, comparison, and heatmap figures |
 | `report` | CSV, Markdown summary, and manifest writers |
 | `workflows` | `dictionary`, `narrative`, `formulation` — each built only from the layers above |
+| `pieces` | The workflows cut into six steps a workflow engine runs one at a time, reading and writing by location |
+
+The pieces and how they chain: [pieces](src/semantic_sensemaking/pieces/README.md).
 
 Design notes for the newer workflows:
 [narrative](src/semantic_sensemaking/workflows/narrative/README.md),
