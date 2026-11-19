@@ -11,6 +11,7 @@ Tool clusters (each importable on its own):
 - ``report``     — CSV, Markdown summary and manifest writers
 - ``workflows``  — end-to-end pipelines: ``dictionary``, ``narrative``
   and ``formulation``
+- ``pieces``     — the workflows cut into steps a workflow engine runs one at a time
 """
 
 from semantic_sensemaking._version import __version__
