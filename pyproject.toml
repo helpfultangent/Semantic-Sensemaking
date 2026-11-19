@@ -44,7 +44,7 @@ semantic-sensemaking = "semantic_sensemaking.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-semantic_sensemaking = ["data/*.json", "data/schemas/*.json", "data/sample_corpus/*"]
+semantic_sensemaking = ["data/*.json", "data/schemas/*.json", "data/sample_corpus/*", "pieces/flow_lock.txt"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

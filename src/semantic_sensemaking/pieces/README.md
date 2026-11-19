@@ -96,6 +96,25 @@ such a planner cannot tell the dictionary flow from the narrative flow by
 contract alone; register only the pieces of the flow you mean to run, or choose
 the piece explicitly.
 
+## Pieces for flows
+
+`flow_catalog.py` describes the same pieces for a DYNAMO flow, which links pieces
+as a graph instead of a chain:
+
+- each input arrives as its own file (`SOURCE_0`, `SOURCE_1`, ...), and nothing is
+  carried from an earlier piece;
+- the piece reports where each of its outputs is, so each can be linked on or
+  filed as a result;
+- `render_report` comes in two forms, with and without narrative frames, because
+  a flow must link every input a piece declares;
+- the stored source installs the dependencies in `flow_lock.txt` at exact
+  versions with `--require-hashes`, and loads the library from the commit's
+  GitHub archive after checking its SHA-256. Nothing is built or resolved at run
+  time.
+
+`python -m semantic_sensemaking.pieces.flow_catalog` lists the pieces.
+`flow_catalog.registration(slug)` is the catalog row for one.
+
 ## Limits
 
 - No piece has been run on Tapis yet. Installing the library inside a function
