@@ -18,6 +18,7 @@ explicit ``<NAME>_URI`` input always wins over the carried value.
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 from collections.abc import Callable, Mapping
 from pathlib import Path
@@ -185,6 +186,12 @@ def _backend(run: _Run, prefix: str) -> BackendConfig:
         for field, name in (("kind", "KIND"), ("model", "MODEL"), ("base_url", "BASE_URL"))
         if run.setting(f"{prefix}_{name}")
     }
+    # The key reaches the backend through the process environment, which is how
+    # the library reads keys; it is never written to an output or a result.
+    key = run.setting(f"{prefix}_API_KEY") or run.setting("MODEL_API_KEY")
+    if key:
+        values["api_key_env"] = f"SSM_PIECE_{prefix}_API_KEY"
+        os.environ[values["api_key_env"]] = key
     return BackendConfig(**values)
 
 

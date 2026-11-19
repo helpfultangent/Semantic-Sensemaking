@@ -126,6 +126,39 @@ def test_narrative_flow_feeds_the_same_projection_piece(ingested):
     assert "## Frames" in Path(report["report_uri"]).read_text(encoding="utf-8")
 
 
+def test_a_model_api_key_is_sent_to_the_server_and_kept_out_of_every_output(ingested, out):
+    seen: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request.headers.get("Authorization", ""))
+        texts = json.loads(request.content)["input"]
+        data = [{"index": i, "embedding": [1.0 + (len(t) % 7), float(i % 3), 1.0]}
+                for i, t in enumerate(texts)]
+        return httpx.Response(200, json={"data": data})
+
+    original = httpx.Client
+
+    def client(*args, **kwargs):
+        kwargs["transport"] = httpx.MockTransport(handler)
+        return original(*args, **kwargs)
+
+    import semantic_sensemaking.backends.openai_compatible as backend
+    backend.httpx.Client, restore = client, backend.httpx.Client
+    try:
+        frames = run(
+            "discover_frames", SOURCE_RESULT=json.dumps(ingested), EMBEDDING_KIND="openai_compatible",
+            EMBEDDING_BASE_URL="https://models.example/v1", EMBEDDING_MODEL="m",
+            MODEL_API_KEY="not-a-real-key", SEGMENT_WORDS="40", MAX_FRAMES="3",
+        )
+    finally:
+        backend.httpx.Client = restore
+    assert seen and set(seen) == {"Bearer not-a-real-key"}
+    assert "not-a-real-key" not in json.dumps(frames)
+    for path in Path(out).rglob("*"):
+        if path.is_file():
+            assert "not-a-real-key" not in path.read_text(encoding="utf-8", errors="ignore"), path.name
+
+
 def test_discover_frames_needs_an_embedding_backend(ingested):
     with pytest.raises(ConfigError, match="EMBEDDING_KIND"):
         run("discover_frames", SOURCE_RESULT=json.dumps(ingested))

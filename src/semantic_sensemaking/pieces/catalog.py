@@ -79,11 +79,13 @@ _EMBEDDING = {
     "embedding_kind": "Embedding backend: openai_compatible, huggingface_local or hashing.",
     "embedding_base_url": "Base URL of an OpenAI-compatible embedding server.",
     "embedding_model": "Embedding model name.",
+    "model_api_key": "API key for the model server, used for embeddings and chat.",
 }
 _CHAT = {
     "chat_kind": "Chat backend: openai_compatible or anthropic.",
     "chat_base_url": "Base URL of an OpenAI-compatible chat server.",
     "chat_model": "Chat model name.",
+    "model_api_key": "API key for the model server, used for embeddings and chat.",
 }
 
 SPECS: dict[str, PieceSpec] = {

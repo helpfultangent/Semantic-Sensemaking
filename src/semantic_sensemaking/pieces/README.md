@@ -19,6 +19,10 @@ Every piece also writes `settings_<piece>.json`: the library version and the inp
 was given, without credentials. The pieces write data only. Figures are drawn elsewhere,
 from these tables.
 
+A piece that calls a model server takes its key as `MODEL_API_KEY` (or `EMBEDDING_API_KEY` /
+`CHAT_API_KEY` when the two servers differ). The key is used for the request only: it is left
+out of the settings file, the result and every output.
+
 The flows are chains of these:
 
 - **dictionary**: `ingest_corpus` → `score_lexicon` → `map_and_project` → `render_report`
