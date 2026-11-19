@@ -8,12 +8,16 @@ a piece is a function that takes a dict and returns a dict.
 
 | Piece | Reads | Writes |
 |---|---|---|
-| `ingest_corpus` | a folder of documents | `corpus.json` |
-| `score_lexicon` | corpus, lexicon | `term_counts.csv`, `lexicon.json` |
-| `map_and_project` | term counts, lexicon, backbone | `domain_assignment.csv`, `domain_weights.csv`, `subdiscipline_weights.csv`, `taxonomy.json` |
-| `discover_frames` | corpus | `frames.csv`, `frames_lexicon.json`, `term_counts.csv` |
+| `ingest_corpus` | a folder of documents | `corpus.json`, `corpus_documents.csv`, `skipped_files.csv` |
+| `score_lexicon` | corpus, lexicon | `term_counts.csv`, `group_totals.csv`, `lexicon.json` |
+| `map_and_project` | term counts, lexicon, backbone | `domain_assignment.csv`, `domain_weights.csv`, `subdiscipline_weights.csv`, `comparison_base_vs_overlay.csv`, `taxonomy.json` |
+| `discover_frames` | corpus | `frames.csv`, `passage_frames.csv`, `frames_lexicon.json`, `term_counts.csv` |
 | `draft_lexicon` | corpus, backbone, a problem statement | `lexicon_draft.json`, `taxonomy_draft.json`, coverage tables |
 | `render_report` | domain weights, assignment, term counts, frames | `summary.md` |
+
+Every piece also writes `settings_<piece>.json`: the library version and the inputs it
+was given, without credentials. The pieces write data only. Figures are drawn elsewhere,
+from these tables.
 
 The flows are chains of these:
 

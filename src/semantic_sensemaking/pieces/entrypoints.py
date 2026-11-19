@@ -25,6 +25,7 @@ from typing import Any
 
 import pandas as pd
 
+from semantic_sensemaking._version import __version__
 from semantic_sensemaking.backends.factory import get_chat_backend, get_embedding_backend
 from semantic_sensemaking.core.config import (
     BackendConfig,
@@ -43,10 +44,11 @@ from semantic_sensemaking.pieces.storage import Storage, join
 from semantic_sensemaking.report import markdown_table, render_summary, write_csv
 from semantic_sensemaking.taxonomy.io import load_taxonomy, save_taxonomy
 from semantic_sensemaking.taxonomy.mapping import map_lexicon_to_taxonomy
-from semantic_sensemaking.taxonomy.projection import project_weights
+from semantic_sensemaking.taxonomy.projection import compare_distributions, project_weights
 
 CORPUS_FILE = "corpus.json"
 COUNT_COLUMNS = ["doc_id", "doc", "group", "count"]
+_SECRET_WORDS = ("TOKEN", "KEY", "SECRET", "PASSWORD")
 
 
 class _Run:
@@ -92,7 +94,18 @@ class _Run:
         self.outputs[f"{key}_uri"] = uri
         return uri
 
+    def settings(self) -> dict[str, str]:
+        """The inputs this piece was given, without credentials or the chained result."""
+        return {
+            name: value for name, value in sorted(self.inputs.items())
+            if name != "SOURCE_RESULT" and not any(word in name for word in _SECRET_WORDS)
+        }
+
     def result(self, **facts: Any) -> dict[str, Any]:
+        record = {"piece": self.piece, "library_version": __version__, "settings": self.settings()}
+        path = self.local(f"settings_{self.piece}.json")
+        path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+        self.publish(f"settings_{self.piece}", path)
         self._tmp.cleanup()
         return {**self.carried, **self.outputs, **facts,
                 "output_uri": self.output_uri, "piece": self.piece}
@@ -209,6 +222,11 @@ def ingest_corpus(inputs: Mapping[str, Any], *, storage: Storage | None = None) 
         run.inputs["CORPUS_URI"] = run.inputs["SOURCE_URI"]
     corpus = read_corpus(run.fetch("corpus", required=True), _corpus_config(run))
     run.publish("corpus", save_corpus(corpus, run.local(CORPUS_FILE)))
+    run.publish("corpus_documents", write_csv(corpus.describe(), run.local("corpus_documents.csv")))
+    skipped = pd.DataFrame(
+        [{"path": s.path, "reason": s.reason} for s in corpus.skipped], columns=["path", "reason"]
+    )
+    run.publish("skipped_files", write_csv(skipped, run.local("skipped_files.csv")))
     return run.result(documents=len(corpus), skipped_files=len(corpus.skipped))
 
 
@@ -228,6 +246,7 @@ def score_lexicon(inputs: Mapping[str, Any], *, storage: Storage | None = None) 
     else:
         scores = score_corpus(corpus, lexicon, scoring)
     run.publish("term_counts", write_csv(_counts(scores.to_frame()), run.local("term_counts.csv")))
+    run.publish("group_totals", write_csv(scores.group_totals(), run.local("group_totals.csv")))
     # Written out so later pieces use the same lexicon, even the built-in one.
     run.publish("lexicon", save_lexicon(lexicon, run.local("lexicon.json")))
     return run.result(total_matches=scores.total_matches(), lexicon_groups=len(lexicon))
@@ -256,6 +275,8 @@ def map_and_project(inputs: Mapping[str, Any], *, storage: Storage | None = None
         "subdiscipline_weights",
         write_csv(projection.subdiscipline_totals(), run.local("subdiscipline_weights.csv")),
     )
+    comparison = compare_distributions(mapping.base_distribution(), projection)
+    run.publish("comparison", write_csv(comparison, run.local("comparison_base_vs_overlay.csv")))
     run.publish("taxonomy", save_taxonomy(taxonomy, run.local("taxonomy.json")))
     return run.result(total_weight=projection.total_weight(), taxonomy_domains=len(taxonomy))
 
@@ -282,6 +303,7 @@ def discover_frames(inputs: Mapping[str, Any], *, storage: Storage | None = None
         chat_backend=get_chat_backend(_backend(run, "CHAT")),
     )
     run.publish("frames", write_csv(result.frames_table(), run.local("frames.csv")))
+    run.publish("passage_frames", write_csv(result.passages_table(), run.local("passage_frames.csv")))
     run.publish("lexicon", save_lexicon(result.lexicon, run.local("frames_lexicon.json")))
     counts = _counts(result.doc_frame_counts(), group="frame", count="n_passages")
     run.publish("term_counts", write_csv(counts, run.local("term_counts.csv")))

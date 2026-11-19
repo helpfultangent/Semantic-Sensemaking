@@ -78,6 +78,36 @@ def test_dictionary_flow_chains_through_results(ingested):
         assert Path(report[key]).is_file()
 
 
+def test_dictionary_flow_writes_every_table_the_library_workflow_does(ingested):
+    scored = run("score_lexicon", SOURCE_RESULT=json.dumps(ingested))
+    projected = run("map_and_project", SOURCE_RESULT=json.dumps(scored))
+
+    documents = pd.read_csv(projected["corpus_documents_uri"], encoding="utf-8-sig")
+    assert len(documents) == N_DOCS and {"doc_id", "n_words"} <= set(documents.columns)
+    skipped = pd.read_csv(projected["skipped_files_uri"], encoding="utf-8-sig")
+    assert list(skipped.columns) == ["path", "reason"] and len(skipped) == ingested["skipped_files"]
+    totals = pd.read_csv(projected["group_totals_uri"], encoding="utf-8-sig")
+    counts = pd.read_csv(projected["term_counts_uri"], encoding="utf-8-sig")
+    assert int(totals["count"].sum()) == int(counts["count"].sum())
+    comparison = pd.read_csv(projected["comparison_uri"], encoding="utf-8-sig")
+    assert list(comparison.columns) == [
+        "domain", "base_n_groups", "base_pct", "overlay_weight", "overlay_pct", "delta_pct"
+    ]
+    assert comparison["overlay_weight"].sum() == pytest.approx(projected["total_weight"])
+
+
+def test_each_piece_records_its_settings_without_credentials(out):
+    result = run(
+        "ingest_corpus", SOURCE_URI=str(sample_corpus_path()), OUTPUT_URI=out, MIN_CHARS="0",
+        TAPIS_TOKEN="not-a-real-token", CHAT_API_KEY="not-a-real-key",
+    )
+    text = Path(result["settings_ingest_corpus_uri"]).read_text(encoding="utf-8")
+    record = json.loads(text)
+    assert record["piece"] == "ingest_corpus" and record["library_version"]
+    assert record["settings"]["MIN_CHARS"] == "0" and record["settings"]["OUTPUT_URI"] == out
+    assert "not-a-real" not in text and "SOURCE_RESULT" not in record["settings"]
+
+
 def test_narrative_flow_feeds_the_same_projection_piece(ingested):
     frames = run(
         "discover_frames", SOURCE_RESULT=json.dumps(ingested),
@@ -88,6 +118,8 @@ def test_narrative_flow_feeds_the_same_projection_piece(ingested):
     counts = pd.read_csv(frames["term_counts_uri"], encoding="utf-8-sig")
     assert list(counts.columns) == COUNT_COLUMNS
     assert int(counts["count"].sum()) == frames["passages"]
+    passages = pd.read_csv(frames["passage_frames_uri"], encoding="utf-8-sig")
+    assert len(passages) == frames["passages"] and set(passages["frame"]) <= set(table["frame"])
 
     projected = run("map_and_project", SOURCE_RESULT=json.dumps(frames))
     report = run("render_report", SOURCE_RESULT=json.dumps(projected))
