@@ -59,3 +59,15 @@ def test_a_piece_that_calls_no_model_server_declares_no_credential():
     runtime = flow_catalog.registration("score-lexicon")["runtime_json"]
     assert "secrets" not in runtime and "sends_data_to" not in runtime
     assert not flow_catalog.registration("score-lexicon")["id"].endswith("-r2")
+
+
+@pytest.mark.parametrize("slug", sorted(flow_catalog.PIECES))
+def test_each_committed_source_file_matches_the_template(slug):
+    """DYNAMO registers a piece from its committed file on GitHub, so the file must be
+    exactly what source(slug) produces. If this fails, run
+    ``python -m semantic_sensemaking.pieces.flow_catalog --write-sources``."""
+    with open(flow_catalog.source_path(slug), encoding="utf-8") as handle:
+        committed = handle.read()
+    assert committed == flow_catalog.source(slug)
+    assert "def transform(inputs):" in committed
+    assert len(committed.encode()) < 64_000

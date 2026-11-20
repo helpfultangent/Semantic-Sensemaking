@@ -239,7 +239,34 @@ def registration(slug: str) -> dict:
     }
 
 
+SOURCES_DIR = os.path.join(HERE, "flow_sources")
+
+
+def source_path(slug: str) -> str:
+    """Where a piece's source is committed, so DYNAMO can register it from GitHub:
+    ``src/semantic_sensemaking/pieces/flow_sources/<slug with underscores>.py``."""
+    return os.path.join(SOURCES_DIR, slug.replace("-", "_") + ".py")
+
+
+def write_sources() -> list[str]:
+    """Write every piece's source to its committed file. A test fails if a committed
+    file differs from ``source(slug)``, so rerun this after changing the template."""
+    os.makedirs(SOURCES_DIR, exist_ok=True)
+    written = []
+    for slug in PIECES:
+        with open(source_path(slug), "w", encoding="utf-8") as handle:
+            handle.write(source(slug))
+        written.append(source_path(slug))
+    return written
+
+
 if __name__ == "__main__":
+    import sys
+
+    if "--write-sources" in sys.argv:
+        for path in write_sources():
+            print("wrote", os.path.relpath(path))
+        raise SystemExit(0)
     for slug in PIECES:
         row = registration(slug)
         compile(source(slug), slug, "exec")
