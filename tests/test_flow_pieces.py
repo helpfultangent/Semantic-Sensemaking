@@ -202,3 +202,10 @@ def test_each_piece_takes_only_settings_that_are_defined(slug):
 def test_every_piece_has_a_revision_after_its_first_so_the_old_declaration_stays_untouched():
     assert set(flow_catalog.REVISION) == set(flow_catalog.PIECES)
     assert all(revision >= 2 for revision in flow_catalog.REVISION.values())
+
+
+@pytest.mark.parametrize("name", ["embedding_kind", "chat_kind"])
+def test_the_model_server_choice_is_titled_tejas_and_keeps_the_value_the_code_reads(name):
+    choice = next(c for c in flow_catalog.SETTINGS[name]["oneOf"] if c["const"] == "openai_compatible")
+    assert choice["title"] == "Tejas"
+    assert "model_server" in choice["description"] and "OpenAI-compatible" in choice["description"]

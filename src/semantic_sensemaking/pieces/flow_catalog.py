@@ -118,9 +118,9 @@ SETTINGS = {
         "Embedding model type",
         "Where the embeddings come from. Required: this piece cannot run without one.",
         advanced=True, choices=[
-            ("openai_compatible", "Model server",
-             "An OpenAI-compatible server, reached with your 'model_server' credential. Needs an "
-             "embedding model name."),
+            ("openai_compatible", "Tejas",
+             "The model server in your stored 'model_server' credential (an OpenAI-compatible API). "
+             "Needs an embedding model name."),
             ("huggingface_local", "Local Hugging Face model",
              "Runs a sentence-transformers model on the machine that runs the piece. Uses "
              "sentence-transformers/all-MiniLM-L6-v2 when no model is named. Needs the optional "
@@ -139,9 +139,9 @@ SETTINGS = {
         "Which service writes text. Required to draft a lexicon. When finding frames, leave it "
         "empty to name each frame from its keywords instead.",
         advanced=True, choices=[
-            ("openai_compatible", "Model server",
-             "An OpenAI-compatible server, reached with your 'model_server' credential. Needs a "
-             "chat model name."),
+            ("openai_compatible", "Tejas",
+             "The model server in your stored 'model_server' credential (an OpenAI-compatible API). "
+             "Needs a chat model name."),
             ("anthropic", "Anthropic Claude",
              "Anthropic's Claude, using the key in your 'model_server' credential. Uses claude-opus-5 "
              "when no model is named."),
