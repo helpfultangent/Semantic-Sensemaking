@@ -280,5 +280,13 @@ def test_draft_lexicon_can_build_an_embedding_backend_for_semantic_grounding():
     assert "cannot" not in json.dumps(props["grounding"]) and "stops with an error" not in json.dumps(props["grounding"])
     semantic = next(c for c in props["grounding"]["oneOf"] if c["const"] == "semantic")
     assert "model_server" in semantic["description"]
+    assert "embedding_base_url" in semantic["description"]
+    # Only keyword grounding can run without the embedding address; the pieces that
+    # always embed keep it required.
+    assert flow_catalog.SECRETS["draft-lexicon"][0]["optional"] == ["embedding_base_url"]
+    assert "optional" not in flow_catalog.SECRETS["discover-frames"][0]
+    assert "optional" not in flow_catalog.SECRETS["map-and-project-embedding"][0]
+    assert flow_catalog.REVISION["draft-lexicon"] == 4
+    assert flow_catalog.registration("draft-lexicon")["id"].endswith("-r4")
     sent = flow_catalog.registration("draft-lexicon")["runtime_json"]["sends_data_to"][0]["what"]
     assert "semantic grounding" in sent and "passages" in sent

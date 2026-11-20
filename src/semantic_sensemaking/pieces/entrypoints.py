@@ -342,7 +342,15 @@ def draft_lexicon(inputs: Mapping[str, Any], *, storage: Storage | None = None) 
     scoring = _scoring(run)
     embedding = None
     if formulation.grounding == "semantic" or scoring.mapping_method == "embedding":
-        embedding = get_embedding_backend(_backend(run, "EMBEDDING"))
+        embedding_config = _backend(run, "EMBEDDING")
+        if embedding_config.kind == "openai_compatible" and not embedding_config.base_url:
+            # The address is an optional field of the credential: keyword grounding runs
+            # without it, so say plainly where this run needs it from.
+            raise ConfigError(
+                "draft_lexicon: semantic grounding needs the embedding address, but the "
+                "'model_server' credential has no 'embedding_base_url' field; add it in Saved "
+                "credentials or use keyword grounding")
+        embedding = get_embedding_backend(embedding_config)
     result = formulate(
         _taxonomy(run), chat, formulation, scoring, corpus=corpus,
         embedding_backend=embedding, proposed=load_lexicon(existing) if existing else None,

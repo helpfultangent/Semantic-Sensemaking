@@ -166,7 +166,8 @@ SETTINGS = {
              "A term is kept if it occurs in the corpus, or if some passage is similar enough to "
              "it by embedding similarity (at least 0.45). Needs a seed corpus and an embedding "
              "model, so also set the embedding model type and name; it uses the 'model_server' "
-             "credential."),
+             "credential, which must then include the embedding address (its "
+             "'embedding_base_url' field)."),
             ("none", "No check",
              "Every drafted term is kept. The seed corpus is not needed."),
         ]),
@@ -181,9 +182,10 @@ SECRETS = {
     "discover-frames": [{"name": MODEL_SERVER, "label": "Model server", "env": {
         "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url",
         "EMBEDDING_BASE_URL": "embedding_base_url"}}],
+    # The embedding address is needed only when grounding is semantic.
     "draft-lexicon": [{"name": MODEL_SERVER, "label": "Model server", "env": {
         "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url",
-        "EMBEDDING_BASE_URL": "embedding_base_url"}}],
+        "EMBEDDING_BASE_URL": "embedding_base_url"}, "optional": ["embedding_base_url"]}],
     "map-and-project-embedding": [{"name": MODEL_SERVER, "label": "Model server", "env": {
         "MODEL_API_KEY": "api_key", "EMBEDDING_BASE_URL": "embedding_base_url"}}],
 }
@@ -206,7 +208,7 @@ FIXED = {"map-and-project-embedding": {"MAPPING_METHOD": "embedding"}}
 # under a new id.
 REVISION = {
     "ingest-corpus": 2, "score-lexicon": 2, "discover-frames": 3, "map-and-project": 2,
-    "draft-lexicon": 3, "render-report": 2, "render-frames-report": 2,
+    "draft-lexicon": 4, "render-report": 2, "render-frames-report": 2,
     "map-and-project-embedding": 1,
 }
 
