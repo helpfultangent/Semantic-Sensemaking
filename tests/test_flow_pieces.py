@@ -36,7 +36,7 @@ def test_each_registration_numbers_its_inputs_and_outputs_from_zero(slug):
         assert positions == list(range(len(positions))) and positions
     runtime = row["runtime_json"]
     assert runtime["env_from_args"]["OUTPUT_URI"] == "output_uri"
-    assert runtime["parameters_schema_json"]["required"] == ["output_uri"]
+    assert runtime["parameters_schema_json"]["required"] == ["output_uri", *flow_catalog.REQUIRED.get(slug, ())]
     json.dumps(row)
 
 
@@ -290,3 +290,14 @@ def test_draft_lexicon_can_build_an_embedding_backend_for_semantic_grounding():
     assert flow_catalog.registration("draft-lexicon")["id"].endswith("-r4")
     sent = flow_catalog.registration("draft-lexicon")["runtime_json"]["sends_data_to"][0]["what"]
     assert "semantic grounding" in sent and "passages" in sent
+
+
+def test_draft_lexicon_requires_its_question_and_a_chat_model():
+    # Without them formulate() refuses mid-run; declared, the run is refused before it starts.
+    schema = flow_catalog.registration("draft-lexicon")["runtime_json"]["parameters_schema_json"]
+    assert schema["required"] == ["output_uri", "problem_statement", "chat_kind"]
+    assert set(schema["required"]) <= set(schema["properties"])
+    for slug in flow_catalog.PIECES:
+        if slug != "draft-lexicon":
+            required = flow_catalog.registration(slug)["runtime_json"]["parameters_schema_json"]["required"]
+            assert required == ["output_uri"], slug

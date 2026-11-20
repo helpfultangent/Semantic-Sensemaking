@@ -204,6 +204,10 @@ SENDS_DATA_TO = {
 # Settings a piece fixes, whatever a run says: the piece is the same library function with one
 # input decided. Names are the library's input names.
 FIXED = {"map-and-project-embedding": {"MAPPING_METHOD": "embedding"}}
+# Settings a piece cannot run without, beyond its output folder, so a run is refused
+# before it starts instead of failing in the step. Drafting a lexicon needs the
+# question and a chat model (pipeline.formulate); this piece takes no lexicon input.
+REQUIRED = {"draft-lexicon": ("problem_statement", "chat_kind")}
 # A piece is never changed in place: one whose declaration changed is registered
 # under a new id.
 REVISION = {
@@ -384,7 +388,7 @@ def registration(slug: str) -> dict:
             "parameters_schema_json": {
                 "type": "object",
                 "properties": {name: copy.deepcopy(SETTINGS[name]) for name in names},
-                "required": ["output_uri"],
+                "required": ["output_uri", *REQUIRED.get(slug, ())],
             },
             **({"secrets": SECRETS[slug]} if slug in SECRETS else {}),
             **({"sends_data_to": SENDS_DATA_TO[slug]} if slug in SENDS_DATA_TO else {}),
