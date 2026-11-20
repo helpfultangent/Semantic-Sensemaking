@@ -115,6 +115,25 @@ as a graph instead of a chain:
 `python -m semantic_sensemaking.pieces.flow_catalog` lists the pieces.
 `flow_catalog.registration(slug)` is the catalog row for one.
 
+### How a piece's settings are described
+
+Each setting is defined once in `flow_catalog.SETTINGS` (so a setting two pieces share is the
+same in both) and becomes a property of the piece's `parameters_schema_json`:
+
+| Key | Meaning |
+|---|---|
+| `title`, `description` | the name and the plain-language explanation shown to a runner |
+| `type` | `string`, `integer`, `number` or `boolean`; counts are `integer` |
+| `default` | the value the piece uses when the setting is not given |
+| `oneOf` | a fixed set of values, `[{const, title, description}]`, each one explained |
+| `minimum`, `maximum` | numeric bounds the library enforces |
+| `x-advanced` | `true` for a rarely changed setting, so a form can tuck it away |
+
+A default, a choice or a bound is stated only where the library's code has it; a test compares
+each with the config models in `core/config.py`. A setting with no default (a model name, a
+backend kind) simply has none. A piece is never changed in place: when a piece's settings
+change, its id gets a new revision (`REVISION`).
+
 ## Limits
 
 - No piece has been run on Tapis yet. Installing the library inside a function

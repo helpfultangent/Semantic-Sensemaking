@@ -1,9 +1,18 @@
 """The pieces as registered for DYNAMO flows."""
 
 import json
+from typing import get_args
 
 import pytest
 
+from semantic_sensemaking.core.config import (
+    BackendConfig,
+    CorpusConfig,
+    FormulationConfig,
+    MatchMode,
+    NarrativeConfig,
+    ScoringConfig,
+)
 from semantic_sensemaking.pieces import flow_catalog
 from semantic_sensemaking.pieces.entrypoints import PIECES
 
@@ -52,13 +61,13 @@ def test_a_piece_that_calls_a_model_server_declares_the_credential_not_settings(
     assert not {name.upper() for name in settings} & filled
     assert not set(runtime["env_from_args"]) & filled
     assert {"model_api_key", "chat_base_url", "embedding_base_url"}.isdisjoint(settings)
-    assert runtime["sends_data_to"] and flow_catalog.registration(slug)["id"].endswith("-r2")
+    assert runtime["sends_data_to"] and flow_catalog.registration(slug)["id"].endswith("-r3")
 
 
 def test_a_piece_that_calls_no_model_server_declares_no_credential():
     runtime = flow_catalog.registration("score-lexicon")["runtime_json"]
     assert "secrets" not in runtime and "sends_data_to" not in runtime
-    assert not flow_catalog.registration("score-lexicon")["id"].endswith("-r2")
+    assert flow_catalog.registration("score-lexicon")["id"].endswith("-r2")
 
 
 @pytest.mark.parametrize("slug", sorted(flow_catalog.PIECES))
@@ -71,3 +80,125 @@ def test_each_committed_source_file_matches_the_template(slug):
     assert committed == flow_catalog.source(slug)
     assert "def transform(inputs):" in committed
     assert len(committed.encode()) < 64_000
+
+
+# ── settings: titles, types, choices, defaults and bounds ───────────────────
+
+SLUGS = sorted(flow_catalog.PIECES)
+
+
+def _properties(slug):
+    return flow_catalog.registration(slug)["runtime_json"]["parameters_schema_json"]["properties"]
+
+
+def _all_settings():
+    return [(slug, name, spec) for slug in SLUGS for name, spec in _properties(slug).items()]
+
+
+def _field(model, name):
+    return model.model_fields[name]
+
+
+def _literal(model, name):
+    return list(get_args(_field(model, name).annotation))
+
+
+def _bound(model, name, kind):
+    return next((getattr(m, kind) for m in _field(model, name).metadata if hasattr(m, kind)), None)
+
+
+# setting -> (the library's allowed values, its default), read from the config models
+CHOICES = {
+    "match_mode": ([m.value for m in MatchMode], ScoringConfig.model_fields["match_mode"].default.value),
+    "mapping_method": (_literal(ScoringConfig, "mapping_method"), _field(ScoringConfig, "mapping_method").default),
+    "unmapped_groups": (_literal(ScoringConfig, "unmapped_groups"), _field(ScoringConfig, "unmapped_groups").default),
+    "grounding": (_literal(FormulationConfig, "grounding"), _field(FormulationConfig, "grounding").default),
+}
+# setting -> (config model, field); the integer settings the library bounds
+INTEGERS = {
+    "max_files": (CorpusConfig, "max_files"), "min_chars": (CorpusConfig, "min_chars"),
+    "max_frames": (NarrativeConfig, "max_frames"), "segment_words": (NarrativeConfig, "segment_words"),
+}
+# Backend kinds a piece can use: the library's kinds that give embeddings or chat, none being "not set".
+EMBEDDING_KINDS = {"openai_compatible", "huggingface_local", "hashing"}
+CHAT_KINDS = {"openai_compatible", "anthropic"}
+
+
+@pytest.mark.parametrize(("slug", "name", "spec"), _all_settings())
+def test_every_setting_has_a_title_a_description_and_a_type(slug, name, spec):
+    assert spec["title"].strip() and spec["description"].strip()
+    assert spec["title"][0].isupper() and name not in spec["title"]
+    assert spec["type"] in {"string", "integer", "number", "boolean"}
+
+
+@pytest.mark.parametrize(("slug", "name", "spec"), _all_settings())
+def test_every_choice_is_explained_and_the_default_is_one_of_them(slug, name, spec):
+    choices = spec.get("oneOf", [])
+    for choice in choices:
+        assert choice["title"].strip() and choice["description"].strip()
+        assert "const" in choice
+    if choices and "default" in spec:
+        assert spec["default"] in [c["const"] for c in choices]
+
+
+@pytest.mark.parametrize("name", sorted(CHOICES))
+def test_choices_and_defaults_are_the_librarys(name):
+    allowed, default = CHOICES[name]
+    spec = flow_catalog.SETTINGS[name]
+    assert [c["const"] for c in spec["oneOf"]] == allowed
+    assert spec["default"] == default
+
+
+@pytest.mark.parametrize("name", sorted(INTEGERS))
+def test_counts_are_integers_with_the_librarys_default_and_bounds(name):
+    model, field = INTEGERS[name]
+    spec = flow_catalog.SETTINGS[name]
+    assert spec["type"] == "integer" and isinstance(spec["default"], int)
+    assert spec["default"] == _field(model, field).default
+    assert spec.get("minimum") == _bound(model, field, "ge")
+    assert "maximum" not in spec
+
+
+def test_backend_kinds_are_kinds_the_library_has_and_the_factory_accepts():
+    kinds = set(get_args(BackendConfig.model_fields["kind"].annotation))
+    for name, expected in (("embedding_kind", EMBEDDING_KINDS), ("chat_kind", CHAT_KINDS)):
+        offered = {c["const"] for c in flow_catalog.SETTINGS[name]["oneOf"]}
+        assert offered == expected and offered <= kinds
+        # Unset means kind "none", which is the library's default, so no default is stated.
+        assert "default" not in flow_catalog.SETTINGS[name]
+    assert BackendConfig.model_fields["kind"].default == "none"
+
+
+def test_model_names_have_no_default_because_the_library_has_none():
+    assert BackendConfig.model_fields["model"].default is None
+    for name in ("embedding_model", "chat_model"):
+        assert "default" not in flow_catalog.SETTINGS[name]
+
+
+def test_advanced_settings_are_the_rarely_changed_ones():
+    advanced = {n for n, spec in flow_catalog.SETTINGS.items() if spec.get("x-advanced")}
+    assert advanced == {
+        "output_uri", "unmapped_groups", "max_files", "min_chars", "segment_words",
+        "embedding_kind", "embedding_model", "chat_kind", "chat_model",
+    }
+
+
+def test_a_setting_two_pieces_share_is_identical_in_both():
+    seen: dict[str, dict] = {}
+    for _, name, spec in _all_settings():
+        assert seen.setdefault(name, spec) == spec
+    users = {name: [slug for slug in SLUGS if name in _properties(slug)] for name in seen}
+    assert len(users["match_mode"]) == 2 and len(users["chat_kind"]) == 2 and len(users["output_uri"]) == len(SLUGS)
+
+
+@pytest.mark.parametrize("slug", SLUGS)
+def test_each_piece_takes_only_settings_that_are_defined(slug):
+    assert set(flow_catalog.PIECES[slug][5]) <= set(flow_catalog.SETTINGS)
+    assert set(_properties(slug)) == set(flow_catalog.PIECES[slug][5])
+    runtime = flow_catalog.registration(slug)["runtime_json"]
+    assert {n for n in runtime["env_from_args"] if n != "TAPIS_TOKEN"} == {n.upper() for n in _properties(slug)}
+
+
+def test_every_piece_has_a_revision_after_its_first_so_the_old_declaration_stays_untouched():
+    assert set(flow_catalog.REVISION) == set(flow_catalog.PIECES)
+    assert all(revision >= 2 for revision in flow_catalog.REVISION.values())

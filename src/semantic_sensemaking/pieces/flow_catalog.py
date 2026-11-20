@@ -19,6 +19,7 @@ keeping, per package, only the hashes of the wheels that platform installs.
 """
 from __future__ import annotations
 
+import copy
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -36,19 +37,140 @@ WEIGHTS = "document_collection_science_domain__weight"
 FRAMES = "document_collection_narrative_frame__description"
 REPORT = "document_collection__sensemaking_report"
 
-OUT = {"output_uri": "Folder the piece writes its outputs into (tapis://system/path)."}
-SCORING = {
-    "match_mode": "How terms are counted: auto, word_boundary or longest_match.",
-    "mapping_method": "How groups are mapped to the backbone: legacy, subdiscipline_aware or embedding.",
-    "unmapped_groups": "What to do with groups that map nowhere: drop or keep.",
-}
-EMBEDDING = {
-    "embedding_kind": "Embedding backend: openai_compatible, huggingface_local or hashing.",
-    "embedding_model": "Embedding model name.",
-}
-CHAT = {
-    "chat_kind": "Chat backend: openai_compatible or anthropic.",
-    "chat_model": "Chat model name.",
+
+def _setting(title, description, type="string", *, default=None, choices=(), minimum=None, maximum=None,
+             advanced=False):
+    """One setting as a JSON Schema property. ``choices`` is ``[(value, title, description)]``.
+
+    Every default, choice and bound is the library's own: it is copied from the code that
+    reads the setting, and a test compares the two, so they cannot drift apart.
+    """
+    spec = {"title": title, "description": description, "type": type}
+    for key, value in (("default", default), ("minimum", minimum), ("maximum", maximum)):
+        if value is not None:
+            spec[key] = value
+    if choices:
+        spec["oneOf"] = [{"const": value, "title": name, "description": text} for value, name, text in choices]
+    if advanced:
+        spec["x-advanced"] = True
+    return spec
+
+
+# Every setting is defined once, so a setting two pieces share is identical in both.
+SETTINGS = {
+    "output_uri": _setting(
+        "Output folder", "Folder the piece writes its outputs into (tapis://system/path). "
+        "DYNAMO sets this for a run.", advanced=True),
+    "max_files": _setting(
+        "Most files to read", "Largest number of files to read from the folder. "
+        "Files beyond this are left out.", "integer", default=200, minimum=1, advanced=True),
+    "min_chars": _setting(
+        "Shortest document", "Skip documents shorter than this many characters.",
+        "integer", default=200, minimum=0, advanced=True),
+    "lexicon_uri": _setting(
+        "Lexicon", "Lexicon to count, as a JSON or CSV file. Leave empty to use the built-in lexicon."),
+    "taxonomy_uri": _setting(
+        "Science backbone", "Science backbone to map onto, as a JSON file. "
+        "Leave empty to use the built-in backbone."),
+    "match_mode": _setting(
+        "How terms are counted", "How a lexicon term is found in the text.", default="auto", choices=[
+            ("auto", "Prototype counting",
+             "Terms containing a space or hyphen are counted wherever the text occurs, even inside "
+             "longer words. Other terms are counted as whole words. Every term counts on its own, "
+             "so 'land subsidence' also counts as 'subsidence'."),
+            ("word_boundary", "Whole terms only",
+             "Every term, including multi-word ones, must start and end on a word boundary, and "
+             "spaces inside a term match any run of whitespace. Terms still count on their own, "
+             "so 'land subsidence' also counts as 'subsidence'."),
+            ("longest_match", "Longest term wins",
+             "Whole terms only, and the longest term at each place wins. Text already counted is "
+             "not counted again, so 'land subsidence' counts once and not also as 'subsidence'. "
+             "This applies within one lexicon group."),
+        ]),
+    "mapping_method": _setting(
+        "How groups are mapped to the backbone",
+        "How each lexicon group is matched to the science backbone's domains and subdisciplines.",
+        default="legacy", choices=[
+            ("legacy", "Domain score for every subdiscipline",
+             "A domain scores one point for each of the group's terms that contains one of the "
+             "domain's indicator terms. Every subdiscipline of a matching domain gets that "
+             "domain's score, then the three best pairs are kept. Because they tie, that is "
+             "usually the first three subdisciplines of one domain."),
+            ("subdiscipline_aware", "Top domains, split by subdiscipline",
+             "Keeps the three best-scoring domains and splits each domain's score across its "
+             "subdisciplines. Subdisciplines whose names overlap the group's terms get a larger "
+             "share; with no overlap the score is split evenly."),
+            ("embedding", "By embedding similarity",
+             "Compares the group's terms with each domain and subdiscipline by embedding "
+             "similarity and keeps the three most similar pairs, ignoring any below 0.3. Needs an "
+             "embedding model."),
+        ]),
+    "unmapped_groups": _setting(
+        "Groups that map nowhere",
+        "What happens to a group whose terms match no domain on the backbone.",
+        default="drop", advanced=True, choices=[
+            ("drop", "Leave out",
+             "The group's counts are left out of the domain totals. Its matches do not appear."),
+            ("keep", "Keep as Uncategorized",
+             "The group's counts stay visible, filed under 'Uncategorized'."),
+        ]),
+    "embedding_kind": _setting(
+        "Embedding model type",
+        "Where the embeddings come from. Required: this piece cannot run without one.",
+        advanced=True, choices=[
+            ("openai_compatible", "Model server",
+             "An OpenAI-compatible server, reached with your 'model_server' credential. Needs an "
+             "embedding model name."),
+            ("huggingface_local", "Local Hugging Face model",
+             "Runs a sentence-transformers model on the machine that runs the piece. Uses "
+             "sentence-transformers/all-MiniLM-L6-v2 when no model is named. Needs the optional "
+             "sentence-transformers and PyTorch packages, which these flow pieces do not install."),
+            ("hashing", "Word hashing (test only)",
+             "Offline vectors made by hashing words. Texts that share words are similar. It does "
+             "not understand meaning, so use it only for tests and dry runs."),
+        ]),
+    "embedding_model": _setting(
+        "Embedding model name",
+        "Name of the embedding model. Required for the model server; the local Hugging Face "
+        "model defaults to sentence-transformers/all-MiniLM-L6-v2; word hashing ignores it.",
+        advanced=True),
+    "chat_kind": _setting(
+        "Chat model type",
+        "Which service writes text. Required to draft a lexicon. When finding frames, leave it "
+        "empty to name each frame from its keywords instead.",
+        advanced=True, choices=[
+            ("openai_compatible", "Model server",
+             "An OpenAI-compatible server, reached with your 'model_server' credential. Needs a "
+             "chat model name."),
+            ("anthropic", "Anthropic Claude",
+             "Anthropic's Claude, using the key in your 'model_server' credential. Uses claude-opus-5 "
+             "when no model is named."),
+        ]),
+    "chat_model": _setting(
+        "Chat model name",
+        "Name of the chat model. Required for the model server; Anthropic Claude defaults to "
+        "claude-opus-5.", advanced=True),
+    "max_frames": _setting(
+        "Most frames", "Largest number of frames to find.", "integer", default=12, minimum=1),
+    "segment_words": _setting(
+        "Words per passage", "Documents are cut into passages of about this many words, and the "
+        "passages are grouped into frames.", "integer", default=200, minimum=10, advanced=True),
+    "problem_statement": _setting(
+        "Problem statement", "The problem the lexicon should cover. Required."),
+    "grounding": _setting(
+        "How terms are checked against the corpus",
+        "Whether the drafted terms must be supported by the seed corpus. Groups left with no "
+        "supported term are dropped.", default="keyword", choices=[
+            ("keyword", "Term appears in the corpus",
+             "A term is kept if it occurs in the corpus at least once, counted the way "
+             "'How terms are counted' says. Needs a seed corpus."),
+            ("semantic", "Term or similar passage",
+             "A term is kept if it occurs in the corpus, or if some passage is similar enough to "
+             "it by embedding similarity (at least 0.45). Needs a seed corpus and an embedding "
+             "model, which this piece does not take as a setting yet, so it stops with an error."),
+            ("none", "No check",
+             "Every drafted term is kept. The seed corpus is not needed."),
+        ]),
 }
 
 # A model server's key and address are the runner's own, stored once with DYNAMO
@@ -71,57 +193,57 @@ SENDS_DATA_TO = {
 }
 # A piece is never changed in place: one whose declaration changed is registered
 # under a new id.
-REVISION = {"discover-frames": 2, "draft-lexicon": 2}
+REVISION = {
+    "ingest-corpus": 2, "score-lexicon": 2, "discover-frames": 3, "map-and-project": 2,
+    "draft-lexicon": 3, "render-report": 2, "render-frames-report": 2,
+}
 
 # slug: (library piece, label, description,
 #        inputs  [(standard variable, format, the library's input name)],
 #        outputs [(standard variable, format, key in the library's result)],
-#        arguments {name: description})
+#        settings, the names of the SETTINGS the piece takes)
 PIECES = {
     "ingest-corpus": ("ingest_corpus", "Sensemaking: ingest corpus",
         "Read a folder of documents (.txt, .md, .json, .docx, .pdf) into one normalised corpus file.",
         [(CORPUS, "directory", "CORPUS_URI")],
         [(CORPUS, "json", "corpus_uri")],
-        {**OUT, "max_files": "Largest number of files to read.",
-         "min_chars": "Skip documents shorter than this many characters."}),
+        ("output_uri", "max_files", "min_chars")),
     "score-lexicon": ("score_lexicon", "Sensemaking: score lexicon",
         "Count how often each lexicon group's terms occur in each document.",
         [(CORPUS, "json", "CORPUS_URI")],
         [(TERM_COUNTS, "csv", "term_counts_uri"), (LEXICON, "json", "lexicon_uri")],
-        {**OUT, "lexicon_uri": "Lexicon to count (JSON or CSV). Default: the built-in lexicon.",
-         "match_mode": SCORING["match_mode"]}),
+        ("output_uri", "lexicon_uri", "match_mode")),
     "discover-frames": ("discover_frames", "Sensemaking: discover frames",
         "Find the recurring frames in a corpus by embedding and clustering its passages, "
         "and export them as a lexicon.",
         [(CORPUS, "json", "CORPUS_URI")],
         [(TERM_COUNTS, "csv", "term_counts_uri"), (FRAMES, "csv", "frames_uri"), (LEXICON, "json", "lexicon_uri")],
-        {**OUT, **EMBEDDING, **CHAT, "max_frames": "Largest number of frames to find.",
-         "segment_words": "Words per passage."}),
+        ("output_uri", "embedding_kind", "embedding_model", "chat_kind", "chat_model", "max_frames",
+         "segment_words")),
     "map-and-project": ("map_and_project", "Sensemaking: map and project",
         "Assign lexicon groups to science-backbone domains and project the counts onto them.",
         [(TERM_COUNTS, "csv", "TERM_COUNTS_URI"), (LEXICON, "json", "LEXICON_URI")],
         [(WEIGHTS, "csv", "domain_weights_uri"), (ASSIGNMENT, "csv", "domain_assignment_uri"),
          (BACKBONE, "json", "taxonomy_uri")],
-        {**OUT, "taxonomy_uri": "Science backbone (JSON). Default: the built-in backbone.", **SCORING}),
+        ("output_uri", "taxonomy_uri", "match_mode", "mapping_method", "unmapped_groups")),
     "draft-lexicon": ("draft_lexicon", "Sensemaking: draft lexicon",
         "Draft a lexicon for a problem statement and keep the terms a seed corpus supports. "
         "The result is a draft for a person to review.",
         [(CORPUS, "json", "CORPUS_URI")],
         [(LEXICON, "json", "lexicon_uri"), (BACKBONE, "json", "taxonomy_uri")],
-        {**OUT, "problem_statement": "The problem the lexicon should cover.",
-         "grounding": "How terms are checked against the corpus: keyword, semantic or none.", **CHAT}),
+        ("output_uri", "problem_statement", "grounding", "chat_kind", "chat_model")),
     "render-report": ("render_report", "Sensemaking: render report",
         "Write a Markdown summary of the backbone projection and group counts.",
         [(WEIGHTS, "csv", "DOMAIN_WEIGHTS_URI"), (ASSIGNMENT, "csv", "DOMAIN_ASSIGNMENT_URI"),
          (TERM_COUNTS, "csv", "TERM_COUNTS_URI")],
         [(REPORT, "md", "report_uri")],
-        {**OUT}),
+        ("output_uri",)),
     "render-frames-report": ("render_report", "Sensemaking: render report with frames",
         "Write a Markdown summary of the backbone projection, group counts and narrative frames.",
         [(WEIGHTS, "csv", "DOMAIN_WEIGHTS_URI"), (ASSIGNMENT, "csv", "DOMAIN_ASSIGNMENT_URI"),
          (TERM_COUNTS, "csv", "TERM_COUNTS_URI"), (FRAMES, "csv", "FRAMES_URI")],
         [(REPORT, "md", "report_uri")],
-        {**OUT}),
+        ("output_uri",)),
 }
 
 SOURCE = '''"""Semantic Sensemaking piece: __LABEL__.
@@ -229,7 +351,7 @@ def registration(slug: str) -> dict:
             "env_from_args": {"TAPIS_TOKEN": "tapis_token", **{name.upper(): name for name in names}},
             "parameters_schema_json": {
                 "type": "object",
-                "properties": {name: {"type": "string", "description": arguments[name]} for name in names},
+                "properties": {name: copy.deepcopy(SETTINGS[name]) for name in names},
                 "required": ["output_uri"],
             },
             **({"secrets": SECRETS[slug]} if slug in SECRETS else {}),
