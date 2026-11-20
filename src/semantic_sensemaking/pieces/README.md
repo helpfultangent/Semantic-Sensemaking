@@ -107,6 +107,11 @@ as a graph instead of a chain:
   filed as a result;
 - `render_report` comes in two forms, with and without narrative frames, because
   a flow must link every input a piece declares;
+- `map_and_project` also comes in two forms. `map-and-project` compares words and needs no
+  credential. `map-and-project-embedding` is the same library function with `mapping_method`
+  fixed to `embedding`; it takes `embedding_kind` and `embedding_model` and declares the
+  `model_server` credential. They are separate pieces because a declared credential is required
+  for every run of the piece that declares it;
 - the stored source installs the dependencies in `flow_lock.txt` at exact
   versions with `--require-hashes`, and loads the library from the commit's
   GitHub archive after checking its SHA-256. Nothing is built or resolved at run

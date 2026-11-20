@@ -89,7 +89,8 @@ SETTINGS = {
         ]),
     "mapping_method": _setting(
         "How groups are mapped to the backbone",
-        "How each lexicon group is matched to the science backbone's domains and subdisciplines.",
+        "How each lexicon group is matched to the science backbone's domains and subdisciplines "
+        "by comparing words. To compare by meaning, use the piece 'map and project with embeddings'.",
         default="legacy", choices=[
             ("legacy", "Domain score for every subdiscipline",
              "A domain scores one point for each of the group's terms that contains one of the "
@@ -100,10 +101,6 @@ SETTINGS = {
              "Keeps the three best-scoring domains and splits each domain's score across its "
              "subdisciplines. Subdisciplines whose names overlap the group's terms get a larger "
              "share; with no overlap the score is split evenly."),
-            ("embedding", "By embedding similarity",
-             "Compares the group's terms with each domain and subdiscipline by embedding "
-             "similarity and keeps the three most similar pairs, ignoring any below 0.3. Needs an "
-             "embedding model."),
         ]),
     "unmapped_groups": _setting(
         "Groups that map nowhere",
@@ -116,7 +113,8 @@ SETTINGS = {
         ]),
     "embedding_kind": _setting(
         "Embedding model type",
-        "Where the embeddings come from. Required: this piece cannot run without one.",
+        "Where the embeddings come from. Required by a piece that always uses embeddings; "
+        "in 'draft lexicon' only when terms are checked semantically.",
         advanced=True, choices=[
             ("openai_compatible", "Tejas",
              "The model server in your stored 'model_server' credential (an OpenAI-compatible API). "
@@ -167,7 +165,8 @@ SETTINGS = {
             ("semantic", "Term or similar passage",
              "A term is kept if it occurs in the corpus, or if some passage is similar enough to "
              "it by embedding similarity (at least 0.45). Needs a seed corpus and an embedding "
-             "model, which this piece does not take as a setting yet, so it stops with an error."),
+             "model, so also set the embedding model type and name; it uses the 'model_server' "
+             "credential."),
             ("none", "No check",
              "Every drafted term is kept. The seed corpus is not needed."),
         ]),
@@ -183,19 +182,32 @@ SECRETS = {
         "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url",
         "EMBEDDING_BASE_URL": "embedding_base_url"}}],
     "draft-lexicon": [{"name": MODEL_SERVER, "label": "Model server", "env": {
-        "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url"}}],
+        "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url",
+        "EMBEDDING_BASE_URL": "embedding_base_url"}}],
+    "map-and-project-embedding": [{"name": MODEL_SERVER, "label": "Model server", "env": {
+        "MODEL_API_KEY": "api_key", "EMBEDDING_BASE_URL": "embedding_base_url"}}],
 }
 SENDS_DATA_TO = {
     "discover-frames": [{"service": "The model server in your 'model_server' credential",
                          "what": "Passages of your documents, to embed them and to name the frames found"}],
     "draft-lexicon": [{"service": "The model server in your 'model_server' credential",
-                       "what": "Your problem statement and passages of your documents, to draft a lexicon"}],
+                       "what": "Your problem statement and passages of your documents, to draft a lexicon; "
+                                "with semantic grounding, also the drafted terms and passages of your documents, "
+                                "to embed them"}],
+    "map-and-project-embedding": [{"service": "The model server in your 'model_server' credential",
+                                   "what": "The lexicon's group names and terms, and the science backbone's "
+                                           "domain and subdiscipline names with each domain's indicator terms, "
+                                           "to compare them by meaning"}],
 }
+# Settings a piece fixes, whatever a run says: the piece is the same library function with one
+# input decided. Names are the library's input names.
+FIXED = {"map-and-project-embedding": {"MAPPING_METHOD": "embedding"}}
 # A piece is never changed in place: one whose declaration changed is registered
 # under a new id.
 REVISION = {
     "ingest-corpus": 2, "score-lexicon": 2, "discover-frames": 3, "map-and-project": 2,
     "draft-lexicon": 3, "render-report": 2, "render-frames-report": 2,
+    "map-and-project-embedding": 1,
 }
 
 # slug: (library piece, label, description,
@@ -226,12 +238,20 @@ PIECES = {
         [(WEIGHTS, "csv", "domain_weights_uri"), (ASSIGNMENT, "csv", "domain_assignment_uri"),
          (BACKBONE, "json", "taxonomy_uri")],
         ("output_uri", "taxonomy_uri", "match_mode", "mapping_method", "unmapped_groups")),
+    "map-and-project-embedding": ("map_and_project", "Sensemaking: map and project with embeddings",
+        "Assign lexicon groups to science-backbone domains by comparing their meaning with an embedding "
+        "model, and project the counts onto them.",
+        [(TERM_COUNTS, "csv", "TERM_COUNTS_URI"), (LEXICON, "json", "LEXICON_URI")],
+        [(WEIGHTS, "csv", "domain_weights_uri"), (ASSIGNMENT, "csv", "domain_assignment_uri"),
+         (BACKBONE, "json", "taxonomy_uri")],
+        ("output_uri", "taxonomy_uri", "unmapped_groups", "embedding_kind", "embedding_model")),
     "draft-lexicon": ("draft_lexicon", "Sensemaking: draft lexicon",
         "Draft a lexicon for a problem statement and keep the terms a seed corpus supports. "
         "The result is a draft for a person to review.",
         [(CORPUS, "json", "CORPUS_URI")],
         [(LEXICON, "json", "lexicon_uri"), (BACKBONE, "json", "taxonomy_uri")],
-        ("output_uri", "problem_statement", "grounding", "chat_kind", "chat_model")),
+        ("output_uri", "problem_statement", "grounding", "embedding_kind", "embedding_model",
+         "chat_kind", "chat_model")),
     "render-report": ("render_report", "Sensemaking: render report",
         "Write a Markdown summary of the backbone projection and group counts.",
         [(WEIGHTS, "csv", "DOMAIN_WEIGHTS_URI"), (ASSIGNMENT, "csv", "DOMAIN_ASSIGNMENT_URI"),
@@ -273,7 +293,7 @@ _ARCHIVE_SHA256 = "__ARCHIVE_SHA256__"
 _INPUTS = __INPUTS__
 # output position -> where the library's result says that output is
 _OUTPUTS = __OUTPUTS__
-_LOCK = """\\
+__FIXED_DEF___LOCK = """\\
 __LOCK__"""
 
 
@@ -306,7 +326,7 @@ def transform(inputs):
     given = {str(k): v for k, v in (inputs or {}).items() if v is not None and str(v) != ""}
     # Each input is linked by itself; nothing is carried over from an earlier piece.
     given.pop("SOURCE_RESULT", None)
-    for position, name in _INPUTS.items():
+__FIXED_USE__    for position, name in _INPUTS.items():
         value = given.pop("SOURCE_" + position, None)
         if value:
             given[name] = value
@@ -321,12 +341,22 @@ def transform(inputs):
 '''
 
 
+def _fixed_def(slug: str) -> str:
+    """Nothing for a piece that fixes nothing, so its source is unchanged."""
+    return f"# settings this piece fixes, whatever a run says\n_FIXED = {FIXED[slug]!r}\n" if slug in FIXED else ""
+
+
+def _fixed_use(slug: str) -> str:
+    return "    given.update(_FIXED)\n" if slug in FIXED else ""
+
+
 def source(slug: str) -> str:
     piece, label, _, inputs, outputs, _ = PIECES[slug]
     return (SOURCE.replace("__LABEL__", label).replace("__PIECE__", piece).replace("__REF__", REF)
             .replace("__ARCHIVE_SHA256__", ARCHIVE_SHA256)
             .replace("__INPUTS__", repr({str(i): name for i, (_, _, name) in enumerate(inputs)}))
             .replace("__OUTPUTS__", repr({str(i): key for i, (_, _, key) in enumerate(outputs)}))
+            .replace("__FIXED_DEF__", _fixed_def(slug)).replace("__FIXED_USE__", _fixed_use(slug))
             .replace("__LOCK__", LOCK))
 
 

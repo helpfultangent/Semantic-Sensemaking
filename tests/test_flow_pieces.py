@@ -61,7 +61,7 @@ def test_a_piece_that_calls_a_model_server_declares_the_credential_not_settings(
     assert not {name.upper() for name in settings} & filled
     assert not set(runtime["env_from_args"]) & filled
     assert {"model_api_key", "chat_base_url", "embedding_base_url"}.isdisjoint(settings)
-    assert runtime["sends_data_to"] and flow_catalog.registration(slug)["id"].endswith("-r3")
+    assert runtime["sends_data_to"] and flow_catalog.registration(slug)["id"].endswith(f"-r{flow_catalog.REVISION[slug]}")
 
 
 def test_a_piece_that_calls_no_model_server_declares_no_credential():
@@ -110,7 +110,11 @@ def _bound(model, name, kind):
 # setting -> (the library's allowed values, its default), read from the config models
 CHOICES = {
     "match_mode": ([m.value for m in MatchMode], ScoringConfig.model_fields["match_mode"].default.value),
-    "mapping_method": (_literal(ScoringConfig, "mapping_method"), _field(ScoringConfig, "mapping_method").default),
+    # the credential-free piece offers the methods that compare words; 'embedding' is its own piece
+    "mapping_method": (
+        [m for m in _literal(ScoringConfig, "mapping_method") if m != "embedding"],
+        _field(ScoringConfig, "mapping_method").default,
+    ),
     "unmapped_groups": (_literal(ScoringConfig, "unmapped_groups"), _field(ScoringConfig, "unmapped_groups").default),
     "grounding": (_literal(FormulationConfig, "grounding"), _field(FormulationConfig, "grounding").default),
 }
@@ -199,9 +203,9 @@ def test_each_piece_takes_only_settings_that_are_defined(slug):
     assert {n for n in runtime["env_from_args"] if n != "TAPIS_TOKEN"} == {n.upper() for n in _properties(slug)}
 
 
-def test_every_piece_has_a_revision_after_its_first_so_the_old_declaration_stays_untouched():
+def test_every_piece_has_a_revision_and_only_the_new_piece_is_on_its_first():
     assert set(flow_catalog.REVISION) == set(flow_catalog.PIECES)
-    assert all(revision >= 2 for revision in flow_catalog.REVISION.values())
+    assert [s for s, r in flow_catalog.REVISION.items() if r == 1] == ["map-and-project-embedding"]
 
 
 @pytest.mark.parametrize("name", ["embedding_kind", "chat_kind"])
@@ -209,3 +213,72 @@ def test_the_model_server_choice_is_titled_tejas_and_keeps_the_value_the_code_re
     choice = next(c for c in flow_catalog.SETTINGS[name]["oneOf"] if c["const"] == "openai_compatible")
     assert choice["title"] == "Tejas"
     assert "model_server" in choice["description"] and "OpenAI-compatible" in choice["description"]
+
+
+# ── the pieces that call an embedding model ─────────────────────────────────
+
+KEYWORD_ONLY = ["ingest-corpus", "score-lexicon", "map-and-project", "render-report", "render-frames-report"]
+
+
+def _secret_env(slug):
+    return flow_catalog.registration(slug)["runtime_json"]["secrets"][0]["env"]
+
+
+@pytest.mark.parametrize("slug", KEYWORD_ONLY)
+def test_a_piece_that_only_counts_or_maps_by_words_declares_no_credential(slug):
+    runtime = flow_catalog.registration(slug)["runtime_json"]
+    assert "secrets" not in runtime and "sends_data_to" not in runtime
+
+
+def test_map_and_project_no_longer_offers_embedding_and_cannot_be_asked_for_it():
+    props = _properties("map-and-project")
+    assert [c["const"] for c in props["mapping_method"]["oneOf"]] == ["legacy", "subdiscipline_aware"]
+    assert not {"embedding_kind", "embedding_model"} & set(props)
+    assert "FIXED" not in flow_catalog.source("map-and-project") and "_FIXED" not in flow_catalog.source("map-and-project")
+
+
+def test_the_embedding_piece_has_the_same_contract_as_map_and_project_and_fixes_the_method():
+    plain = flow_catalog.registration("map-and-project")
+    embed = flow_catalog.registration("map-and-project-embedding")
+    assert embed["contracts"] == plain["contracts"]
+    props = _properties("map-and-project-embedding")
+    assert set(props) == {"output_uri", "taxonomy_uri", "unmapped_groups", "embedding_kind", "embedding_model"}
+    assert "mapping_method" not in props
+    assert flow_catalog.FIXED["map-and-project-embedding"] == {"MAPPING_METHOD": "embedding"}
+    assert "given.update(_FIXED)" in flow_catalog.source("map-and-project-embedding")
+    assert embed["id"].endswith("-r1")
+
+
+def test_the_embedding_piece_declares_the_model_server_credential_and_what_it_sends():
+    row = flow_catalog.registration("map-and-project-embedding")["runtime_json"]
+    assert row["secrets"][0]["name"] == "model_server"
+    assert row["secrets"][0]["env"] == {"MODEL_API_KEY": "api_key", "EMBEDDING_BASE_URL": "embedding_base_url"}
+    sent = row["sends_data_to"][0]["what"]
+    assert "group names and terms" in sent and "domain and subdiscipline names" in sent
+
+
+def test_the_fixed_method_reaches_the_library_function(monkeypatch):
+    seen = {}
+    scope: dict = {}
+    exec(compile(flow_catalog.source("map-and-project-embedding"), "piece", "exec"), scope)
+    scope["_load_library"] = lambda: None
+
+    def fake(piece, given):
+        seen.update(piece=piece, given=given)
+        return json.dumps({"domain_weights_uri": "a", "domain_assignment_uri": "b", "taxonomy_uri": "c"})
+
+    import semantic_sensemaking.pieces as pieces
+    monkeypatch.setattr(pieces, "run_piece", fake)
+    scope["transform"]({"SOURCE_0": "t.csv", "SOURCE_1": "l.json", "OUTPUT_URI": "out", "MAPPING_METHOD": "legacy"})
+    assert seen["piece"] == "map_and_project" and seen["given"]["MAPPING_METHOD"] == "embedding"
+
+
+def test_draft_lexicon_can_build_an_embedding_backend_for_semantic_grounding():
+    props = _properties("draft-lexicon")
+    assert {"embedding_kind", "embedding_model"} <= set(props)
+    assert _secret_env("draft-lexicon")["EMBEDDING_BASE_URL"] == "embedding_base_url"
+    assert "cannot" not in json.dumps(props["grounding"]) and "stops with an error" not in json.dumps(props["grounding"])
+    semantic = next(c for c in props["grounding"]["oneOf"] if c["const"] == "semantic")
+    assert "model_server" in semantic["description"]
+    sent = flow_catalog.registration("draft-lexicon")["runtime_json"]["sends_data_to"][0]["what"]
+    assert "semantic grounding" in sent and "passages" in sent
