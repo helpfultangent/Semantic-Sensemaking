@@ -44,15 +44,34 @@ SCORING = {
 }
 EMBEDDING = {
     "embedding_kind": "Embedding backend: openai_compatible, huggingface_local or hashing.",
-    "embedding_base_url": "Base URL of an OpenAI-compatible embedding server.",
     "embedding_model": "Embedding model name.",
 }
 CHAT = {
     "chat_kind": "Chat backend: openai_compatible or anthropic.",
-    "chat_base_url": "Base URL of an OpenAI-compatible chat server.",
     "chat_model": "Chat model name.",
 }
-KEY = {"model_api_key": "API key for the model server, used for embeddings and chat."}
+
+# A model server's key and address are the runner's own, stored once with DYNAMO
+# and fetched by the step when it starts. They are never run settings: a value
+# typed into a run is kept in many places, and an address chosen by a flow's
+# author could send the runner's key elsewhere.
+MODEL_SERVER = "model_server"
+SECRETS = {
+    "discover-frames": [{"name": MODEL_SERVER, "label": "Model server", "env": {
+        "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url",
+        "EMBEDDING_BASE_URL": "embedding_base_url"}}],
+    "draft-lexicon": [{"name": MODEL_SERVER, "label": "Model server", "env": {
+        "MODEL_API_KEY": "api_key", "CHAT_BASE_URL": "chat_base_url"}}],
+}
+SENDS_DATA_TO = {
+    "discover-frames": [{"service": "The model server in your 'model_server' credential",
+                         "what": "Passages of your documents, to embed them and to name the frames found"}],
+    "draft-lexicon": [{"service": "The model server in your 'model_server' credential",
+                       "what": "Your problem statement and passages of your documents, to draft a lexicon"}],
+}
+# A piece is never changed in place: one whose declaration changed is registered
+# under a new id.
+REVISION = {"discover-frames": 2, "draft-lexicon": 2}
 
 # slug: (library piece, label, description,
 #        inputs  [(standard variable, format, the library's input name)],
@@ -76,7 +95,7 @@ PIECES = {
         "and export them as a lexicon.",
         [(CORPUS, "json", "CORPUS_URI")],
         [(TERM_COUNTS, "csv", "term_counts_uri"), (FRAMES, "csv", "frames_uri"), (LEXICON, "json", "lexicon_uri")],
-        {**OUT, **EMBEDDING, **CHAT, **KEY, "max_frames": "Largest number of frames to find.",
+        {**OUT, **EMBEDDING, **CHAT, "max_frames": "Largest number of frames to find.",
          "segment_words": "Words per passage."}),
     "map-and-project": ("map_and_project", "Sensemaking: map and project",
         "Assign lexicon groups to science-backbone domains and project the counts onto them.",
@@ -90,7 +109,7 @@ PIECES = {
         [(CORPUS, "json", "CORPUS_URI")],
         [(LEXICON, "json", "lexicon_uri"), (BACKBONE, "json", "taxonomy_uri")],
         {**OUT, "problem_statement": "The problem the lexicon should cover.",
-         "grounding": "How terms are checked against the corpus: keyword, semantic or none.", **CHAT, **KEY}),
+         "grounding": "How terms are checked against the corpus: keyword, semantic or none.", **CHAT}),
     "render-report": ("render_report", "Sensemaking: render report",
         "Write a Markdown summary of the backbone projection and group counts.",
         [(WEIGHTS, "csv", "DOMAIN_WEIGHTS_URI"), (ASSIGNMENT, "csv", "DOMAIN_ASSIGNMENT_URI"),
@@ -189,6 +208,11 @@ def source(slug: str) -> str:
             .replace("__LOCK__", LOCK))
 
 
+def piece_id(slug: str) -> str:
+    revision = REVISION.get(slug)
+    return ID % slug + (f"-r{revision}" if revision else "")
+
+
 def registration(slug: str) -> dict:
     """The catalog row for one piece: insert_modelcatalog_etl_process_one's object."""
     _, label, description, inputs, outputs, arguments = PIECES[slug]
@@ -197,7 +221,7 @@ def registration(slug: str) -> dict:
                  for position, (variable, fmt, _) in enumerate(items)]
     names = sorted(arguments)
     return {
-        "id": ID % slug, "label": label, "description": description, "version": SHORT,
+        "id": piece_id(slug), "label": label, "description": description, "version": SHORT,
         "visibility": "public", "runtime_kind": "tapis_function",
         "runtime_json": {
             "language": "python", "entrypoint": "transform",
@@ -208,6 +232,8 @@ def registration(slug: str) -> dict:
                 "properties": {name: {"type": "string", "description": arguments[name]} for name in names},
                 "required": ["output_uri"],
             },
+            **({"secrets": SECRETS[slug]} if slug in SECRETS else {}),
+            **({"sends_data_to": SENDS_DATA_TO[slug]} if slug in SENDS_DATA_TO else {}),
         },
         "contracts": {"data": contracts},
     }
