@@ -96,6 +96,25 @@ such a planner cannot tell the dictionary flow from the narrative flow by
 contract alone; register only the pieces of the flow you mean to run, or choose
 the piece explicitly.
 
+## Pieces for flows
+
+`flow_catalog.py` describes the same pieces for a DYNAMO flow, which links pieces
+as a graph instead of a chain:
+
+- each input arrives as its own file (`SOURCE_0`, `SOURCE_1`, ...), and nothing is
+  carried from an earlier piece;
+- the piece reports where each of its outputs is, so each can be linked on or
+  filed as a result;
+- `render_report` comes in two forms, with and without narrative frames, because
+  a flow must link every input a piece declares;
+- the stored source installs the dependencies in `flow_lock.txt` at exact
+  versions with `--require-hashes`, and loads the library from the commit's
+  GitHub archive after checking its SHA-256. Nothing is built or resolved at run
+  time.
+
+`python -m semantic_sensemaking.pieces.flow_catalog` lists the pieces.
+`flow_catalog.registration(slug)` is the catalog row for one.
+
 ## Limits
 
 - No piece has been run on Tapis yet. Installing the library inside a function
@@ -106,3 +125,31 @@ the piece explicitly.
   task has no way to be given one safely. Use a server reachable without a key.
 - `discover_frames` and `draft_lexicon` (when drafting) need a model server the
   task can reach.
+
+## Pieces for DYNAMO flows
+
+`flow_catalog.py` describes each piece as DYNAMO registers it for a flow: its inputs and
+outputs, its settings, any credential it needs, and the source DYNAMO stores and runs.
+That source is a small wrapper with one function, `transform(inputs)`. It installs exact,
+hash-checked dependencies (`flow_lock.txt`) and loads this library from the GitHub archive
+of one pinned commit (`REF`), checked against its SHA-256.
+
+The wrappers are committed in `flow_sources/`, one file per piece, so a piece can be
+registered from GitHub. On DYNAMO's **Register a piece from GitHub** page, give:
+
+| Field | Value |
+|---|---|
+| Repository | `helpfultangent/Semantic-Sensemaking` |
+| Commit | the full 40-character SHA of a commit on `main` |
+| Path to the source file | `src/semantic_sensemaking/pieces/flow_sources/<piece>.py`, e.g. `discover_frames.py` |
+| Entrypoint | `transform` |
+
+Copy the inputs, outputs, settings and credential from the piece's entry in `flow_catalog.py`.
+
+After changing the template or a piece, regenerate the files:
+
+```bash
+python -m semantic_sensemaking.pieces.flow_catalog --write-sources
+```
+
+A test fails if a committed file differs from what `flow_catalog.source()` produces.
