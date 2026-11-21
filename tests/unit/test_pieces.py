@@ -175,6 +175,27 @@ def test_draft_lexicon_checks_an_existing_lexicon_without_a_chat_model(ingested,
     assert Path(result["taxonomy_uri"]).is_file() and Path(result["group_coverage_uri"]).is_file()
 
 
+def test_semantic_grounding_without_the_embedding_address_names_the_credential_field(ingested, tmp_path):
+    lexicon = tmp_path / "mine.json"
+    lexicon.write_text(json.dumps({"Subsidence": ["subsidence"]}))
+    with pytest.raises(ConfigError, match="embedding_base_url"):
+        run("draft_lexicon", SOURCE_RESULT=json.dumps(ingested), LEXICON_URI=str(lexicon),
+            GROUNDING="semantic", EMBEDDING_KIND="openai_compatible", EMBEDDING_MODEL="m")
+
+
+def test_keyword_grounding_builds_no_embedding_backend(ingested, tmp_path, monkeypatch):
+    import semantic_sensemaking.pieces.entrypoints as entrypoints
+
+    def refuse(*args, **kwargs):
+        raise AssertionError("no embedding backend should be built for keyword grounding")
+    monkeypatch.setattr(entrypoints, "get_embedding_backend", refuse)
+    lexicon = tmp_path / "mine.json"
+    lexicon.write_text(json.dumps({"Subsidence": ["subsidence"]}))
+    result = run("draft_lexicon", SOURCE_RESULT=json.dumps(ingested), LEXICON_URI=str(lexicon),
+                 GROUNDING="keyword", EMBEDDING_KIND="openai_compatible", EMBEDDING_MODEL="m")
+    assert result["review_required"] is True
+
+
 def test_draft_lexicon_without_a_lexicon_needs_a_chat_model(ingested):
     with pytest.raises(ConfigError, match="CHAT_KIND"):
         run("draft_lexicon", SOURCE_RESULT=json.dumps(ingested), PROBLEM_STATEMENT="x")
