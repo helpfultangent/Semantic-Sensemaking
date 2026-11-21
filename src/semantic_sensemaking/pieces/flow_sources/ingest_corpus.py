@@ -91,4 +91,9 @@ def transform(inputs):
     from semantic_sensemaking.pieces import run_piece
 
     result = json.loads(run_piece(_PIECE, given))
+    if not result.get('documents'):
+        raise RuntimeError(
+            _PIECE + ": no documents were kept (" + str(result.get('skipped_files', 0))
+            + " skipped, minimum length " + str(given.get("MIN_CHARS", "200")) + " characters)."
+            " The reason for each file is in skipped_files.csv in the run's files.")
     return {"svo_flow": {"outputs": {position: result[key] for position, key in _OUTPUTS.items()}}}

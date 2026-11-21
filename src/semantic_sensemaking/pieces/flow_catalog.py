@@ -204,6 +204,10 @@ SENDS_DATA_TO = {
 # Settings a piece fixes, whatever a run says: the piece is the same library function with one
 # input decided. Names are the library's input names.
 FIXED = {"map-and-project-embedding": {"MAPPING_METHOD": "embedding"}}
+# A piece whose result says it found nothing to work on fails the step, so a run
+# that read no documents is not reported as completed with an empty report.
+# piece slug: (result key that must be above zero, result key counting what was skipped).
+MUST_FIND = {"ingest-corpus": ("documents", "skipped_files")}
 # Settings a piece cannot run without, beyond its output folder, so a run is refused
 # before it starts instead of failing in the step. Drafting a lexicon needs the
 # question and a chat model (pipeline.formulate); this piece takes no lexicon input.
@@ -211,7 +215,7 @@ REQUIRED = {"draft-lexicon": ("problem_statement", "chat_kind")}
 # A piece is never changed in place: one whose declaration changed is registered
 # under a new id.
 REVISION = {
-    "ingest-corpus": 2, "score-lexicon": 2, "discover-frames": 3, "map-and-project": 2,
+    "ingest-corpus": 3, "score-lexicon": 2, "discover-frames": 3, "map-and-project": 2,
     "draft-lexicon": 4, "render-report": 2, "render-frames-report": 2,
     "map-and-project-embedding": 1,
 }
@@ -343,7 +347,7 @@ __FIXED_USE__    for position, name in _INPUTS.items():
     from semantic_sensemaking.pieces import run_piece
 
     result = json.loads(run_piece(_PIECE, given))
-    return {"svo_flow": {"outputs": {position: result[key] for position, key in _OUTPUTS.items()}}}
+__MUST_FIND_USE__    return {"svo_flow": {"outputs": {position: result[key] for position, key in _OUTPUTS.items()}}}
 '''
 
 
@@ -356,6 +360,20 @@ def _fixed_use(slug: str) -> str:
     return "    given.update(_FIXED)\n" if slug in FIXED else ""
 
 
+def _must_find_use(slug: str) -> str:
+    """Nothing for a piece without the check, so its source is unchanged."""
+    if slug not in MUST_FIND:
+        return ""
+    found, skipped = MUST_FIND[slug]
+    return (
+        f"    if not result.get({found!r}):\n"
+        f"        raise RuntimeError(\n"
+        f"            _PIECE + \": no documents were kept (\" + str(result.get({skipped!r}, 0))\n"
+        f"            + \" skipped, minimum length \" + str(given.get(\"MIN_CHARS\", \"200\")) + \" characters).\"\n"
+        f"            \" The reason for each file is in skipped_files.csv in the run's files.\")\n"
+    )
+
+
 def source(slug: str) -> str:
     piece, label, _, inputs, outputs, _ = PIECES[slug]
     return (SOURCE.replace("__LABEL__", label).replace("__PIECE__", piece).replace("__REF__", REF)
@@ -363,6 +381,7 @@ def source(slug: str) -> str:
             .replace("__INPUTS__", repr({str(i): name for i, (_, _, name) in enumerate(inputs)}))
             .replace("__OUTPUTS__", repr({str(i): key for i, (_, _, key) in enumerate(outputs)}))
             .replace("__FIXED_DEF__", _fixed_def(slug)).replace("__FIXED_USE__", _fixed_use(slug))
+            .replace("__MUST_FIND_USE__", _must_find_use(slug))
             .replace("__LOCK__", LOCK))
 
 

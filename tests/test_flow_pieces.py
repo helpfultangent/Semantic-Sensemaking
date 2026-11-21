@@ -301,3 +301,34 @@ def test_draft_lexicon_requires_its_question_and_a_chat_model():
         if slug != "draft-lexicon":
             required = flow_catalog.registration(slug)["runtime_json"]["parameters_schema_json"]["required"]
             assert required == ["output_uri"], slug
+
+
+
+def _ingest_transform(monkeypatch, result):
+    scope: dict = {}
+    exec(compile(flow_catalog.source("ingest-corpus"), "piece", "exec"), scope)
+    scope["_load_library"] = lambda: None
+    import semantic_sensemaking.pieces as pieces
+    monkeypatch.setattr(pieces, "run_piece", lambda piece, given: json.dumps(result))
+    return scope["transform"]
+
+
+def test_ingest_fails_when_it_keeps_no_documents(monkeypatch):
+    # A run that read nothing must not be reported as completed with an empty report.
+    transform = _ingest_transform(monkeypatch, {"corpus_uri": "c.json", "documents": 0, "skipped_files": 3})
+    with pytest.raises(RuntimeError) as caught:
+        transform({"SOURCE_0": "docs/", "OUTPUT_URI": "out", "MIN_CHARS": "200"})
+    message = str(caught.value)
+    assert "no documents were kept" in message and "3 skipped" in message
+    assert "200 characters" in message and "skipped_files.csv" in message
+
+
+def test_ingest_passes_when_it_keeps_documents(monkeypatch):
+    transform = _ingest_transform(monkeypatch, {"corpus_uri": "c.json", "documents": 2, "skipped_files": 1})
+    assert transform({"SOURCE_0": "docs/", "OUTPUT_URI": "out"}) == {"svo_flow": {"outputs": {"0": "c.json"}}}
+
+
+def test_only_ingest_carries_the_found_nothing_check():
+    for slug in flow_catalog.PIECES:
+        has = "no documents were kept" in flow_catalog.source(slug)
+        assert has == (slug in flow_catalog.MUST_FIND), slug
